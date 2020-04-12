@@ -1,0 +1,354 @@
+*{
+    margin: 0 auto;
+    padding: 0;
+}
+/*顶部logo区*/
+#top-logo{
+    width: 100%;
+    height: 70px;
+}
+#top-logo .logo{
+    margin-left: 0;
+    height: 70px;
+    /*background: #50bcb8;*/
+    width: 25%;
+    float: left;
+}
+#top-logo .logo img,b{
+    float: left;
+    height: 70px;
+    /*margin: 5px auto 5px 10px;*/
+}
+#top-logo .logo b{
+    float: left;
+    text-align: center;
+    line-height: 70px;
+    color: #333333;
+    font-family: 幼圆, serif;
+    font-weight: bold;
+    font-size: 26px;
+    margin-left: 5px;
+}
+/*头部右侧导航区*/
+#top-logo .nav_span{
+    width: 20%;
+    float: right;
+}
+#top-logo .nav_span #nav-list{
+    width: 100%;
+    line-height: 16px;
+    font-family: tahoma,arial,sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+}
+#top-logo .nav_span .nav{
+    float: left;
+    height: 16px;
+    display: inline;
+    padding: 0 10px ;
+    margin: 10px 0;
+    border-left : 1px gray solid;
+    color: gray;
+}
+/*注册导航区*/
+#top-logo .nav_span .nav.first{
+    border-left: none;
+}
+#top-logo .nav_span #nav-list a{
+    text-decoration: none;
+    color: gray;
+}
+/*划分线的统一样式*/
+section .divide{
+    margin: 0 auto 10px auto;
+    width: 100%;
+    height: 30px;
+    position: relative;
+}
+section .divide hr{
+    width:80%;
+    margin:0 auto;
+    bottom: 12px;
+    left: 150px;
+    border: 0;
+    height: 1px;
+    background: #333 linear-gradient(to right, rgb(149,252,166), rgb(0,208,212), rgb(123,242,171));
+    position: absolute;
+}
+section .divide img{
+    height: 30px;
+    float: left;
+    left: 10px;
+    position: absolute;
+}
+section .divide p{
+    font-size: 20px;
+    font-family: "幼圆", sans-serif;
+    color: black;
+    height: 30px;
+    line-height: 30px;
+    margin: 5px 0;
+    width: 170px;
+    text-align: center;
+    /*position: absolute;*/
+}
+/*商品推送*/
+.intro .banner{
+    width: 100%;
+    height: 50px;
+    /*background: #50bcb8;*/
+}
+.intro *{
+	margin:0;
+	padding:0;
+}
+a{
+	text-decoration:none;
+	color:black;
+}
+.intro hr{
+    width:99%;
+    color:lightblue;
+}
+.intro .banner li{
+	border-left:1px solid;
+	list-style-type:none;
+	width:200px;
+	height:50px;
+	text-align:center;
+    line-height:50px;
+    /*background:#50bcb8;*/
+	font-size:20px;
+	color:black;
+	font-family : arial, "Hiragino Sans GB", "Microsoft Yahei", "微软雅黑", "宋体", Tahoma, Arial, Helvetica, STHeiti, sans-serif;
+}
+/*.intro.banner >ul>li>ul{
+	position:absolute;
+	display:none;
+}*/
+div ul ul{
+	position:absolute;
+	display:none;
+}
+.banner >ul>li:hover {
+	display:block;
+	background:purple;
+}
+
+.banner ul li{
+	float:left;
+}
+.intro h1{
+	font-weight:bold;
+	text-align:center;
+	line-height:70px;
+}
+.intro pre{
+	text-indent:1em;
+	letter-spacing:2px;
+	margin:20px 35px;
+	padding:10px;
+	font-size:15px;
+	white-space:pre-wrap;
+}
+/*.li1:hover.li2{
+	width:100%;
+	height:0;
+}*/
+
+.intro .banner span{
+    margin-left: 30px;
+    font-size: 25px;
+    font-family : arial, "Hiragino Sans GB", "Microsoft Yahei", "微软雅黑", "宋体", Tahoma, Arial, Helvetica, STHeiti, sans-serif;
+    color: white;
+    height: 50px;
+    line-height: 50px;
+}
+.intro .intro-product{
+    width: 100%;
+    height: 360px;
+}
+.intro .intro-product .ad-pic{
+    width: 380px;
+    height: 350px;
+    margin: 10px 0 0 10px ;
+    float: left;
+    position: relative;
+}
+.intro .intro-product .ad-pic img{
+    position: absolute;
+}
+.intro .intro-product .ad-pic span{
+    text-align: center;
+    height: 40px;
+    line-height: 40px;
+    width: 100%;
+    background: rgba(0,0,0,0.5);
+    bottom: 2px;
+    position: absolute;
+    color: white;
+    font-size: 25px;
+}
+.intro .intro-product .pro-introduction{
+    height: 350px;
+    width: 180px;
+    background: lightgoldenrodyellow;
+    float: left;
+    margin: 10px 0 0 10px;
+    /*text-align: center;*/
+    padding: 0 5px;
+}
+.intro .intro-product .pro-introduction p{
+    margin: 10px 0;
+    font-family: arial, "Hiragino Sans GB", "Microsoft Yahei", "微软雅黑", "宋体", Tahoma, Arial, Helvetica, STHeiti, sans-serif;
+    font-size: 16px;
+    color: rgba(0,0,0,0.5);
+}
+.intro .intro-product .pro-introduction span{
+    width: 100%;
+    font-family: arial, "Hiragino Sans GB", "Microsoft Yahei", "微软雅黑", "宋体", Tahoma, Arial, Helvetica, STHeiti, sans-serif;
+    font-size: 16px;
+    color: rgba(0,0,0,0.6);
+    height: 40px;
+    line-height: 40px;
+}
+.intro .intro-product .seller-introduction{
+    width: 300px;
+    height: 350px;
+    margin: 10px 0 0 10px;
+    float: left;
+}
+.intro .intro-product .seller-introduction{
+    width: 300px;
+    height: 350px;
+    background: lightgoldenrodyellow;
+}
+.intro .intro-product .seller-introduction ul{
+    margin-top: 20px;
+}
+.intro .intro-product .seller-introduction ul li{
+    background: lightgoldenrodyellow;
+    list-style: none;
+    width: 270px;
+    margin: 15px 0 0 8px;
+    font-size: 20px;
+    color: #444444;
+    height: 35px;
+    line-height: 35px;
+    border-bottom: #cccccc solid 1px;
+
+}
+.intro .intro-product .seller-introduction ul li a{
+    text-decoration: none;
+    color: #444444;
+}
+.intro .intro-product .seller-introduction ul .do-buy{
+    margin-top: 50px;
+}
+.intro .intro-product .seller-introduction ul li .i-do{
+    font-size: 15px;
+    background: url("../ad-img/i-do.png") 10px no-repeat;
+    background-size: 30px;
+    width: 30%;
+    display: inline-block;
+    text-align: right;
+    margin-left: 10%;
+}
+.intro .intro-product .seller-introduction ul li .i-buy{
+    font-size: 15px;
+    background: url("../ad-img/i-buy.png") 10px no-repeat;
+    background-size: 30px;
+    width: 30%;
+    display: inline-block;
+    text-align: right;
+}
+.intro .intro-product .seller-introduction ul li .price{
+    color : chocolate;
+}
+.intro .intro-product .baidu-map {
+    margin-top: 10px;
+    margin-left: 10px;
+    width: 350px;
+    height: 350px;
+    background: #9ce0fe;
+    float: left;
+}
+/*产品介绍*/
+.intro .details{
+    margin-top: 20px;
+    width: 94%;
+    background: lightgoldenrodyellow;
+    color: #333333;
+    font-family: "幼圆", sans-serif;
+    font-size: 16px;
+    padding: 10px 20px 5px 20px;
+    line-height: 30px;
+	margin:35px 25px 5px 15px;
+}
+.intro .details li{
+    width:100%;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border-bottom: 3px
+    #ebebeb solid;
+}
+.intro .details li a{
+    font-size: 22px;
+    font-weight:bold;
+    color: black;
+}
+/*页脚*/
+footer{
+    margin-top: 10px;
+    height: 170px;
+    width: 100%;
+    background:linear-gradient(90deg,#66FF99 19%,#66FFCC 58%,#66FFFF 100%);
+    clear: both;
+}
+footer #address{
+    float: left;
+    margin-left : 30px;
+    margin-top: 40px;
+    height: 120px;
+    font-size: 15px;
+    font-family: "方正姚体", sans-serif;
+    line-height: 20px;
+    color: #333333;
+}
+footer #address p span{
+    font-size: 12px;
+    color: rgba(0,0,0,0.2);
+}
+footer #poster{
+    float: left;
+    margin-left : 80px;
+    margin-top: 30px;
+}
+footer #poster a{
+    text-decoration: none;
+    font-size: 16px;
+    color: black;
+}
+footer #return-top{
+    float: right;
+    margin-right : 30px;
+    background: chocolate;
+    width: 120px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+}
+footer #return-top a{
+    text-decoration: none;
+    color: white;
+    width: 120px;
+    height: 50px;
+}
+footer #return-top a span{
+    margin: 5px 0 0 5px;
+    float: left;
+}
+footer #return-top img{
+    padding: 15px 0 0 10px;
+    float: left;
+}

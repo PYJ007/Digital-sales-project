@@ -1,0 +1,295 @@
+*{
+    margin: 0 auto;
+    padding: 0;
+}
+/*顶部logo区*/
+#top-logo{
+    width: 100%;
+    height: 70px;
+}
+#top-logo .logo{
+    margin-left: 0;
+    height: 70px;
+    /*background: #50bcb8;*/
+    width: 25%;
+    float: left;
+}
+#top-logo .logo img,b{
+    float: left;
+    height: 70px;
+    /*margin: 5px auto 5px 10px;*/
+}
+#top-logo .logo b{
+    float: left;
+    text-align: center;
+    line-height: 70px;
+    color: #333333;
+    font-family: 幼圆, serif;
+    font-weight: bold;
+    font-size: 26px;
+    margin-left: 5px;
+}
+/*头部右侧导航区*/
+#top-logo .nav_span{
+    width: 20%;
+    float: right;
+}
+#top-logo .nav_span #nav-list{
+    width: 100%;
+    line-height: 16px;
+    font-family: tahoma,arial,sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+}
+#top-logo .nav_span .nav{
+    float: left;
+    height: 16px;
+    display: inline;
+    padding: 0 10px ;
+    margin: 10px 0;
+    border-left : 1px gray solid;
+    color: gray;
+}
+/*注册导航区*/
+#top-logo .nav_span .nav.first{
+    border-left: none;
+}
+#top-logo .nav_span #nav-list a{
+    text-decoration: none;
+    color: gray;
+}
+
+/*划分线的统一样式*/
+section .divide{
+    margin: 0 auto 10px auto;
+    width: 100%;
+    height: 30px;
+    position: relative;
+}
+section .divide hr{
+    width:80%;
+    margin:0 auto;
+    bottom: 12px;
+    left: 150px;
+    border: 0;
+    height: 1px;
+    background: #333 linear-gradient(to right, rgb(149,252,166), rgb(0,208,212), rgb(123,242,171));
+    position: absolute;
+}
+section .divide img{
+    height: 30px;
+    float: left;
+    left: 10px;
+    position: absolute;
+}
+section .divide p{
+    font-size: 20px;
+    font-family: "幼圆", sans-serif;
+    color: black;
+    height: 30px;
+    line-height: 30px;
+    margin: 5px 0;
+    width: 170px;
+    text-align: center;
+    /*position: absolute;*/
+}
+/*商品推送区*/
+li{
+    list-style: none;
+}
+#ad-products #ad-nav{
+    width: 100%;
+    height: 50px;
+    text-align: center;
+    background: #50bcb8;
+}
+#ad-products #ad-nav li{
+    display: inline-block;
+    height: 50px;
+    line-height: 50px;
+    width: 100px;
+    border-left: #9ce0fe solid 1px;
+    margin: 0;
+}
+#ad-products #ad-nav li.first{
+    border-left: none;
+}
+#ad-products #ad-nav li.active{
+    border-bottom: chocolate solid 2px ;
+}
+#ad-products #ad-nav li.active a{
+    color: chocolate;
+}
+#ad-products #ad-nav li a{
+    text-decoration: none;
+    font-size: 22px;
+    color: white;
+}
+#ad-products #ad-nav li a:hover{
+    color: chocolate;
+}
+#ad-products .dd02{
+    width: 100%;
+    height: 800px;
+}
+#ad-products .dd02 .ad-hot{
+    width: 60%;
+    height: 310px;
+    float: left;
+    margin-left: 5px;
+    margin-top: 5px;
+}
+#ad-products .dd02 .ad-hot ul,#ad-products .dd02 .ad-hot ul li,#ad-products .dd02 .ad-hot .ad-hot-pic{
+    width: 380px;
+    height: 300px;
+    float: left;
+    position: relative;
+}
+#ad-products .dd02 .ad-hot .ad-hot-pic img{
+     width: 380px;
+     height: 300px;
+    position: absolute;
+ }
+#ad-products .dd02 .ad-hot .ad-hot-pic span{
+    height: 35px;
+    line-height: 35px;
+    background: rgba(0,0,0,0.5);
+    font-size: 22px;
+    color: white;
+    bottom: 5px;
+    position: absolute;
+    width: 100%;
+    text-align: center;
+}
+.ad-hot-banner{
+    width: 360px;
+    height: 300px;
+    float: right;
+}
+/*为所有标题做统一样式*/
+.text-line{
+    border-bottom: #0d6c6e 1px solid;
+    width: 80%;
+    margin: 0;
+    font-size: 20px;
+    color: #0d6c6e;
+    height: 40px;
+    line-height: 40px;
+    font-family: arial, "Hiragino Sans GB", "Microsoft Yahei", "微软雅黑", "宋体", Tahoma, Arial, Helvetica, STHeiti, sans-serif;
+    font-weight: 700;
+    display: block;
+}
+/*为选择地区做统一样式*/
+#ad-products .dd02 .seeds .location-filter{
+    width: 100%;
+    height: 20px;
+}
+#ad-products .dd02 .seeds .location-filter a{
+    height: 18px;
+    background: #0d6c6e url("../ad-img/arrow-down.png") 60px 9px no-repeat;
+    float: right;
+    margin-right: 20%;
+    font-size: 12px;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    padding: 2px 20px 2px 6px;
+}
+#ad-products .dd02 .ad-hot-banner ul{
+    width: 100%;
+    overflow: hidden;
+    height: 259px;
+}
+#ad-products .dd02  .ad-hot-li{
+    height: 30px;
+    margin-top: 10px;
+    list-style: square;
+    margin-left: 20px;
+}
+#ad-products .dd02 .ad-hot-banner .ad-hot-li{
+    width: 340px;
+    height: 30px;
+}
+#ad-products .dd02 .ad-hot-banner .ad-hot-li.active a{
+    color: chocolate;
+    font-weight: 500;
+}
+#ad-products .dd02  .ad-hot-li a:hover{
+    color: chocolate;
+}
+#ad-products .dd02  .ad-hot-li a{
+    text-decoration: none;
+    font-family: arial, "Hiragino Sans GB", "Microsoft Yahei", "微软雅黑", "宋体", Tahoma, Arial, Helvetica, STHeiti, sans-serif;
+    color: black;
+}
+#ad-products .dd02 .ad-new{
+    width: 35%;
+    height: 310px;
+    float: left;
+    margin-left: 20px;
+    margin-top: 5px;
+}
+#ad-products .dd02 .seeds{
+    width: 32%;
+    height: 320px;
+    float: left;
+}
+#ad-products .dd02 .seeds.first{
+    margin-left: 3%;
+}
+
+/*页脚*/
+footer{
+    margin-top: 10px;
+    height: 170px;
+    width: 100%;
+    background:linear-gradient(90deg,#66FF99 19%,#66FFCC 58%,#66FFFF 100%);
+    clear: both;
+}
+footer #address{
+    float: left;
+    margin-left : 30px;
+    margin-top: 40px;
+    height: 120px;
+    font-size: 15px;
+    font-family: "方正姚体", sans-serif;
+    line-height: 20px;
+    color: #333333;
+}
+footer #address p span{
+    font-size: 12px;
+    color: rgba(0,0,0,0.2);
+}
+footer #poster{
+    float: left;
+    margin-left : 80px;
+    margin-top: 30px;
+}
+footer #poster a{
+    text-decoration: none;
+    font-size: 16px;
+    color: black;
+}
+footer #return-top{
+    float: right;
+    margin-right : 30px;
+    background: chocolate;
+    width: 120px;
+    height: 50px;
+    text-align: center;
+    line-height: 50px;
+}
+footer #return-top a{
+    text-decoration: none;
+    color: white;
+    width: 120px;
+    height: 50px;
+}
+footer #return-top a span{
+    margin: 5px 0 0 5px;
+    float: left;
+}
+footer #return-top img{
+    padding: 15px 0 0 10px;
+    float: left;
+}

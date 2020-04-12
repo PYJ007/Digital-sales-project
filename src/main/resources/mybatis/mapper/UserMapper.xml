@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dajun.springbootplatform.repository.userRepository">
+<!--    原本对象应该是com.dajun.springboot.entities.User,因为都是指向一个实例类，可以提出来-->
+    <select id="findAll" resultType="User">
+        select * from user
+    </select>
+
+    <select id="findByAccount" parameterType="java.lang.String" resultType="User">
+        select * from user where user_name=#{account}
+    </select>
+
+    <insert id="save" parameterType="User" >
+        insert into user(user_name,user_pass,user_phone,user_card,user_fieldadress,user_fieldacres,field_id)
+        values (#{user_name},#{user_pass},#{user_phone},#{user_card},#{user_fieldadress},#{user_fieldacres},#{field_id})
+    </insert>
+
+    <update id="upDate" parameterType="User">
+        update user set user_name=#{user_name},user_card=#{user_card},user_pass=#{user_pass},user_phone=#{user_phone},
+                        user_fieldacres=#{user_fieldacres},user_fieldadress=#{user_fieldadress} where user_id=#{user_id}
+    </update>
+
+    <delete id="deleteById" parameterType="java.lang.Long">
+        delete from user where user_id=#{id}
+    </delete>
+</mapper>

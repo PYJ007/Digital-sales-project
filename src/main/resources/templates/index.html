@@ -1,0 +1,464 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org">
+<link rel="shortcut icon" type="image/x-icon" href="img/ari-logo.png"/>
+<head>
+    <meta charset="UTF-8">
+    <title>一体化智能农业平台</title>
+    <link rel="stylesheet" type="text/css" href="CSS/my-css.css">
+    <script type="text/javascript" src="JS/my-js.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</head>
+<body>
+<!-- 首先设置导航栏 -->
+<div id="top-logo">
+    <div class="logo">
+        <img src="img/ari-logo.png" alt="加载失败">
+        <b>农业一体化智能平台</b>
+    </div>
+    <div class="nav_span">
+        <ul id="nav-list">
+            <li th:style="${session.userName==null}?'display:block;':'display:none;'" class="nav first">请&nbsp;<a href="\login" style="color: chocolate">登陆</a>&nbsp;或&nbsp;<a href="#" style="color: chocolate">注册</a></li>
+            <li th:style="${session.userName==null}?'display:none;':'display:block;'" class="nav first" ><span>欢迎您&nbsp;</span><span style="color: chocolate" th:text="${session.userName}"></span></li>
+            <li class="nav"><a href="#">收藏</a></li>
+            <li class="nav"><a href="#">消息&nbsp;</a><span th:if="${not #strings.isEmpty(session.userMsg)}" th:text="${session.userMsg}" class="badge badge-info"></span></li>
+            <li class="nav end"><a href="#">反馈</a></li>
+        </ul>
+    </div>
+</div>
+<header>
+    <div class="navigation">
+        <ul id="first-nav-list">
+            <li class="first-nav first"><a href="#">首页</a></li>
+            <li class="first-nav"><a href="#">个人中心</a></li>
+            <li class="first-nav"><a href="#">我的田</a></li>
+            <li class="first-nav end"><a href="信息推送.html">智能推荐</a></li>
+        </ul>
+    </div>
+<!--    学姐那copy的搜索框-->
+    <form class="navbar-form navbar-left" role="search">
+        <div class="form-group">
+            <label>
+                <input type="text" class="form-control">
+            </label>
+        </div>
+        <button type="submit" class="btn btn-default">搜索</button>
+    </form>
+</header>
+<!--滚动展板区-->
+<section id="banner-section">
+    <div id="pic">
+        <ul class="banner">
+            <li id="banner1" class="li-banner"><a href="#"><div></div></a></li>
+            <li id="banner2" class="li-banner"><a href="#"><div></div></a></li>
+            <li id="banner3" class="li-banner"><a href="#"><div></div></a></li>
+        </ul>
+    </div>
+    <ul id="button">
+        <li id="button1" class="li-button"><a href="#"><div></div></a></li>
+        <li id="button2" class="li-button"><a href="#"><div></div></a></li>
+        <li id="button3" class="li-button"><a href="#"><div></div></a></li>
+    </ul>
+</section>
+<!--小工具栏-->
+<section id="tools-section">
+    <div class="divide1">
+        <img src="img/tool-icon.png" alt="">
+        <p>实用功能</p>
+        <hr/>
+    </div>
+    <ul id="function">
+        <li class="tools" id="nutrition"><a href="#"><img src="img/nutrition.png" alt=""><br/>营养诊断</a></li>
+        <li class="tools" id="paddy"><a href="#"><img src="img/paddy1.png" alt=""><br/>水稻病害诊断</a></li>
+        <li class="tools" id="knowledge"><a href="#"><img src="img/knowledge.png" alt=""><br/>知识检索</a></li>
+        <li class="tools" id="question-platform"><a href="#"><img src="img/question.png" alt=""><br/>智能问答</a></li>
+        <li class="tools" id="evaluate-margin"><a href="#"><img src="img/margin.png" alt=""><br/>效益估算</a></li>
+        <li class="tools" id="profession"><a href="#"><img src="img/zhuanjia1.png" alt=""><br/>专家答疑</a></li>
+        <li class="tools" id="trade-platform"><a href="#"><img src="img/trade.png" alt=""><br/>交易大厅</a></li>
+        <li class="tools" id="ai-recommendation"><a href="#"><img src="img/rec.png" alt=""><br/>智能推荐</a></li>
+    </ul>
+</section>
+<!--消息区-->
+<section id="advertise">
+    <div class="divide2">
+        <img src="img/tool-icon.png" alt="">
+        <p>产品热点与最新信息</p>
+        <hr/>
+    </div>
+    <div id="ad-banner">
+        <ul class=ad-all>
+            <li class="ad-li"><a href="">种子</a></li>   
+            <li class="ad-li"><a href="">化肥</a></li>
+            <li class="ad-li"><a href="">农药</a></li>
+        </ul>
+    </div >
+   
+    <ul class="ad-content">
+        <li class="ad-p"><a href=""><img src="img2/fu_yuan.jfif" alt=""><br/>富源四号</a>></li>
+        <li class="ad-p"><a href=""><img src="img2/fu_yuan.jfif" alt=""><br/>富源四号</a>></li>
+        <li class="ad-p"><a href=""><img src="img2/fu_yuan.jfif" alt=""><br/>富源四号</a>></li>
+        <li class="ad-p"><a href=""><span>更多<br/>>></span></a></li>
+        <!--li class="ad-p"><img src="img2/fu_yuan.jfif" alt=""></li>
+        <li class="ad-p"><img src="img2/fu_yuan.jfif" alt=""></li-->
+        
+    </ul>
+    <fieldset>
+        <legend>产品新讯</legend>
+        <div class="head" title="最新消息">近日最新:
+            <ul class="newslist">
+                <li>
+                    <a href="#" target="_blank">            牧草新品种选育助推我国寒旱区牧草产业发展
+                    </a>
+                </li>
+                <li>
+                    <a href="#" target="_blank">            棉花所开放棉花资源和基因数据共享
+                    </a>
+                </li>
+                <li>
+                    <a href="#" target="_blank">            中单111和中单6323实现高质量籽粒直接收获
+                    </a>
+                </li>
+                <li>
+                    <a href="#" target="_blank">            牧草新品种选育助推我国寒旱区牧草产业发展
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </fieldset>
+</section>
+<!--推送区-->
+<section id="mess-ad">
+    <div class="divide3">
+        <img src="img/tool-icon.png" alt="">
+        <p>智能推送</p>
+        <hr/>
+    </div>
+    <div class="tabArticleList01" id="tab01">
+    <ul class="tabMenu01">
+        <li class="tab-tag news" onmouseover="trans(0)"><a href="javascript:void(0);">种子</a></li>
+        <li class="tab-tag" onmouseover="trans(1)"><a href="javascript:void(0);">农时</a></li>
+        <li class="tab-tag" onmouseover="trans(2)"><a href="javascript:void(0);">农资</a></li>
+        <li class="tab-tag" onmouseover="trans(3)"><a href="javascript:void(0);">农技</a></li>
+        <li class="tab-tag" onmouseover="trans(4)"><a href="javascript:void(0);">政策</a></li>
+        <!--li class="tab-tag" onmouseover="trans(5)"><a href="javascript:void(0);">党政工作</a></li>
+        <li class="tab-tag" onmouseover="trans(6)"><a href="javascript:void(0);">专家观点</a></li>
+        <li class="tab-tag active" onmouseover="trans(7)"><a href="javascript:void(0);">媒体报道</a></li-->
+    </ul>
+    <dl class="tabList01">
+<!--        第一模块-->
+        <dd class="dd01" id="dd0" style="display: none;">
+            <ul class="ddList00">
+                <li>
+                    <span>02-12</span>
+                    <!--<strong><a href="xwzx/mtbd/loginTest.html" target="_blank">【媒体报道】</a></strong>-->
+                    <a href="#" target="_blank">            [Xinhua]China launches comprehensive d...
+                    </a>
+                </li>
+                <li>
+                    <span>02-12</span>
+                    <!--<strong><a href="xwzx/dzdt/loginTest.html" target="_blank">【党政工作】</a></strong>-->
+                    <a href="#" target="_blank">            勇挑重担 默默奉献 普通党员奋战在疫情防控第一线
+                    </a>
+                </li>
+                <li>
+                    <span>02-11</span>
+                    <!--<strong><a href="xwzx/mtbd/loginTest.html" target="_blank">【媒体报道】</a></strong>-->
+                    <a href="#" target="_blank">            [中国科学报]首个园艺类作物全基因组变异数据库发布
+                    </a>
+                </li>
+                <li>
+                    <span>02-10</span>
+                    <!--<strong><a href="xwzx/dzdt/loginTest.html" target="_blank">【党政工作】</a></strong>-->
+                    <a href="#" target="_blank">            新乡基地强化“六个到位”夯实疫情联防联控
+                    </a>
+                </li>
+                <li>
+                    <span>02-10</span>
+                    <!--<strong><a href="xwzx/dzdt/loginTest.html" target="_blank">【党政工作】</a></strong>-->
+                    <a href="#" target="_blank">            水稻所试验农场党员干部投身疫情防控第一线
+                    </a>
+                </li>
+                <li>
+                    <span>02-10</span>
+                    <!--<strong><a href="xwzx/mtbd/loginTest.html" target="_blank">【媒体报道】</a></strong>-->
+                    <a href="#" target="_blank">            [中国农村网]疫情防控责任重于泰山 南繁科研任务分秒必争
+                    </a>
+                </li>
+                <li>
+                    <span>02-10</span>
+                    <!--<strong><a href="xwzx/mtbd/loginTest.html" target="_blank">【媒体报道】</a></strong>-->
+                    <a href="#" target="_blank">            [农民日报]陈秧分：农业战“疫”，主动作为
+                    </a>
+                </li>
+                <li>
+                    <span>02-10</span>
+                    <!--<strong><a href="xwzx/mtbd/loginTest.html" target="_blank">【媒体报道】</a></strong>-->
+                    <a href="#" target="_blank">            [中国妇女报]中国农业科学院：党旗飘扬在疫情防控一线
+                    </a>
+                </li>
+                <li>
+                    <span>02-10</span>
+                    <!--<strong><a href="xwzx/mtbd/loginTest.html" target="_blank">【媒体报道】</a></strong>-->
+                    <a href="#" target="_blank">            [中国妇女报]李楠：奋战在疫情防控一线的普通党员
+                    </a>
+                </li>
+                <li>
+                    <span>02-10</span>
+                    <!--<strong><a href="xwzx/mtbd/loginTest.html" target="_blank">【媒体报道】</a></strong>-->
+                    <a href="#" target="_blank">            [光明日报]防止疫情蔓延 如何补上农村环境这块“短板”
+                    </a>
+                </li>
+            </ul>
+        </dd>
+<!--        第二模块-->
+        <dd class="dd01" id="dd1" style="display: none;">
+
+            <ul class="ddList00">
+                <li>
+                    <span>01-22</span>
+                    <a href="#" target="_blank">            沼液资源化利用可降低秸秆燃料乙醇成本5%-10%
+                    </a>
+                </li>
+                <li>
+                    <span>01-17</span>
+                    <a href="#" target="_blank">            牧草新品种选育助推我国寒旱区牧草产业发展
+                    </a>
+                </li>
+                <li>
+                    <span>01-02</span>
+                    <a href="#" target="_blank">            棉花所开放棉花资源和基因数据共享
+                    </a>
+                </li>
+                <li>
+                    <span>12-31</span>
+                    <a href="#" target="_blank">            中单111和中单6323实现高质量籽粒直接收获
+                    </a>
+                </li>
+                <li>
+                    <span>12-25</span>
+                    <a href="#" target="_blank">            特产所成为吉林省科普工作示范基地
+                    </a>
+                </li>
+                <li>
+                    <span>12-24</span>
+                    <a href="#" target="_blank">            《中国棉花栽培学》（2019版）出版发行
+                    </a>
+                </li>
+                <li>
+                    <span>12-23</span>
+                    <a href="#" target="_blank">            庐山云雾茶3个专用品种通过部品种登记
+                    </a>
+                </li>
+                <li>
+                    <span>12-20</span>
+                    <a href="#" target="_blank">            研究揭示熊蜂蜂王重要生命阶段的肠道微生物动态变化
+                    </a>
+                </li>
+                <li>
+                    <span>12-20</span>
+                    <a href="#" target="_blank">            白肋烟缺绿性状形成基因被克隆
+                    </a>
+                </li>
+                <li>
+                    <span>12-20</span>
+                    <a href="#" target="_blank">            基因编辑技术可减缓作物群体多样性降低趋势
+                    </a>
+                </li>
+            </ul>
+        </dd>
+<!--        第三模块-->
+        <dd class="dd01" id="dd2" style="display: none;">
+            <ul class="ddList00">
+                <li>
+                    <span>02-07</span>
+                    <a href="#" target="_blank">            以“读”攻毒 海量资源免费用
+                    </a>
+                </li>
+                <li>
+                    <span>01-21</span>
+                    <a href="#" target="_blank">            植保所专家说鼠讲科普
+                    </a>
+                </li>
+                <li>
+                    <span>12-20</span>
+                    <a href="#" target="_blank">            “狐联网”平台实现毛皮动物产业研学产互联
+                    </a>
+                </li>
+                <li>
+                    <span>12-20</span>
+                    <a href="#" target="_blank">            中国农业经济学者研讨学术前沿问题
+                    </a>
+                </li>
+                <li>
+                    <span>12-18</span>
+                    <a href="#" target="_blank">            饲料所构建融合发展产业链推动绿色养殖
+                    </a>
+                </li>
+                <li>
+                    <span>12-16</span>
+                    <a href="#" target="_blank">            茶学青年科学家汇聚深圳交流科研进展
+                    </a>
+                </li>
+                <li>
+                    <span>12-05</span>
+                    <a href="#" target="_blank">            烟草所谋划蓝色海洋助力绿色农业发展
+                    </a>
+                </li>
+                <li>
+                    <span>12-04</span>
+                    <a href="#" target="_blank">            质标所创新政策研究推动有机农业发展
+                    </a>
+                </li>
+                <li>
+                    <span>12-04</span>
+                    <a href="#" target="_blank">            2019现代种业权益改革与农业知识产权研修班在深圳举办
+                    </a>
+                </li>
+                <li>
+                    <span>11-28</span>
+                    <a href="#" target="_blank">            “全国草食动物健康生产科技创新联盟”成立
+                    </a>
+                </li>
+            </ul>
+        </dd>
+<!--        第四模块-->
+        <dd class="dd01" id="dd3" style="display: none;">
+            <ul class="ddList00">
+                <li>
+                    <span>01-03</span>
+                    <a href="xwzx/rcjy/300224.html" target="_blank">            茶叶所白堃元被评为部离退休干部先进个人
+                    </a>
+                </li>
+                <li>
+                    <span>01-02</span>
+                    <a href="xwzx/rcjy/300209.html" target="_blank">            牧医所崔尚金被聘为全国动物疫病专家委员会委员
+                    </a>
+                </li>
+                <li>
+                    <span>12-25</span>
+                    <a href="xwzx/rcjy/300127.html" target="_blank">            中国农科院考点2020年硕士生入学考试顺利结束
+                    </a>
+                </li>
+                <li>
+                    <span>12-24</span>
+                    <a href="xwzx/rcjy/300070.html" target="_blank">            烟草所“海洋农业”青年突击队被评为青岛市先进青年集体
+                    </a>
+                </li>
+                <li>
+                    <span>12-23</span>
+                    <a href="xwzx/rcjy/300039.html" target="_blank">            植保所陆宴辉当选中国青年科技工作者协会副会长
+                    </a>
+                </li>
+                <li>
+                    <span>12-23</span>
+                    <a href="xwzx/rcjy/300030.html" target="_blank">            研究生院首次独立组织全国大学英语四、六级考试
+                    </a>
+                </li>
+                <li>
+                    <span>12-18</span>
+                    <a href="xwzx/rcjy/299943.html" target="_blank">            研究生院举办“新时代 中国梦”知识竞赛活动
+                    </a>
+                </li>
+                <li>
+                    <span>12-18</span>
+                    <a href="xwzx/rcjy/299939.html" target="_blank">            研究生院在中国研究生数学建模竞赛中取得佳绩
+                    </a>
+                </li>
+                <li>
+                    <span>11-21</span>
+                    <a href="xwzx/rcjy/299536.html" target="_blank">            加强全院学习培训 助力离退休工作落实
+                    </a>
+                </li>
+                <li>
+                    <span>11-20</span>
+                    <a href="xwzx/rcjy/299492.html" target="_blank">            茶叶所举办首期茶园植保专项职业能力培训
+                    </a>
+                </li>
+            </ul>
+        </dd>
+<!--        第五模块-->
+        <dd class="dd01" id="dd4" style="display: block;">
+
+            <ul class="ddList00">
+                <li>
+                    <span>01-22</span>
+                    <a href="xwzx/hzjl/gnhz/300379.html" target="_blank">            果树所与蒲县人民政府签订技术合作协议
+                    </a>
+                </li>
+                <li>
+                    <span>01-15</span>
+                    <a href="xwzx/hzjl/gnhz/300312.html" target="_blank">            牧医所与青岛农业大学深化动物科学领域合作
+                    </a>
+                </li>
+                <li>
+                    <span>01-07</span>
+                    <a href="xwzx/hzjl/gnhz/300247.html" target="_blank">            国审小麦新品种中麦30实现成果转化
+                    </a>
+                </li>
+                <li>
+                    <span>01-06</span>
+                    <a href="xwzx/hzjl/gnhz/300229.html" target="_blank">            资源区划所与呼伦贝尔市深化科技交流合作
+                    </a>
+                </li>
+                <li>
+                    <span>12-30</span>
+                    <a href="xwzx/hzjl/gjhz/300171.html" target="_blank">            草原所引进高端人才增强草业学科建设
+                    </a>
+                </li>
+                <li>
+                    <span>12-27</span>
+                    <a href="xwzx/hzjl/gjhz/300164.html" target="_blank">            作科所专家团赴巴基斯坦执行科技合作交流任务
+                    </a>
+                </li>
+                <li>
+                    <span>12-26</span>
+                    <a href="xwzx/hzjl/gnhz/300137.html" target="_blank">            植保所全面深化与四川省农科院植保所战略合作
+                    </a>
+                </li>
+                <li>
+                    <span>12-23</span>
+                    <a href="xwzx/hzjl/gnhz/300033.html" target="_blank">            作科所加强与牡丹江市农业科技合作
+                    </a>
+                </li>
+                <li>
+                    <span>12-20</span>
+                    <a href="xwzx/hzjl/gjhz/300009.html" target="_blank">            “棉花外交”战略初见成效
+                    </a>
+                </li>
+                <li>
+                    <span>12-18</span>
+                    <a href="xwzx/hzjl/gnhz/299931.html" target="_blank">            成都中心与中国电信合作共同推进智慧园区信息化建设
+                    </a>
+                </li>
+            </ul>
+        </dd>
+    </dl>
+</div>
+</section>
+<!--页脚-->
+<footer>
+    <div id="address">
+        <p>
+            COPYRIGHT©大数据集成与可视化团队<br/><br/>
+            联系邮箱110@nun.edu.cn<br/><br/>
+            建议使用chrome，firefox或者IE&nbsp;11以上浏览器
+            <span><br/>技术支持 : c</span>
+        </p>
+    </div>
+    <div id="poster">
+        <a href="#">
+        <img src="img/data-logo.png" alt="" style="width: 160px;height: 120px">
+            <p style="float: right;padding: 10px 0 0 10px">&nbsp;大<br/>&nbsp;数<br/>&nbsp;据<br/>&nbsp;团<br/>&nbsp;队<br/></p>
+        </a>
+    </div>
+    <div id="return-top">
+        <a href="#">
+            <img src="img/jiantou.png" alt="">
+            <span>返回顶部</span>
+        </a>
+    </div>
+</footer>
+</body>
+</html>
