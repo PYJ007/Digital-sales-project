@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dajun.springbootplatform.repository.collectionProductRepository">
+    <select id="findSeed" parameterType="java.lang.String" resultType="Seed">
+        select * from seed where seed_id in (select product_id from collection13259680250 where product_type=1);
+    </select>
+    <select id="findFertilizer" parameterType="java.lang.String" resultType="Fertilizer">
+        select * from fertilizer where fertilizer_id in (select product_id from collection13259680250 where product_type=3);
+    </select>
+</mapper>
+

@@ -5,7 +5,7 @@
 body, html { height:100%; overflow:hidden; }
 body {
     background-image: url("../images/background-pic.jpg"),linear-gradient(180deg,#0260ac,#3992e0 32%,#9ce0fe 60%,#eff9fd 70%);
-    background-size: 100%;
+    background-size: 1280px;
 }
 a {
     color:#1a437e;

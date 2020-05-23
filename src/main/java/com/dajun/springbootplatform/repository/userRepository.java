@@ -7,9 +7,10 @@ import java.util.List;
 
 @Component
 public interface userRepository{
-    public List<User> findAll();
-    public User findByAccount(String account);
-    public void save(User user);
-    public void deleteById(long id);
-    public void upDate(User user);
+    List<User> findAll();
+    User findByAccount(String account);
+    void save(User user);
+    void deleteById(long id);
+    void upDate(User user);
+    String findName(String phone);
 }

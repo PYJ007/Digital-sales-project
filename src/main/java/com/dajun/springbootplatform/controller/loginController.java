@@ -1,9 +1,7 @@
 package com.dajun.springbootplatform.controller;
 
 import com.dajun.springbootplatform.entities.User;
-import com.dajun.springbootplatform.repository.userRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -13,7 +11,6 @@ public class loginController {
 
     @Autowired
     private com.dajun.springbootplatform.repository.userRepository userRepository;
-
 
 //    测试内容
     @GetMapping("/findAll")

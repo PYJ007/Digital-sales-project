@@ -1,0 +1,110 @@
+*{
+    margin: 0 auto;
+    padding: 0;
+}
+/*顶部logo区*/
+#top-logo{
+    width: 100%;
+    height: 70px;
+}
+#top-logo .logo{
+    margin-left: 0;
+    height: 70px;
+    /*background: #50bcb8;*/
+    width: 25%;
+    float: left;
+}
+#top-logo .logo img,b{
+    float: left;
+    height: 70px;
+    /*margin: 5px auto 5px 10px;*/
+}
+#top-logo .logo b{
+    float: left;
+    text-align: center;
+    line-height: 70px;
+    color: #333333;
+    font-family: 幼圆, serif;
+    font-weight: bold;
+    font-size: 26px;
+    margin-left: 5px;
+}
+/*头部右侧导航区*/
+#top-logo .nav_span{
+    width: 20%;
+    float: right;
+}
+#top-logo .nav_span #nav-list{
+    width: 100%;
+    line-height: 16px;
+    font-family: tahoma,arial,sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+}
+#top-logo .nav_span .nav{
+    float: left;
+    height: 16px;
+    display: inline;
+    padding: 0 10px ;
+    margin: 10px 0;
+    border-left : 1px gray solid;
+    color: gray;
+}
+/*头部右侧导航区*/
+#top-logo .nav_span{
+    width: 20%;
+    float: right;
+}
+#top-logo .nav_span #nav-list{
+    width: 100%;
+    line-height: 16px;
+    font-family: tahoma,arial,sans-serif;
+    font-size: 12px;
+    font-weight: bold;
+}
+#top-logo .nav_span .nav{
+    float: left;
+    height: 16px;
+    display: inline;
+    padding: 0 10px ;
+    margin: 10px 0;
+    border-left : 1px gray solid;
+    color: gray;
+}
+/*注册导航区*/
+#top-logo .nav_span .nav.first{
+    border-left: none;
+}
+#top-logo .nav_span #nav-list a{
+    text-decoration: none;
+    color: gray;
+}
+/*bootstrap引用的导航栏*/
+nav .collapse .navbar-nav .nav-item .nav-link{
+    font-size: 20px;
+    color: snow;
+}
+nav .collapse .navbar-nav .nav-item .nav-link:hover{
+    color: chocolate;
+}
+nav .collapse .navbar-nav .nav-item.active .nav-link{
+    color: chocolate;
+}
+/*个人中心那块*/
+.nav-item .dropdown-item:hover{
+    background: lightgreen;
+}
+.nav-item .dropdown-item.active{
+    background: lightseagreen;
+}
+/*主站*/
+.my-text-span{
+    font: 600 16px/20px Arial;
+    color: rgb(32,178,170);
+}
+/*主站左侧提醒框*/
+#remind-broader .card .list-group-item{
+    background: rgba(102,236,178,0.9);
+    font: 500 16px/20px Arial;
+}
+

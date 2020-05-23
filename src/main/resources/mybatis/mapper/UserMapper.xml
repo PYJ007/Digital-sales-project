@@ -9,7 +9,11 @@
     </select>
 
     <select id="findByAccount" parameterType="java.lang.String" resultType="User">
-        select * from user where user_name=#{account}
+        select * from user where user_phone=#{phone}
+    </select>
+
+    <select id="findName" parameterType="java.lang.String" resultType="java.lang.String">
+        select user_name from user where user_phone=#{phone}
     </select>
 
     <insert id="save" parameterType="User" >

@@ -22,46 +22,82 @@
         <ul id="nav-list">
             <li th:style="${session.userName==null}?'display:block;':'display:none;'" class="nav first">请&nbsp;<a href="\login" style="color: chocolate">登陆</a>&nbsp;或&nbsp;<a href="#" style="color: chocolate">注册</a></li>
             <li th:style="${session.userName==null}?'display:none;':'display:block;'" class="nav first" ><span>欢迎您&nbsp;</span><span style="color: chocolate" th:text="${session.userName}"></span></li>
-            <li class="nav"><a href="#">收藏</a></li>
+            <li class="nav"><a href="/collect">收藏</a></li>
             <li class="nav"><a href="#">消息&nbsp;</a><span th:if="${not #strings.isEmpty(session.userMsg)}" th:text="${session.userMsg}" class="badge badge-info"></span></li>
             <li class="nav end"><a href="#">反馈</a></li>
         </ul>
     </div>
 </div>
-<header>
-    <div class="navigation">
-        <ul id="first-nav-list">
-            <li class="first-nav first"><a href="#">首页</a></li>
-            <li class="first-nav"><a href="#">个人中心</a></li>
-            <li class="first-nav"><a href="#">我的田</a></li>
-            <li class="first-nav end"><a href="信息推送.html">智能推荐</a></li>
+<!--bootstrap引用导航栏-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background: linear-gradient(90deg,#00d0d4 19%,#00c5c3 58%,#9effa4 100%);">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto" style="margin: 0">
+            <li class="nav-item">
+                <a class="nav-link"  href="#">主页</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="collect">个人中心</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    我的田
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    智能推荐
+                </a>
+            </li>
         </ul>
+        <form class="form-inline my-2 my-lg-0" style="margin: 0">
+            <input class="form-control mr-sm-2" type="search" placeholder="搜索" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0"  type="submit">
+                <svg class="bi bi-search" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="vertical-align:revert">
+                    <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z" clip-rule="evenodd"/>
+                    <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" clip-rule="evenodd"/>
+                </svg></button>
+        </form>
     </div>
-<!--    学姐那copy的搜索框-->
-    <form class="navbar-form navbar-left" role="search">
-        <div class="form-group">
-            <label>
-                <input type="text" class="form-control">
-            </label>
-        </div>
-        <button type="submit" class="btn btn-default">搜索</button>
-    </form>
-</header>
+</nav>
 <!--滚动展板区-->
-<section id="banner-section">
-    <div id="pic">
-        <ul class="banner">
-            <li id="banner1" class="li-banner"><a href="#"><div></div></a></li>
-            <li id="banner2" class="li-banner"><a href="#"><div></div></a></li>
-            <li id="banner3" class="li-banner"><a href="#"><div></div></a></li>
-        </ul>
+<div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <li data-target="#carouselExampleCaptions" data-slide-to="0" class="active"></li>
+        <li data-target="#carouselExampleCaptions" data-slide-to="1"></li>
+        <li data-target="#carouselExampleCaptions" data-slide-to="2"></li>
+    </ol>
+    <div class="carousel-inner">
+        <div class="carousel-item active">
+            <img src="img/tmp1489123206_1223223_s.jpg"  class="d-block w-100" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>First slide label</h5>
+                <p>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="img/tmp1481097457_1223223_s.jpg" class="d-block w-100" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>Second slide label</h5>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+            </div>
+        </div>
+        <div class="carousel-item">
+            <img src="img/tmp1495703201_1223223_s.jpg" class="d-block w-100" alt="...">
+            <div class="carousel-caption d-none d-md-block">
+                <h5>Third slide label</h5>
+                <p>Praesent commodo cursus magna, vel scelerisque nisl consectetur.</p>
+            </div>
+        </div>
     </div>
-    <ul id="button">
-        <li id="button1" class="li-button"><a href="#"><div></div></a></li>
-        <li id="button2" class="li-button"><a href="#"><div></div></a></li>
-        <li id="button3" class="li-button"><a href="#"><div></div></a></li>
-    </ul>
-</section>
+    <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="sr-only">Previous</span>
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="sr-only">Next</span>
+    </a>
+</div>
 <!--小工具栏-->
 <section id="tools-section">
     <div class="divide1">

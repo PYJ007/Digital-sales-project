@@ -3,10 +3,6 @@ body {
   height: 100%;
 }
 
-#identify-background{
-  url("images/background-pic.jpg")
-}
-
 body {
   display: -ms-flexbox;
   display: -webkit-box;
