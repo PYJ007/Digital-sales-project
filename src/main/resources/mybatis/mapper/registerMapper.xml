@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dajun.springbootplatform.repository.registerRepository">
+    <insert id="saveUser" parameterType="com.dajun.springbootplatform.entities.User" >
+        insert into user(user_name,user_pass,user_phone)
+        values (#{user_name},#{user_pass},#{user_phone})
+    </insert>
+    <update id="saveCrops" parameterType="User">
+        update user set user_card=#{user_card},user_fieldadress=#{user_fieldadress},
+                        user_fieldacres=#{user_fieldacres},user_cropsname=#{user_cropsname},
+                        user_cropstype=#{user_cropstype},user_cropsacres=#{user_cropsacres}
+        where user_phone=#{user_phone}
+    </update>
+    <update id="saveCrop" parameterType="User">
+        update user set user_fieldacres=#{user_fieldacres},user_cropsname=#{user_cropsname},
+                        user_cropstype=#{user_cropstype},user_cropsacres=#{user_cropsacres}
+        where user_phone=#{user_phone}
+    </update>
+</mapper>

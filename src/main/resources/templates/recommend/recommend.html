@@ -1,0 +1,554 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>智能推荐</title>
+    <link rel="stylesheet" type="text/css" href="CSS/collection.css">
+    <script type="text/javascript" src="JS/my-js.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <link href="asserts/css/dashboard.css" rel="stylesheet">
+</head>
+<body>
+
+<!--因为本人技术限制，现在所有下拉框以及主产品展示框的唤醒都是通过id来定位的，所以请注意id命名的规范-->
+<!--下拉框：id一致-->
+<!--主界面唤醒：唤醒id=触发id + main-->
+
+
+<!--logo-->
+<div id="top-logo">
+    <div class="logo">
+        <img src="img/ari-logo.png" alt="加载失败">
+        <b>农业一体化智能平台</b>
+    </div>
+    <div class="nav_span">
+        <ul id="nav-list">
+            <li class="nav first"><span>欢迎您，</span><span style="color: chocolate">臭弟弟</span></li>
+            <li class="nav"><a href="#">收藏</a></li>
+            <li class="nav"><a href="#">消息</a></li>
+            <li class="nav end"><a href="#">反馈</a></li>
+        </ul>
+    </div>
+</div>
+
+<!--最上方导航栏-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background: linear-gradient(90deg,#00d0d4 19%,#00c5c3 58%,#9effa4 100%);">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto" style="margin: 0">
+            <li class="nav-item">
+                <a class="nav-link"  href="#">主页</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">个人中心</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    我的田
+                </a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="#">
+                    智能推荐
+                </a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0" style="margin: 0">
+            <input class="form-control mr-sm-2" type="search" placeholder="搜索" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0"  type="submit">
+                <svg class="bi bi-search" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="vertical-align:revert">
+                    <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z" clip-rule="evenodd"/>
+                    <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" clip-rule="evenodd"/>
+                </svg></button>
+        </form>
+    </div>
+</nav>
+
+<!--侧栏和主区域-->
+<div class="container-fluid">
+    <div class="row">
+        <!--左侧功能框-->
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar" style="float: left">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <!--最新推荐-->
+                    <li class="nav-item">
+                        <a class="nav-link active" id="main" onclick="show(this)" href="#">
+                            <svg width="24" height="24" viewBox="0 0 16 16" class="feather" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M8 16a2 2 0 0 0 2-2H6a2 2 0 0 0 2 2z"/>
+                                <path fill-rule="evenodd" d="M8 1.918l-.797.161A4.002 4.002 0 0 0 4 6c0 .628-.134 2.197-.459 3.742-.16.767-.376 1.566-.663 2.258h10.244c-.287-.692-.502-1.49-.663-2.258C12.134 8.197 12 6.628 12 6a4.002 4.002 0 0 0-3.203-3.92L8 1.917zM14.22 12c.223.447.481.801.78 1H1c.299-.199.557-.553.78-1C2.68 10.2 3 6.88 3 6c0-2.42 1.72-4.44 4.005-4.901a1 1 0 1 1 1.99 0A5.002 5.002 0 0 1 13 6c0 .88.32 4.2 1.22 6z"/>
+                            </svg>
+                            最新推荐
+                        </a>
+                    </li>
+                    <!--热点分析-->
+                    <li class="nav-item">
+                        <a class="nav-link" id="hot" onclick="show(this)" href="#">
+                            <svg width="23" height="22" viewBox="0 0 16 16" class="feather " fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M2.678 11.894a1 1 0 0 1 .287.801 10.97 10.97 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8.06 8.06 0 0 0 8 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894zm-.493 3.905a21.682 21.682 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105z"/>
+                                <path fill-rule="evenodd" d="M4 5.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zM4 8a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7A.5.5 0 0 1 4 8zm0 2.5a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1h-4a.5.5 0 0 1-.5-.5z"/>
+                            </svg>
+                            热点分析
+                        </a>
+                    </li>
+                    <!--全部推荐-->
+                    <li class="nav-item">
+                        <a class="nav-link" id="shopping" onclick="show1(this)" data-toggle="collapse" href="#collapseMarket" role="button" aria-expanded="false" aria-controls="collapseMarket">
+                            <svg width="22" height="22" viewBox="0 0 16 16" class="feather" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M2.5 0a.5.5 0 0 1 .5.5V2h10V.5a.5.5 0 0 1 1 0v15a.5.5 0 0 1-1 0V15H3v.5a.5.5 0 0 1-1 0V.5a.5.5 0 0 1 .5-.5zM3 14h10v-3H3v3zm0-4h10V7H3v3zm0-4h10V3H3v3z"/>
+                            </svg>
+                            全部推荐
+                        </a>
+                        <div class="collapse" id="collapseMarket">
+                            <a class="dropdown-item" href="#" id="seed" onclick="show(this)">种子</a>
+                            <a class="dropdown-item" href="#" id="ari-time" onclick="show(this)">农时</a>
+                            <a class="dropdown-item" href="#" id="ari-tec" onclick="show(this)">农技</a>
+                            <a class="dropdown-item" href="#" id="policy" onclick="show(this)">政策</a>
+                            <a class="dropdown-item" href="#" id="ari-res" onclick="show(this)">农资</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!--        主内容页面-->
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <!--这里是推荐主站界面-->
+            <div class="main-context" id="mainmain" style="display: block;overflow: auto">
+                <!--左侧框-->
+                <div style="width: 14%;background: wheat;float: right;margin-top: 10px;text-align: center;font: 400 15px Arial;padding: 10px 0px 0px 0px">
+                    <div  style="width: 100%;text-align: center;background:wheat;">
+                        <div style="border-radius: 100%;overflow: hidden;border: 4px #fff solid;box-shadow: rgba(1,1,1,0.5) 3px 2px 10px 0;width: 100px;text-align: center;margin: 10px auto">
+                            <img src="img/profile1.jpg" class="card-img-top" alt="profile" style="width: 100px">
+                        </div>
+                        <span style="font: 700 18px/20px Arial;color: white;margin-bottom: 12px">臭弟弟</span>
+                    </div>
+                    <p style="margin-top: 15px">今天是<span style="color: chocolate">2020-01-12</span></p>
+                    <p>您有<span style="color: chocolate">2</span>条新提醒</p>
+                    <div class="card-body" style="margin: 0;background: wheat;border-top: 1px gray solid">
+                        <p class="card-text" style="font: 600 16px/20px Arial;color: rgba(43,43,43,0.8);float: left;width: 100%">您现在位于&nbsp;<p style="font: 600 16px/20px Arial;color: chocolate">中卫县</p></p>
+                        <a  type="button" data-toggle="modal" data-target="#exampleModal"  class="btn btn-warning btn-sm" style="float:top;">切换地区</a>
+                    </div>
+                </div>
+                <!--种子-->
+                <div class="media position-relative" style="float: left; margin-top: 18px;border-bottom: rgba(1,1,1,0.2) 1px solid;width: 84%;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.19)">
+                    <a href="#">
+                        <img src="img/rice-ningjin1.jpg" class="mr-3" width="100px" height="100px" alt="加载失败">
+                    </a>
+                    <div class="media-body">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">宁粳43号</h5>
+                            <small style="margin-right: 6px">2020-03-15</small>
+                        </div>
+                        <p>宁粳43号具有抗倒伏，耐旱耐寒，且产量高，味道甜，在市场上具有一定的人气和市场。</p>
+                        <div style="float: right;width: 100px;margin-bottom: 5px">
+                            <a style="width: 100%;color: gray;text-decoration: none" data-toggle="collapse" href="#recommend-More3" role="button" aria-expanded="false" aria-controls="collapseMore">
+                                <svg class="bi bi-list-task" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5H2zM3 3H2v1h1V3z" clip-rule="evenodd"/>
+                                    <path d="M5 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM5.5 7a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 4a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9z"/>
+                                    <path fill-rule="evenodd" d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5V7zM2 7h1v1H2V7zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5H2zm1 .5H2v1h1v-1z" clip-rule="evenodd"/>
+                                </svg>
+                                更多操作</a>
+                            <div class="collapse dropdown" id="recommend-More3" style="width: 100px;border: 1px rgba(1,1,1,0.2) solid;border-top: none ;">
+                                <a class="dropdown-item" href="#">标记已读</a>
+                                <a class="dropdown-item" href="商品二级页面.html">查看全部</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--政策-->
+                <div class="media position-relative" style="float: left; margin-top: 18px;border-bottom: rgba(1,1,1,0.2) 1px solid;width: 84%;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.19)">
+                    <a href="#">
+                        <img src="img/arg-policy.jpg" class="mr-3" width="100px" height="100px" alt="加载失败">
+                    </a>
+                    <div class="media-body">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">关于国家下调粮食销售税政策</h5>
+                            <small style="margin-right: 6px">2020-03-15</small>
+                        </div>
+                        <p>就在2200年的1月，国家农科院发布了关于下调粮食税率，所有税率统一下调了四个基点。</p>
+                        <div style="float: right;width: 100px;margin-bottom: 5px">
+                            <a style="width: 100%;color: gray;text-decoration: none" data-toggle="collapse" href="#recommend-More4" role="button" aria-expanded="false" aria-controls="collapseMore">
+                                <svg class="bi bi-list-task" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5H2zM3 3H2v1h1V3z" clip-rule="evenodd"/>
+                                    <path d="M5 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM5.5 7a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 4a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9z"/>
+                                    <path fill-rule="evenodd" d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5V7zM2 7h1v1H2V7zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5H2zm1 .5H2v1h1v-1z" clip-rule="evenodd"/>
+                                </svg>
+                                更多操作</a>
+                            <div class="collapse dropdown" id="recommend-More4" style="width: 100px;border: 1px rgba(1,1,1,0.2) solid;border-top: none ;">
+                                <a class="dropdown-item" href="#">标记已读</a>
+                                <a class="dropdown-item" href="政策推送二级.html">查看全部</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!---->
+            </div>
+            <!--热点分析-->
+            <div class="main-context" id="hotmain" style="display: none;overflow: auto">
+                <!--第一个热点-->
+                <div class="media position-relative" style="float: left; margin-top: 18px;border-bottom: rgba(1,1,1,0.2) 1px solid;width: 90%;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.19)">
+                    <a href="#">
+                        <img src="img/arg-policy.jpg" class="mr-3" width="100px" height="100px" alt="加载失败">
+                    </a>
+                    <div class="media-body">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">关于国家下调粮食销售税政策</h5>
+                            <small style="margin-right: 6px">2020-03-15</small>
+                        </div>
+                        <p>就在2200年的1月，国家农科院发布了关于下调粮食税率，所有税率统一下调了四个基点。</p>
+                        <div style="float: right;width: 100px;margin-bottom: 5px">
+                            <a style="width: 100%;color: gray;text-decoration: none" data-toggle="collapse" href="#hot-More1" role="button" aria-expanded="false" aria-controls="collapseMore">
+                                <svg class="bi bi-list-task" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5H2zM3 3H2v1h1V3z" clip-rule="evenodd"/>
+                                    <path d="M5 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM5.5 7a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 4a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9z"/>
+                                    <path fill-rule="evenodd" d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5V7zM2 7h1v1H2V7zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5H2zm1 .5H2v1h1v-1z" clip-rule="evenodd"/>
+                                </svg>
+                                更多操作</a>
+                            <div class="collapse dropdown" id=“hot-More1" style="width: 100px;border: 1px rgba(1,1,1,0.2) solid;border-top: none ;">
+                                <a class="dropdown-item" href="#">标记已读</a>
+                                <a class="dropdown-item" href="#">查看全部</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--第二个热点-->
+                <div class="media position-relative" style="float: left; margin-top: 18px;border-bottom: rgba(1,1,1,0.2) 1px solid;width: 90%;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.19)">
+                    <a href="#">
+                        <img src="img/arg-policy.jpg" class="mr-3" width="100px" height="100px" alt="加载失败">
+                    </a>
+                    <div class="media-body">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">关于国家下调粮食销售税政策</h5>
+                            <small style="margin-right: 6px">2020-03-15</small>
+                        </div>
+                        <p>就在2200年的1月，国家农科院发布了关于下调粮食税率，所有税率统一下调了四个基点。</p>
+                        <div style="float: right;width: 100px;margin-bottom: 5px">
+                            <a style="width: 100%;color: gray;text-decoration: none" data-toggle="collapse" href="#hot-More2" role="button" aria-expanded="false" aria-controls="collapseMore">
+                                <svg class="bi bi-list-task" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                    <path fill-rule="evenodd" d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5H2zM3 3H2v1h1V3z" clip-rule="evenodd"/>
+                                    <path d="M5 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM5.5 7a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 4a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9z"/>
+                                    <path fill-rule="evenodd" d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5V7zM2 7h1v1H2V7zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5H2zm1 .5H2v1h1v-1z" clip-rule="evenodd"/>
+                                </svg>
+                                更多操作</a>
+                            <div class="collapse dropdown" id=“hot-More2" style="width: 100px;border: 1px rgba(1,1,1,0.2) solid;border-top: none ;">
+                                <a class="dropdown-item" href="#">标记已读</a>
+                                <a class="dropdown-item" href="#">查看全部</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--        全部推荐          -->
+                <!--农时-->
+                <div class="main-context" id="ari-timemain" style="display: none;overflow: auto">
+                    <div class="bought-details" >
+                        <div>
+                            <img src="img2/fu_yuan.jfif" width="80px" height="80px"  alt="">
+                        </div>
+                        <div>订单号:<span style="color: chocolate">170526435444865</span></div>
+                        <div>
+                            <ul>
+                                <li>已完成</li>
+                                <li>37.00</li>
+                                <li>2019/12/24 14:02</li>
+                                <li><a href="">订单详情></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="bought-details" >
+                        <div>
+                            <img src="img2/fu_yuan.jfif" width="80px" height="80px"  alt="">
+                        </div>
+                        <div>订单号:<span style="color: chocolate">170526435444865</span></div>
+                        <div>
+                            <ul>
+                                <li>已完成</li>
+                                <li>37.00</li>
+                                <li>2019/12/24 14:02</li>
+                                <li><a href="">订单详情></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--农技-->
+                <div class="main-context" id="ari-tecmain" style="display: none;overflow: auto">
+                    <div class="bought-details" >
+                        <div>
+                            <img src="img2/fu_yuan.jfif" width="80px" height="80px"  alt="">
+                        </div>
+                        <div>订单号:<span style="color: chocolate">170526435444865</span></div>
+                        <div>
+                            <ul>
+                                <li>未发货</li>
+                                <li>37.00</li>
+                                <li>2019/12/24 14:02</li>
+                                <li><a href="">订单详情></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="bought-details" >
+                        <div>
+                            <img src="img2/fu_yuan.jfif" width="80px" height="80px"  alt="">
+                        </div>
+                        <div>订单号:<span style="color: chocolate">170526435444865</span></div>
+                        <div>
+                            <ul>
+                                <li>未发货</li>
+                                <li>37.00</li>
+                                <li>2019/12/24 14:02</li>
+                                <li><a href="">订单详情></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--政策-->
+                <div class="main-context" id="policymain" style="display: none;overflow: auto">
+                    <!--第一个政策-->
+                    <div class="media position-relative" style="float: left; margin-top: 18px;border-bottom: rgba(1,1,1,0.2) 1px solid;width: 90%;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.19)">
+                        <a href="#">
+                            <img src="img/arg-policy.jpg" class="mr-3" width="100px" height="100px" alt="加载失败">
+                        </a>
+                        <div class="media-body">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">关于国家下调粮食销售税政策</h5>
+                                <small style="margin-right: 6px">2020-03-15</small>
+                            </div>
+                            <p>就在2200年的1月，国家农科院发布了关于下调粮食税率，所有税率统一下调了四个基点。</p>
+                            <div style="float: right;width: 100px;margin-bottom: 5px">
+                                <a style="width: 100%;color: gray;text-decoration: none" data-toggle="collapse" href="#polict-More1" role="button" aria-expanded="false" aria-controls="collapseMore">
+                                    <svg class="bi bi-list-task" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5H2zM3 3H2v1h1V3z" clip-rule="evenodd"/>
+                                        <path d="M5 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM5.5 7a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 4a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9z"/>
+                                        <path fill-rule="evenodd" d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5V7zM2 7h1v1H2V7zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5H2zm1 .5H2v1h1v-1z" clip-rule="evenodd"/>
+                                    </svg>
+                                    更多操作</a>
+                                <div class="collapse dropdown" id=“policy-More1" style="width: 100px;border: 1px rgba(1,1,1,0.2) solid;border-top: none ;">
+                                    <a class="dropdown-item" href="#">标记已读</a>
+                                    <a class="dropdown-item" href="#">查看全部</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--第二个政策-->
+                    <div class="media position-relative" style="float: left; margin-top: 18px;border-bottom: rgba(1,1,1,0.2) 1px solid;width: 90%;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.19)">
+                        <a href="#">
+                            <img src="img/arg-policy.jpg" class="mr-3" width="100px" height="100px" alt="加载失败">
+                        </a>
+                        <div class="media-body">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">关于国家下调粮食销售税政策</h5>
+                                <small style="margin-right: 6px">2020-03-15</small>
+                            </div>
+                            <p>就在2200年的1月，国家农科院发布了关于下调粮食税率，所有税率统一下调了四个基点。</p>
+                            <div style="float: right;width: 100px;margin-bottom: 5px">
+                                <a style="width: 100%;color: gray;text-decoration: none" data-toggle="collapse" href="#policy-More2" role="button" aria-expanded="false" aria-controls="collapseMore">
+                                    <svg class="bi bi-list-task" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5H2zM3 3H2v1h1V3z" clip-rule="evenodd"/>
+                                        <path d="M5 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM5.5 7a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 4a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9z"/>
+                                        <path fill-rule="evenodd" d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5V7zM2 7h1v1H2V7zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5H2zm1 .5H2v1h1v-1z" clip-rule="evenodd"/>
+                                    </svg>
+                                    更多操作</a>
+                                <div class="collapse dropdown" id=“polict-More2" style="width: 100px;border: 1px rgba(1,1,1,0.2) solid;border-top: none ;">
+                                    <a class="dropdown-item" href="#">标记已读</a>
+                                    <a class="dropdown-item" href="#">查看全部</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--农资-->
+                <div class="main-context" id="ari-resmain" style="display: none;overflow: auto">
+                    <div class="bought-details" >
+                        <div>
+                            <img src="img2/fu_yuan.jfif" width="80px" height="80px"  alt="">
+                        </div>
+                        <div>订单号:<span style="color: chocolate">170526435444865</span></div>
+                        <div>
+                            <ul>
+                                <li>已失效</li>
+                                <li>37.00</li>
+                                <li>2019/12/24 14:02</li>
+                                <li><a href="">订单详情></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="bought-details" >
+                        <div>
+                            <img src="img2/fu_yuan.jfif" width="80px" height="80px"  alt="">
+                        </div>
+                        <div>订单号:<span style="color: chocolate">170526435444865</span></div>
+                        <div>
+                            <ul>
+                                <li>已发货</li>
+                                <li>37.00</li>
+                                <li>2019/12/24 14:02</li>
+                                <li><a href="">订单详情></a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <!--种子-->
+                <div class="main-context" id="seedmain" style="display: none;overflow: auto">
+                    <!--第一个种子-->
+                    <div class="media position-relative" style="float: left; margin-top: 18px;border-bottom: rgba(1,1,1,0.2) 1px solid;width: 84%;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.19)">
+                        <a href="#">
+                            <img src="img/rice-ningjin1.jpg" class="mr-3" width="100px" height="100px" alt="加载失败">
+                        </a>
+                        <div class="media-body">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">宁粳43号</h5>
+                                <small style="margin-right: 6px">2020-03-15</small>
+                            </div>
+                            <p>宁粳43号具有抗倒伏，耐旱耐寒，且产量高，味道甜，在市场上具有一定的人气和市场。</p>
+                            <div style="float: right;width: 100px;margin-bottom: 5px">
+                                <a style="width: 100%;color: gray;text-decoration: none" data-toggle="collapse" href="#seed-More1" role="button" aria-expanded="false" aria-controls="collapseMore">
+                                    <svg class="bi bi-list-task" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                        <path fill-rule="evenodd" d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5H2zM3 3H2v1h1V3z" clip-rule="evenodd"/>
+                                        <path d="M5 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM5.5 7a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 4a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9z"/>
+                                        <path fill-rule="evenodd" d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5V7zM2 7h1v1H2V7zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5H2zm1 .5H2v1h1v-1z" clip-rule="evenodd"/>
+                                    </svg>
+                                    更多操作</a>
+                                <div class="collapse dropdown" id="seed-More1" style="width: 100px;border: 1px rgba(1,1,1,0.2) solid;border-top: none ;">
+                                    <a class="dropdown-item" href="#">标记已读</a>
+                                    <a class="dropdown-item" href="#">查看全部</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+            </div>
+            <!--        全部推荐结束        -->
+        </main>
+        <!-- - - - - - - - - - -->
+    </div>
+</div>
+
+<!-- 选择地区的模态框 -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">选择地区</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <div class="input-group mb-3" style="margin-left: 5%;width: 60%">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">我的位置</span>
+                        <select aria-label="province" class="btn btn-outline-secondary prov" type="button">Button</select>
+                        <select aria-label="city" class="btn btn-outline-secondary city" type="button">Button</select>
+                        <select aria-label="country" class="btn btn-outline-secondary country" type="button">Button</select>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                <button type="button" class="btn btn-primary">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+
+<script>
+    //选择的动态联动
+
+    //定义省市的信息
+    let provList = ['银川市','石嘴山市','吴忠市','固原市','中卫市'];
+    let cityList = [];
+    cityList[0] = ['西夏区','金凤区','兴庆区','永宁县','贺兰县','武灵市'];//银川
+    cityList[1] = ['大武口', '惠农区', '平罗县'];//石嘴山
+    cityList[2] = ['利通区', '红寺堡区', '盐池县', '同心县','青铜峡市'];//吴忠
+    cityList[3] = ['原州区', '西吉县', '隆德县', '泾源县','彭阳县'];//固原
+    cityList[4] = ['沙坡头区','中宁县','海原县'];//中卫
+
+    let countryList = [[],[],[],[],[]];
+    //使用三维数组来存储县信息
+    //银川
+    countryList[0][0] = ['西花园路街道', '北京西路街道', '文昌路街道', '朔方路街道', '宁华路街道', '贺兰山西路街道', '怀远路街道','镇北堡镇', '兴泾镇'];//西夏区
+    countryList[0][1] = ['丰登镇', '良田镇', '上海西路街道', '北京中路街道', '长城中路街道', '黄河东路街道', '满城北街街道'];//金凤区
+    countryList[0][2] = ['凤凰北街街道', '解放西街街道', '文化街街道', '富宁街街道', '新华街街道', '玉皇阁北街街道', '前进街街道', '中山南街街道', '银古路街道', '胜利街街道', '丽景街街道', '掌政镇', '大新镇', '通贵乡', '月牙湖乡'];//兴庆区
+    countryList[0][3] = ['杨和街道','杨和镇','李俊镇','望远镇','望洪镇','闽宁镇','胜利乡'];//永宁县
+    countryList[0][4] = ['金贵镇', '立岗镇', '洪广镇', '习岗镇', '常信乡'];//贺兰山县
+    countryList[0][5] = ['东塔镇','郝家桥镇','崇兴镇','宁东镇','马家滩镇','临河镇','桐树乡','白土岗乡'];//武灵
+    //石嘴山
+    countryList[1][0] = ['长胜街道', '朝阳街道', '人民路街道', '长城街道', '青山街道', '石炭井街道', '白芨沟街道', '沟口街道', '长兴街道','锦林街道', '星海镇'];//大武口
+    countryList[1][1] = ['北街街道', '南街街道', '中街街道', '育才路街道', '河滨街街道', '火车站街道', '红果子镇', '尾闸镇', '园艺镇', '庙台乡', '礼和乡', '燕子墩乡'];//惠农区
+    countryList[1][2] = ['城关镇', '黄渠桥镇', '宝丰镇', '头闸镇', '姚伏镇', '崇岗镇', '陶乐镇', '高庄乡', '灵沙乡', '渠口乡', '通伏乡', '高仁乡', '红崖子乡'];//平罗县
+    //吴忠
+    countryList[2][0] = ['古城镇', '上桥镇', '胜利镇', '金星镇', '金积镇', '金银滩镇', '高闸镇', '扁担沟镇', '东塔寺乡', '板桥乡', '马莲渠乡', '郭家桥乡'];//利通区
+    countryList[2][1] = ['红寺堡镇', '太阳山镇', '南川乡', '大河乡', '沙泉乡', '买河乡'];//红寺堡
+    countryList[2][2] = ['花马池镇', '大水坑镇', '惠安堡镇', '高沙窝镇', '王乐井乡', '冯记沟乡', '青山乡', '麻黄山乡'];//盐池县
+    countryList[2][3] = ['豫海镇河西镇', '丁塘镇', '韦州镇', '下马关镇', '预旺镇', '王团镇', '田老庄乡', '马高庄乡', '张家塬乡', '兴隆乡', '石狮开发区管委会', '窑山管委会'];//同心县
+    countryList[2][4] = ['小坝镇','大坝镇','青铜峡镇','叶盛镇','瞿靖镇','峡口镇','邵刚镇','陈袁滩镇'];//青铜峡
+    //固原
+    countryList[3][0] = ['三营镇', '头营镇', '官厅镇', '张易镇', '开城镇', '彭堡镇', '黄铎堡镇', '寨科乡', '炭山乡', '中河乡', '河川乡', '南关街道', '古雁街道', '北塬街道'];//原州区
+    countryList[3][1] = ['吉强镇', '兴隆镇', '平峰镇', '将台堡镇', '新营乡', '红耀乡', '田坪乡', '马建乡', '震湖乡', '兴平乡', '西滩乡', '王民乡', '什字乡', '马莲乡', '硝河乡', '偏城乡', '沙沟乡', '白崖乡', '火石寨乡'];//西吉县
+    countryList[3][2] = ['城关镇', ' 沙塘镇', '联财镇', '陈靳乡', '好水乡', '观庄乡', '杨河乡', '神林乡', '张程乡', '凤岭乡', '山河乡 ', '温堡乡', '奠安乡'];//隆德县
+    countryList[3][3] = ['香水镇', '泾河源镇', '六盘山镇', '黄花乡', '大湾乡', '兴盛乡', '新民乡'];//泾源县
+    countryList[3][4] = ['白阳镇', '王洼镇', '古城镇', '红河镇', '新集乡', ' 城阳乡', ' 冯庄乡', ' 小岔乡', ' 孟塬乡', ' 罗洼乡 ', '交岔乡', '草庙乡'];//彭阳县
+    //中卫
+    countryList[4][0] = ['文昌镇', '滨河镇', '迎水桥镇', '东园镇', '柔远镇', '镇罗镇', '宣和镇', '永康镇', '常乐镇', '兴仁镇', '香山乡', '蒿川乡'];//沙坡头区
+    countryList[4][1] = ['宁安镇', '鸣沙镇', '石空镇', '新堡镇', '恩和镇', '舟塔乡', '白马乡', '余丁乡', '大战场乡', '喊叫水乡', '徐套乡'];//中宁县
+    countryList[4][2] = ['三河镇', '西安镇', '李旺镇', '贾塘乡', '曹洼乡', '郑旗乡', '高崖乡', '关桥乡', '李俊乡', '树台乡', '九彩乡', '关庄乡', '红羊乡', '史店乡', '罗山乡', '高台乡', '杨明乡'];//海原县
+
+    //作物信息
+    let cropList = ['玉米','水稻','枸杞'];
+    let breedList = [];
+    breedList[0] = ['保玉1号','苏玉31','中糯1号'];
+    breedList[1] = ['旱优73','宁粳4号','宁粳1号'];
+    breedList[2] = ['中华枸杞','北方枸杞','宁夏枸杞'];
+
+    //获取select元素
+    let provSelects = document.getElementsByClassName('prov');
+    let citySelects = document.getElementsByClassName('city');
+    let countrySelects = document.getElementsByClassName('country');
+
+
+
+    for(let i=0;i<citySelects.length;i++) {
+        //把省的信息 添加到第一个select元素中
+        provList.forEach(function(val, index){
+            //DOM操作  了解
+            provSelects[i].add(new Option(val, index));
+
+        });
+
+        let index1;
+        //给第一个select绑定change事件
+        provSelects[i].onchange = function () {
+            //获取 当前的选项
+            index1 = this.value;
+
+            //清空第二个select原先内容
+            citySelects[i].length = 0;
+
+            //选择对应的城市列表，添加到第二个select
+            cityList[index1].forEach(function (val, index) {
+                citySelects[i].add(new Option(val, index));
+            })
+        };
+
+
+        citySelects[i].onchange = function () {
+            let index = this.value;
+            countrySelects[i].length = 0;
+            countryList[index1][index].forEach(function (val, index) {
+                countrySelects[i].add(new Option(val, index));
+            })
+        };
+
+        //手工触发一次 change事件
+        provSelects[i].onchange();
+        citySelects[i].onchange();
+    }
+    for(let i=0;i<cropsSelects.length;i++) {
+        cropsSelects[i].onchange();
+    }
+
+</script>
+</html>

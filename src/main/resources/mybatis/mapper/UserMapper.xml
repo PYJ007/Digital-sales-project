@@ -16,11 +16,6 @@
         select user_name from user where user_phone=#{phone}
     </select>
 
-    <insert id="save" parameterType="User" >
-        insert into user(user_name,user_pass,user_phone,user_card,user_fieldadress,user_fieldacres,field_id)
-        values (#{user_name},#{user_pass},#{user_phone},#{user_card},#{user_fieldadress},#{user_fieldacres},#{field_id})
-    </insert>
-
     <update id="upDate" parameterType="User">
         update user set user_name=#{user_name},user_card=#{user_card},user_pass=#{user_pass},user_phone=#{user_phone},
                         user_fieldacres=#{user_fieldacres},user_fieldadress=#{user_fieldadress} where user_id=#{user_id}

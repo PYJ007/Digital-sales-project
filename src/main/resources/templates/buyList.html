@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>buy</title>
+</head>
+<body>
+    <p>你的id是<span th:text="${session.buy.getUser_id()}">123</span></p>
+<!--    <p>用户id是<span th:text="${buy.getBuy_type()}">1</span></p>-->
+    <p>购买类型<span th:text="${session.buy.getBuy_time()}">0</span></p>
+    <p th:text="${session.buy.getBuy_num()}">名称<span>水稻</span></p>
+    <a href="/testbuy">nihao</a>
+</body>
+</html>

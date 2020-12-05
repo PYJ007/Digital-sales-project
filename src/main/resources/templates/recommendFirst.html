@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>推荐作物选择</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <style>
+        /*顶部logo区*/
+        #top-logo{
+            width: 100%;
+            height: 70px;
+        }
+        #top-logo .logo{
+            margin-left: 0;
+            height: 70px;
+            /*background: #50bcb8;*/
+            width: 25%;
+            float: left;
+        }
+        #top-logo .logo img,b{
+            float: left;
+            height: 70px;
+            /*margin: 5px auto 5px 10px;*/
+        }
+        #top-logo .logo b{
+            float: left;
+            text-align: center;
+            line-height: 70px;
+            color: #333333;
+            font-family: 幼圆, serif;
+            font-weight: bold;
+            font-size: 26px;
+            margin-left: 5px;
+        }
+    </style>
+</head>
+<body>
+<div id="top-logo">
+    <div class="logo">
+        <img th:src="@{img/ari-logo.png}" src="../static/img/ari-logo.png" alt="加载失败">
+        <b>农业一体化智能平台</b>
+    </div>
+</div>
+<header>
+    <div class="navigation" style="background: #333 linear-gradient(to right,  rgb(1,208,212), rgb(123,242,171));height: 30px;width: 100%;margin-bottom: 20px">
+        <span style="margin-left: 5%;font: 700 18px Arial;line-height: 30px;color: white">请您选择做推荐的作物</span>
+    </div>
+</header>
+<!--左侧选择栏-->
+    <div style="width: 45%;float: left">
+        <div class="list-group" style="margin-left: 2%;margin-right: 10px">
+            <a href="#" onclick="shows(0)" class="list-group-item list-group-item-action crop-type active">水稻类</a>
+            <a href="#" onclick="shows(1)" class="list-group-item list-group-item-action crop-type">玉米类</a>
+            <a href="#" onclick="shows(2)" class="list-group-item list-group-item-action crop-type">枸杞类</a>
+            <a href="#" onclick="shows(3)" class="list-group-item list-group-item-action crop-type">蔬菜类</a>
+<!--            <a href="#" onclick="shows(4)" class="list-group-item list-group-item-action crop-type">大米类</a>-->
+<!--            <a href="#" onclick="shows(5)" class="list-group-item list-group-item-action crop-type">。。类</a>-->
+        </div>
+    </div>
+<!--右侧选择栏-->
+    <div style="width: 45%;float: right;margin-right: 9%">
+<!--        水稻类-->
+        <div class="list-group crop-list" style="margin-left: 2%;margin-right: 10px;display: block">
+            <a href="#" onclick="submitCrop(this)" class="list-group-item list-group-item-action active">富源四号</a>
+            <a href="#" onclick="submitCrop(this)" class="list-group-item list-group-item-action">宁粳43号</a>
+            <a href="#" onclick="submitCrop(this)" class="list-group-item list-group-item-action">富源四号</a>
+            <a href="#" onclick="submitCrop(this)" class="list-group-item list-group-item-action">富源四号</a>
+            <a href="#" onclick="submitCrop(this)" class="list-group-item list-group-item-action">富源四号</a>
+            <a href="#" onclick="submitCrop(this)" class="list-group-item list-group-item-action">富源四号</a>
+        </div>
+<!--        玉米类-->
+        <div class="list-group crop-list" style="margin-left: 2%;margin-right: 10px;display: none">
+            <a href="#" class="list-group-item list-group-item-action active">保玉1号</a>
+            <a href="#" class="list-group-item list-group-item-action">宁粳43号</a>
+            <a href="#" class="list-group-item list-group-item-action">富源四号</a>
+            <a href="#" class="list-group-item list-group-item-action">富源四号</a>
+            <a href="#" class="list-group-item list-group-item-action">富源四号</a>
+            <a href="#" class="list-group-item list-group-item-action">富源四号</a>
+        </div>
+<!--        枸杞类-->
+        <div class="list-group crop-list" style="margin-left: 2%;margin-right: 10px;display: none">
+            <a href="#" class="list-group-item list-group-item-action active">富源四号</a>
+            <a href="#" class="list-group-item list-group-item-action">宁粳43号</a>
+            <a href="#" class="list-group-item list-group-item-action">富源四号</a>
+            <a href="#" class="list-group-item list-group-item-action">富源四号</a>
+            <a href="#" class="list-group-item list-group-item-action">富源四号</a>
+            <a href="#" class="list-group-item list-group-item-action">富源四号</a>
+        </div>
+<!--        蔬菜类-->
+        <div class="list-group crop-list" style="margin-left: 2%;margin-right: 10px;display: none">
+            <a href="#" class="list-group-item list-group-item-action active">富源四号</a>
+            <a href="#" class="list-group-item list-group-item-action">宁粳43号</a>
+            <a href="#" class="list-group-item list-group-item-action">富源四号</a>
+            <a href="#" class="list-group-item list-group-item-action">富源四号</a>
+            <a href="#" class="list-group-item list-group-item-action">富源四号</a>
+            <a href="#" class="list-group-item list-group-item-action">富源四号</a>
+        </div>
+    </div>
+<!--提交信息的表单，不显示，使用JS自动提交-->
+<form id="hidden-form" action="/specialistFirst" method="get" style="display: none">
+    <label for="hidden-input"></label><input id="hidden-input" name="crops_name" value="null">
+    <button type="submit"></button>
+</form>
+
+</body>
+<footer style="float: bottom;clear: both;padding-top: 70px">
+    <div class="navigation" style="background: #333 linear-gradient(to right,  rgb(1,208,212), rgb(123,242,171));height: 30px;width: 100%;margin-bottom: 20px">
+        <a href="/specialistIndex" style="margin-left: 5%;font: 700 18px Arial;line-height: 30px;color: white">返回上一级</a>
+    </div>
+</footer>
+
+<script>
+    function shows(num) {
+        const tags1 = document.getElementsByClassName("crop-list");
+        const tags2 = document.getElementsByClassName("crop-type");
+        for (let i=0; i<tags2.length; i++){
+            tags2[i].classList.remove("active");
+            tags1[i].style.display = "none";
+        }
+        tags1[num].style.display = "block";
+        tags2[num].classList.add("active");
+    }
+    function submitCrop(object){
+        const crop = object.innerText;
+        const form = document.getElementById("hidden-form");
+        const input = document.getElementById("hidden-input");
+        input.setAttribute("value",crop);
+        form.submit();
+
+    }
+</script>
+</html>

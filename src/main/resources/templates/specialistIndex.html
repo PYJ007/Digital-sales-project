@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en"   xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>专家欢迎页</title>
+    <link rel="stylesheet" type="text/css" th:href="@{specialistCSS/Specialist.css}" href="../static/specialistCSS/Specialist.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+<body>
+    <div id="top-logo">
+        <div class="logo">
+            <img th:src="@{img/ari-logo.png}" src="../static/img/ari-logo.png" alt="加载失败">
+            <b>农业一体化智能平台</b>
+        </div>
+    </div>
+    <header>
+        <div class="navigation" style="background: #333 linear-gradient(to right,  rgb(1,208,212), rgb(123,242,171));height: 30px;width: 100%;margin-bottom: 20px">
+            <span style="margin-left: 5%;font: 700 18px Arial;line-height: 30px;color: white">欢迎您，</span>
+            <span th:text="${session.userName}" style="font:  700 18px Arial;color: chocolate">俊</span>
+            <span style="margin-left: 1%;font: 700 18px Arial;line-height: 30px;color: white">专家</span>
+            <a style="margin-right: 5%;font: 700 18px Arial;line-height: 30px;color: white;float: right" href="/logout" >注销</a>
+        </div>
+    </header>
+    <section  class="container">
+<!--        栅格划分-->
+        <div class="row" style="width: 1100px;margin: auto;">
+<!--            专家推送-->
+            <div class="card col" style="width: 120px;border: none;padding:30px 50px">
+                <img src="../static/specialistCSS/7659/Bff6.png" th:src="@{specialistCSS/7659/Bff6.png}" class="card-img-top" alt="..." style="height: 130px;width: 120px">
+                <a class="btn btn-dark" href="/recommendFirst" style="font: 500 18px Arial, sans-serif;margin-top: 10px">农技推荐</a>
+            </div>
+<!--            种子推送-->
+            <div class="card col" style="width: 120px;border: none;padding:30px 50px">
+                <img src="../static/specialistCSS/7659/Bff15.png" th:src="@{specialistCSS/7659/Bff15.png}" class="card-img-top" alt="..." style="height: 130px;width: 120px">
+                <button class="btn btn-warning"  style="font: 500 18px Arial, sans-serif;margin-top: 10px">种子推荐</button>
+            </div>
+<!--           农机推送-->
+            <div class="card col" style="width: 120px;border: none;padding:30px 50px">
+                <img src="../static/specialistCSS/7659/Bff18.png" th:src="@{specialistCSS/7659/Bff18.png}" class="card-img-top" alt="..." style="height: 130px;width: 120px">
+                <button class="btn btn-success"  style="font: 500 18px Arial, sans-serif;margin-top: 10px">农资推荐</button>
+            </div>
+<!--            政策推送-->
+            <div class="card col" style="width: 120px;border: none;padding:30px 50px">
+                <img src="../static/specialistCSS/7674/Cbb24.png" th:src="@{specialistCSS/7674/Cbb24.png}" class="card-img-top" alt="..." style="height: 130px;width: 120px">
+                <button class="btn btn-primary"  style="font: 500 18px Arial, sans-serif;margin-top: 10px">政策推荐</button>
+            </div>
+<!--            占位，没有内容-->
+            <div class="card col" style="width: 120px;border: none;padding:30px 50px">
+                <img src="../static/specialistCSS/7659/Bff3.png" th:src="@{specialistCSS/7659/Bff3.png}" class="card-img-top" alt="..." style="height: 130px;width: 120px">
+                <button class="btn btn-info"  style="font: 500 18px Arial, sans-serif;margin-top: 10px">种子信息</button>
+            </div>
+        </div>
+    </section>
+</body>
+</html>

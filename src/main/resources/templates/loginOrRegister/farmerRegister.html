@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>信息完善</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        /*顶部logo区*/
+        #top-logo{
+            width: 100%;
+            height: 70px;
+        }
+        #top-logo .logo{
+            margin-left: 0;
+            height: 70px;
+            /*background: #50bcb8;*/
+            width: 25%;
+            float: left;
+        }
+        #top-logo .logo img,b{
+            float: left;
+            height: 70px;
+            /*margin: 5px auto 5px 10px;*/
+        }
+        #top-logo .logo b{
+            float: left;
+            text-align: center;
+            line-height: 70px;
+            color: #333333;
+            font-family: 幼圆, serif;
+            font-weight: bold;
+            font-size: 26px;
+            margin-left: 5px;
+        }
+    </style>
+
+</head>
+<div id="top-logo">
+    <div class="logo">
+        <img th:src="@{img/ari-logo.png}" src="img/ari-logo.png" alt="加载失败">
+        <b>农业一体化智能平台</b>
+    </div>
+</div>
+<header>
+    <div class="navigation" style="background: #333 linear-gradient(to right,  rgb(1,208,212), rgb(123,242,171));height: 30px;width: 100%;margin-bottom: 20px">
+        <span style="margin-left: 5%;font: 700 18px Arial;line-height: 30px;color: white">用户注册</span>
+    </div>
+</header>
+<body>
+<!--农民的进一步注册界面-->
+<form  id="farmerProfile" method="post" style="display: block" th:action="@{/registerCrops}" >
+    <!--农民身份证信息-->
+    <div class="input-group mb-3"  style="width: 60%;margin-left: 15%">
+        <div class="input-group-prepend">
+            <span class="input-group-text">身份证</span>
+        </div>
+        <input type="text" placeholder="您的身份证号" name="user_card" aria-label="IDcard"  class="form-control">
+    </div>
+    <!--农民的具体地址-->
+    <label for="farmer-address" style="margin-left: 15%;">填写您的地址</label>
+    <div class="input-group mb-3" id="farmer-address" style="width: 60%;margin-left: 15%">
+        <div class="input-group-prepend" id="button-addon3">
+            <select aria-label="province" name="user_prov" class="btn btn-outline-secondary prov" type="button">Button</select>
+            <select aria-label="city"  name="user_city" class="btn btn-outline-secondary city" type="button">Button</select>
+            <select aria-label="country" name="user_country" class="btn btn-outline-secondary country" type="button">Button</select>
+        </div>
+        <input type="text" class="form-control" name="user_address" placeholder="具体位置" aria-label="detail-road" aria-describedby="button-addon3">
+    </div>
+
+    <!--  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  -->
+    <div class="field-details">
+        <!--田的位置，作物-->
+        <label style="margin-left: 15%;">田间相关信息</label>
+        <div class="input-group mb-3" style="margin-left: 15%;width: 60%">
+            <div class="input-group-prepend">
+                <span class="input-group-text">田的位置</span>
+                <select aria-label="province" name="crop_prov" class="btn btn-outline-secondary prov" type="button">Button</select>
+                <select aria-label="city" name="crop_city" class="btn btn-outline-secondary city" type="button">Button</select>
+                <select aria-label="country" name="crop_country" class="btn btn-outline-secondary country" type="button">Button</select>
+            </div>
+            <input type="text" class="form-control" name="crop_address" placeholder="田的具体位置" aria-label="fieldAddress" aria-describedby="basic-addon2">
+        </div>
+        <div class="input-group mb-3"  style="width: 60%;margin-left: 15%">
+            <div class="input-group-prepend">
+                <span class="input-group-text">具体作物</span>
+                <select aria-label="country" name="crop_name1" class="btn btn-outline-secondary crops" type="button">Button</select>
+                <select aria-label="country" name="crop_name2" class="btn btn-outline-secondary breeds" type="button">Button</select>
+                <span class="input-group-text" style="margin-left: 25px">田的面积</span>
+            </div>
+            <input type="text" class="form-control" name="crop_acres" placeholder="具体面积 0.00" aria-label="detail-area" aria-describedby="button-addon3">
+            <div class="input-group-append">
+                <span class="input-group-text">亩</span>
+            </div>
+        </div>
+    </div>
+
+    <!--提交和重置按钮-->
+    <div style="width: 30%;margin-left: 35%;text-align: center;margin-top:20px;margin-bottom: 20px">
+        <div id="crop-sub-button">
+            <button type="submit" class="btn btn-secondary">提交</button>
+            <button class="btn btn-secondary" type="reset" value="Reset" style="margin-left:15%">重置</button>
+        </div>
+    </div>
+</form>
+
+<!--  添加按钮  -->
+<div id="add-button" class="input-group mb-3" style="width: 60%;margin-left: 15%;margin-top: 30px;height: 40px;line-height: 40px">
+    <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal" style="font: 400 18px/20px Arial;">
+        <svg class="bi bi-plus-circle" width="25px" height="25px" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+            <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"/>
+            <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z"/>
+            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+        </svg>
+        继续添加田间信息
+    </button>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog"  style="max-width: 750px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">作物信息</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form th:action="@{/registerCropFurther}" method="post">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">具体作物</span>
+                        <select aria-label="country" class="btn btn-outline-secondary crops" name="CropType" type="button">Button</select>
+                        <select aria-label="country" class="btn btn-outline-secondary breeds" name="CropName" type="button">Button</select>
+                        <span class="input-group-text" style="margin-left: 25px">田的面积</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="具体面积" name="CropAcres" aria-label="detail-area" aria-describedby="button-addon3">
+                    <div class="input-group-append">
+                        <span class="input-group-text">亩</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    <button type="submit" class="btn btn-primary">提交</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script type="text/javascript" th:src="@{JS/location.js}"></script>
+<!--bootstrap的js文件-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
+</html>

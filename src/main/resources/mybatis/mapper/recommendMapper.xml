@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dajun.springbootplatform.repository.recommendRepository">
+<!--    这个有限制返回的数据数-->
+    <select id="findBySeedIdAndSpecialistIdLimit" resultType="recommend" parameterType="specialistAndSeedId">
+        select * from recommend where seed_id=#{seed_id} and specialist_id=#{specialist_id}
+        order by recommend_id desc limit 6;
+    </select>
+<!--    这个不限制返回的数据数-->
+    <select id="findBySeedIdAndSpecialistId" resultType="recommend" parameterType="specialistAndSeedId">
+        select * from recommend where seed_id=#{seed_id} and specialist_id=#{specialist_id}
+        order by recommend_id desc;
+    </select>
+<!--    插入水表-->
+    <insert id="insertBySeedId" parameterType="recommend">
+        insert into recommend
+            (specialist_id,recommend_time,recommend_endtime,seed_id,recommend_type,recommend_readed,detail,notice,stage,sowmethod)
+        values
+            (#{specialist_id},#{recommend_time},#{recommend_endtime},#{seed_id},#{recommend_type},#{recommend_readed},#{detail},#{notice},#{stage},#{sowmethod})
+    </insert>
+    <delete id="deleteByRecommendId" parameterType="int">
+        delete from recommend where recommend_id=#{recommend_id}
+    </delete>
+    <select id="findRecommendIdBySpecialistId" parameterType="int" resultType="int">
+        select recommend_id from recommend where specialist_id=#{specialistId}
+        order by recommend_id desc limit 1;
+    </select>
+    <insert id="saveElements" parameterType="recommendElements">
+        insert into
+            recommendfertilizer (recommend_id,element,element_type,element_volume)
+        values
+            (#{recommend_id},#{element},#{element_type},#{element_volume})
+    </insert>
+    <insert id="savePesticide" parameterType="recommendPesticide">
+        insert into
+            recommendpesticide(recommend_id, name, ingredient) VALUES
+            (#{recommend_id},#{name},#{ingredient})
+    </insert>
+</mapper>

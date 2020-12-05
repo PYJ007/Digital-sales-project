@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/html" xmlns:th="http://www.thymeleaf.org">
+<link rel="shortcut icon" type="image/x-icon" th:href="@{img/ari-logo.png}" href="../static/img/ari-logo.png"/>
+<head>
+    <meta charset="UTF-8">
+    <title>专家推送界面</title>
+    <link rel="stylesheet" type="text/css" th:href="@{specialistCSS/SpecialistRec.css}" href="../static/specialistCSS/SpecialistRec.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+<body>
+    <div id="top-logo">
+        <div class="logo">
+            <img th:src="@{img/ari-logo.png}" src="../static/img/ari-logo.png" alt="加载失败">
+            <b>农业一体化智能平台</b>
+        </div>
+    </div>
+    <header>
+        <div class="navigation" style="background: #333 linear-gradient(to right,  rgb(1,208,212), rgb(123,242,171));height: 30px;width: 100%;margin-bottom: 20px">
+            <span style="margin-left: 5%;font: 700 18px Arial;line-height: 30px;color: white">信息推送</span>
+        </div>
+    </header>
+<!--    选择类型-->
+    <div class="bd-callout bd-callout-info">
+        <span >选择您发布类型</span>
+        <span onclick="shows(1)" class="form-choose btn btn-info active">施水</span>
+        <span onclick="shows(2)" class="form-choose btn btn-info">施肥</span>
+        <span onclick="shows(3)" class="form-choose btn btn-info">施药</span>
+        <span onclick="shows(4)" class="form-choose btn btn-info">其他</span>
+        <!-- Example split danger button -->
+        <div class="btn-group form-choose">
+            <button type="button" class="btn btn-info">播种方式</button>
+            <button type="button" class="btn btn-info dropdown-toggle dropdown-toggle-split" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <span class="sr-only">Toggle Dropdown</span>
+            </button>
+            <div class="dropdown-menu">
+                <a class="dropdown-item" type="button" onclick="setMethod(this)">插秧</a>
+                <a class="dropdown-item" type="button" onclick="setMethod(this)">保墒旱直播</a>
+                <a class="dropdown-item" type="button" onclick="setMethod(this)">播后上水</a>
+                <a class="dropdown-item" type="button" onclick="setMethod(this)">催芽撒播</a>
+            </div>
+        </div>
+    </div>
+<!--    施水-->
+    <form class="specialistForms border" method="post" action="/waterPost" style="display: block">
+        <div class="form-group row">
+            <label for="staticEmail" class="col-sm-2 col-form-label">播种方式</label>
+            <div class="col-sm-10">
+                <input type="text" readonly class="form-control-plaintext sowMethod" id="staticEmail" th:value="${session.sowMethod==null?'未选择':session.sowMethod}" value="未选择" name="sowMethod" th:style="${session.sowMethod==null?'color:red':'color:black'}">
+            </div>
+        </div>
+<!--        时间选择-->
+        <div class="form-group">
+            <label for="group2-date1">开始时间</label>
+            <input type="date" class="form-control date-picker" id="group2-date1" aria-describedby="emailHelp2" name="startTime" placeholder="选择开始时间">
+            <br>
+            <label for="group2-date2">结束时间</label>
+            <input type="date" class="form-control date-picker" id="group2-date2" name="endTime">
+            <small id="emailHelp2" class="form-text text-muted">选择开始和结束时间</small>
+        </div>
+        <!--        生长阶段选择-->
+        <div class="form-group">
+            <label for="exampleFormControlSelect2">生长时期</label>
+            <select class="form-control" name="stage" id="exampleFormControlSelect2" >
+                <option value="种子露白">种子露白</option>
+                <option value="三叶期">三叶期</option>
+                <option value="四叶期">四叶期</option>
+                <option value="成熟期">成熟期</option>
+                <option>.....</option>
+            </select>
+        </div>
+        <!--        具体操作-->
+        <div class="input-group" style="margin-top: 30px">
+            <div class="input-group-prepend">
+                <span class="input-group-text">具体操作</span>
+            </div>
+            <textarea name="detail" class="form-control" placeholder="输入具体操作事项" aria-label="With textarea"></textarea>
+        </div>
+        <!--        注意事项-->
+        <div class="input-group" style="margin-top: 30px">
+            <div class="input-group-prepend">
+                <span class="input-group-text">注意事项</span>
+            </div>
+            <textarea class="form-control" name="notice" placeholder="输入需要注意的事项" aria-label="With textarea"></textarea>
+        </div>
+        <!--        隐藏的操作类型-->
+        <label>
+            <input name="operation" value="1" style="display: none">
+        </label>
+        <!--提交和重置按钮-->
+        <div style="width: 30%;margin-left: 35%;text-align: center;margin-top:20px;margin-bottom: 20px">
+            <div>
+                <button type="submit" class="btn btn-primary">提交</button>
+                <button class="btn btn-primary" type="reset" value="Reset" style="margin-left:15%">重置</button>
+            </div>
+        </div>
+    </form>
+<!--    施肥-->
+    <form action="/fertilizerPost" method="post"  class="specialistForms border" style="display: none">
+<!--        种植方式-->
+        <div class="form-group row">
+            <label for="staticEmai2" class="col-sm-2 col-form-label">播种方式</label>
+            <div class="col-sm-10">
+                <input type="text" readonly  class="form-control-plaintext sowMethod" id="staticEmai2"  th:value="${session.sowMethod==null?'未选择':session.sowMethod}" value="未选择" name="sowMethod" th:style="${session.sowMethod==null?'color:red':'color:black'}">
+            </div>
+        </div>
+<!--        时间选择-->
+        <div class="form-group">
+            <label for="group1-date1">开始时间</label>
+            <input type="date" name="startTime" class="form-control date-picker" id="group1-date1" aria-describedby="emailHelp" placeholder="选择开始时间">
+            <br>
+            <label for="group1-date2">结束时间</label>
+            <input type="date" name="endTime" class="form-control date-picker" id="group1-date2">
+            <small id="emailHelp" class="form-text text-muted">选择开始和结束时间</small>
+        </div>
+<!--        生长阶段选择-->
+        <div class="form-group">
+            <label for="exampleFormControlSelect1">生长时期</label>
+            <select class="form-control" name="stage" id="exampleFormControlSelect1">
+                <option>种子露白</option>
+                <option>三叶期</option>
+                <option>四叶期</option>
+                <option>成熟期</option>
+                <option>.....</option>
+            </select>
+        </div>
+        <span style="margin-right: 20px">包含的营养元素:</span>
+        <!--        第一种元素-->
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" type="text" hidden onclick="furtherInfo(this)" name="ingredient" id="ingredientK" value="false">
+            <label class="form-check-label" for="ingredientK">钾</label>
+        </div>
+        <!--        选择后显示-->
+        <div class="border" id="ingredientK-info" style="padding: 10px 10px 5px 10px;margin-bottom: 5px;display: none">
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="ingredient1-child1">元素类型:</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" name="ingredient-type" id="ingredient1-child1" placeholder="例如:五氧化二磷（P2O5）">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="ingredient1-child2">所需量(KG):</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" id="ingredient1-child2" name="ingredient-volume" placeholder="例如:5kg~8kg">
+                </div>
+            </div>
+        </div>
+        <!--        第二种元素-->
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" onclick="furtherInfo(this)" hidden type="text" name="ingredient" id="ingredientN" value="false">
+            <label class="form-check-label" for="ingredientN">氮</label>
+        </div>
+        <!--        选择后显示-->
+        <div class="border" id="ingredientN-info" style="padding: 10px 10px 5px 10px;margin-bottom: 5px;display: none">
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="ingredient2-child1">元素类型:</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" id="ingredient2-child1" name="ingredient-type" placeholder="例如:五氧化二磷（P2O5）">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="ingredient2-child2">所需量(KG):</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" id="ingredient2-child2" name="ingredient-volume" placeholder="例如:5kg~8kg">
+                </div>
+            </div>
+        </div>
+        <!--        第三种元素-->
+        <div class="form-check form-check-inline">
+            <input class="form-check-input" onclick="furtherInfo(this)" hidden type="text" name="ingredient" id="ingredientP" value="false">
+            <label class="form-check-label" for="ingredientP">磷</label>
+        </div>
+        <!--        选择后显示-->
+        <div class="border" id="ingredientP-info" style="padding: 10px 10px 5px 10px;margin-bottom: 5px;display: none">
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="ingredient3-child1">元素类型:</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" id="ingredient3-child1" name="ingredient-type" placeholder="例如:五氧化二磷（P2O5）">
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-2 col-form-label" for="ingredient3-child2">所需量(KG):</label>
+                <div class="col-sm-10">
+                    <input class="form-control" type="text" id="ingredient3-child2" name="ingredient-volume" placeholder="例如:5kg~8kg">
+                </div>
+            </div>
+        </div>
+<!--        具体操作-->
+        <div class="input-group" style="margin-top: 30px">
+            <div class="input-group-prepend">
+                <span class="input-group-text">具体操作</span>
+            </div>
+            <textarea class="form-control" placeholder="输入具体操作事项" name="detail" aria-label="With textarea"></textarea>
+        </div>
+        <!--提交和重置按钮-->
+        <div style="width: 30%;margin-left: 35%;text-align: center;margin-top:20px;margin-bottom: 20px">
+            <div id="res-sub-button">
+                <button type="submit" class="btn btn-primary">提交</button>
+                <button class="btn btn-primary" type="reset" value="Reset" style="margin-left:15%">重置</button>
+            </div>
+        </div>
+    </form>
+<!--    施药-->
+    <form class="specialistForms border" method="post" action="/pesticidePost" style="display: none">
+        <!--        种植方式-->
+        <div class="form-group row">
+            <label for="staticEmai3" class="col-sm-2 col-form-label">播种方式</label>
+            <div class="col-sm-10">
+                <input type="text" readonly class="form-control-plaintext sowMethod" id="staticEmai3" th:value="${session.sowMethod==null?'未选择':session.sowMethod}" value="未选择" name="sowMethod" th:style="${session.sowMethod==null?'color:red':'color:black'}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="group3-date1">开始时间</label>
+            <input type="date" class="form-control date-picker" name="startTime" id="group3-date1" aria-describedby="emailHelp3" placeholder="选择开始时间">
+            <br>
+            <label for="group3-date2">结束时间</label>
+            <input type="date" class="form-control date-picker" name="endTime" id="group3-date2">
+            <small id="emailHelp3" class="form-text text-muted">选择开始和结束时间</small>
+        </div>
+        <!--        生长阶段选择-->
+        <div class="form-group">
+            <label for="exampleFormControlSelect3">生长时期</label>
+            <select class="form-control" name="stage" id="exampleFormControlSelect3">
+                <option>种子露白</option>
+                <option>三叶期</option>
+                <option>四叶期</option>
+                <option>成熟期</option>
+                <option>.....</option>
+            </select>
+        </div>
+<!--        预防的疾病-->
+        <div class="form-group">
+            <label for="exampleFormControlInput1">预防病害</label>
+            <input type="text" class="form-control" name="illness" id="exampleFormControlInput1" placeholder="预防的具体病害名">
+        </div>
+<!--        预防病害的有效成分-->
+        <div class="form-group">
+            <label for="exampleFormControlInput2">关键成分</label>
+            <input type=text class="form-control" name="ingredient" id="exampleFormControlInput2" placeholder="预防病害所需的有效成分">
+        </div>
+        <!--        具体操作-->
+        <div class="input-group" style="margin-top: 30px">
+            <div class="input-group-prepend">
+                <span class="input-group-text">具体操作</span>
+            </div>
+            <textarea class="form-control" name="detail" placeholder="输入具体操作事项" aria-label="With textarea"></textarea>
+        </div>
+        <!--提交和重置按钮-->
+        <div style="width: 30%;margin-left: 35%;text-align: center;margin-top:20px;margin-bottom: 20px">
+            <div>
+                <button type="submit" class="btn btn-primary">提交</button>
+                <button class="btn btn-primary" type="reset" value="Reset" style="margin-left:15%">重置</button>
+            </div>
+        </div>
+    </form>
+<!--    其他操作-->
+    <form class="specialistForms border" method="post" action="/waterPost" style="display: none">
+        <!--        种植方式-->
+        <div class="form-group row">
+            <label for="staticEmail4" class="col-sm-2 col-form-label">播种方式</label>
+            <div class="col-sm-10">
+                <input type="text" readonly class="form-control-plaintext sowMethod" id="staticEmail4" th:value="${session.sowMethod==null?'未选择':session.sowMethod}" value="未选择" name="sowMethod" th:style="${session.sowMethod==null?'color:red':'color:black'}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="group5-date1">开始时间</label>
+            <input type="date" class="form-control date-picker" name="startTime" id="group5-date1" aria-describedby="emailHelp4" placeholder="选择开始时间">
+            <br>
+            <label for="group5-date2">结束时间</label>
+            <input type="date" class="form-control date-picker" name="endTime" id="group5-date2">
+            <small id="emailHelp5" class="form-text text-muted">选择开始和结束时间</small>
+        </div>
+        <!--        生长阶段选择-->
+        <div class="form-group">
+            <label for="exampleFormControlSelect5">生长时期</label>
+            <select class="form-control" name="stage" id="exampleFormControlSelect5">
+                <option>种子露白</option>
+                <option>三叶期</option>
+                <option>四叶期</option>
+                <option>成熟期</option>
+                <option>.....</option>
+            </select>
+        </div>
+        <!--        具体操作-->
+        <div class="input-group" style="margin-top: 30px">
+            <div class="input-group-prepend">
+                <span class="input-group-text">具体操作</span>
+            </div>
+            <textarea class="form-control" name="detail" placeholder="输入具体操作事项" aria-label="With textarea"></textarea>
+        </div>
+<!--        隐藏的注意事项-->
+        <label>
+            <input name="notice" value="default" style="display: none">
+        </label>
+<!--        隐藏的操作类型-->
+        <label>
+            <input name="operation" value="4" style="display: none">
+        </label>
+        <!--提交和重置按钮-->
+        <div style="width: 30%;margin-left: 35%;text-align: center;margin-top:20px;margin-bottom: 20px">
+            <div>
+                <button type="submit" class="btn btn-primary">提交</button>
+                <button class="btn btn-primary" type="reset" value="Reset" style="margin-left:15%">重置</button>
+            </div>
+        </div>
+    </form>
+<!--    已填写的内容-->
+    <div style="width: 28%;position: absolute;top: 120px;right: 10px">
+        <div  style="width: 100%;background-color: #50bcb8;border-radius: 8px;height: 60px;padding-top: 15px;;text-align: center">
+            <span style="font: 500 18px Arial, sans-serif;color: snow">您对<span style="color: chocolate" th:text="${session.crops_name}">富源四号</span>推荐历史</span>
+        </div>
+        <ul th:if="${recommends!=null}" class="list-group" id="written-content" th:each="recommend:${recommends}" style="display:inline-block">
+            <li class="list-group-item">
+                <span style="color: black" th:text="${recommend.getRecommend_time()}+' ~ '+${recommend.getRecommend_endtime()}">10/10-10/18</span>&nbsp;&nbsp;&nbsp;<span style="color: #CC5522" th:text="${converse.operationConverse(recommend.getRecommend_type())}">施肥操作</span>
+                <div style="margin-bottom: 5px">
+                    <span th:text="${recommend.getStage()}">三叶期</span>&nbsp;&nbsp;&nbsp; 种植方式：<span style="color: black" th:text="${converse.sowMethodConverse(recommend.getSowmethod())}">插秧</span>
+                    <div class="text-truncate" th:text="${recommend.getDetail()}" style="width: 80%">需要氮肥需要氮磷钾需要金坷垃，需要需要需要</div>
+                    <a type="button" th:value="${recommend.getRecommend_id()}" class="btn btn-warning btn-sm" onclick="submitForm(1,this)" style="float: right;">修改</a>
+                    <a type="button" th:value="${recommend.getRecommend_id()}" class="btn btn-danger btn-sm" onclick="submitForm(2,this)" style="float: right;color: snow">删除</a>
+                    <form style="display: none" th:id="${recommend.getRecommend_id()}" method="post" action="/specialistForm">
+                        <label>
+                            <input  th:id="${recommend.getRecommend_id()+'Operation'}" name="operation" value="delete">
+                        </label>
+                        <label>
+                            <input  name="recommend_id" th:value="${recommend.getRecommend_id()}">
+                        </label>
+                    </form>
+                </div>
+            </li>
+        </ul>
+        <p th:if="${recommends!=null}" style="text-align: center"><a href="/specialistSeedAll" style="text-decoration: none;color:cornflowerblue;">查看全部>></a></p>
+        <span th:if="${recommends==null}">您还没有为<span th:text="${session.crops_name}" style="color: chocolate"></span>推送内容</span>
+    </div>
+</body>
+<script>
+    function shows(x) {
+        let tags = document.getElementsByClassName('specialistForms');
+        let btns = document.getElementsByClassName('form-choose');
+        for(let i=0; i<tags.length; i++){
+            tags[i].style.display = "none";
+            btns[i].classList.remove('active');
+        }
+        tags[x-1].style.display = "block";
+        btns[x-1].classList.add("active");
+    }
+
+    //给所有data赋值，默认为今天
+    const defaultDate = document.querySelectorAll('.date-picker');
+    for (let i = 0; i<defaultDate.length; i++) {
+        defaultDate[i].valueAsDate = new Date();
+    }
+
+    //点击出现填入框
+    //这个函数工作和标签的ID值有关，所以统一好ID名称
+    function furtherInfo(object) {
+        const tagId = object.getAttribute("id");
+        const detailTag = document.getElementById(tagId+'-info');
+        if (object.getAttribute("value")==="false"){
+            detailTag.style.display = 'block';
+            object.setAttribute("value","true");
+        }
+        else{
+            detailTag.style.display='none';
+            object.setAttribute("value","false");
+        }
+
+    }
+
+    //给所有表单加上种植方法
+    function setMethod(object){
+        const tags = document.getElementsByClassName("sowMethod");
+        for(let i=0;i<tags.length;i++){
+            tags[i].removeAttribute("style");
+            tags[i].setAttribute("value",object.innerText);
+        }
+    }
+
+//    提交修改或者删除的请求
+    function submitForm(x,object) {
+        let tag = document.getElementById(object.getAttribute("value"));
+        let tagOperation = document.getElementById(object.getAttribute("value")+"Operation");
+        if (x===1){
+            tagOperation.setAttribute("value","update");
+        }
+        else {
+            tagOperation.setAttribute("value","delete");
+        }
+        tag.submit();
+    }
+
+</script>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+</html>

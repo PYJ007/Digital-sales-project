@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dajun.springbootplatform.repository.indexRepository">
+    <!--    原本对象应该是com.dajun.springboot.entities.User,因为都是指向一个实例类，可以提出来-->
+    <select id="findAllProduct" resultType="indexProduct">
+        select * from indexproduct;
+    </select>
+
+    <select id="findAllInfo" resultType="indexInfo">
+        select * from indexinfo;
+    </select>
+
+
+</mapper>
