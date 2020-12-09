@@ -1,10 +1,4 @@
-package com.dajun.springbootplatform.Dao;
-
-import com.dajun.springbootplatform.entities.CollectionDetail;
-import com.dajun.springbootplatform.entities.Product;
-import org.springframework.stereotype.Repository;
-
-import java.util.*;
+package com.dajun.springbootplatform.application;
 
 //@Repository
 //public class CollectDetailDao {

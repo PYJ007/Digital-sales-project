@@ -1,6 +1,6 @@
 package com.dajun.springbootplatform.controller;
 
-import com.dajun.springbootplatform.Dao.Converse;
+import com.dajun.springbootplatform.application.Converse;
 import com.dajun.springbootplatform.entities.other.specialistAndSeedId;
 import com.dajun.springbootplatform.entities.recommend;
 import com.dajun.springbootplatform.entities.recommendElements;
@@ -142,15 +142,27 @@ public class specialistController {
         recommend.setSeed_id(seed_id);
         recommend.setSpecialist_id(specialistId);
         recommendRepository.insertBySeedId(recommend);
+        int flag = 0;//标志位
+        String elementName = "";
+        String elementType = "";
+        String elementVolume = "";
         for (int i=0;i<ingredient.size();i++){
             if (ingredient.get(i).equals("true")){
-                recommendElements.setElement(elements.get(i));
-                recommendElements.setElement_type(ingredient_type.get(i));
-                recommendElements.setElement_volume(ingredient_volume.get(i));
-                //通过专家ID查询到最新的推荐ID
-                recommendElements.setRecommend_id(recommendRepository.findRecommendIdBySpecialistId(specialistId));
-                recommendRepository.saveElements(recommendElements);
+                flag=1;//根据标志位判断是否有填写元素信息
+                //根据位置获取氮磷钾
+                elementName = elementName + elements.get(i) +",";
+                elementType = elementType + ingredient_type.get(i) + ",";
+                elementVolume =elementVolume + ingredient_volume.get(i) +",";
             }
+        }
+        //通过标志位判断专家是否填写了元素
+        if (flag==1){
+            recommendElements.setElement(elementName.substring(0,elementName.length()-1));
+            recommendElements.setElement_type(elementType.substring(0,elementType.length()-1));
+            recommendElements.setElement_volume(elementVolume.substring(0,elementVolume.length()-1));
+            //通过专家ID查询到最新的推荐ID
+            recommendElements.setRecommend_id(recommendRepository.findRecommendIdBySpecialistId(specialistId));
+            recommendRepository.saveElements(recommendElements);
         }
         session.setAttribute("sowMethod",sowMethod);
         return "redirect:/specialistReco";

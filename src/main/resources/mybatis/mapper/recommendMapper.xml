@@ -38,4 +38,13 @@
             recommendpesticide(recommend_id, name, ingredient) VALUES
             (#{recommend_id},#{name},#{ingredient})
     </insert>
+    <select id="findElementsById" parameterType="int" resultType="recommendElements">
+        select * from recommendfertilizer where recommend_id=#{id}
+    </select>
+    <select id="findPesticideById" parameterType="int" resultType="recommendPesticide">
+        select * from recommendpesticide where recommend_id=#{id}
+    </select>
+    <select id="findRecommendByCropsAndTime" resultType="recommend" parameterType="int">
+        select * from recommend
+    </select>
 </mapper>

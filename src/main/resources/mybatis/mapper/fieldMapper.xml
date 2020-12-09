@@ -4,6 +4,18 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dajun.springbootplatform.repository.fieldRepository">
     <select id="showField" parameterType="String" resultType="com.dajun.springbootplatform.entities.User" >
-        select * from user where user_phone = #{phone}
+        select * from user where user_tel = #{phone}
+    </select>
+    <update id="updateAcres" parameterType="User">
+        update user set user_fieldacres=user_fieldacres+#{user_fieldacres} where user_tel=#{user_tel}
+    </update>
+    <select id="findFieldByTel" parameterType="String" resultType="field">
+        select * from field where user_tel=#{tel}
+    </select>
+    <delete id="deleteFieldByTelAndName" parameterType="phoneAndCropsName">
+        delete from field where user_tel=#{user_tel} and user_cropsname=#{user_cropsname}
+    </delete>
+    <select id="selectFieldAcresByTelAndName" parameterType="phoneAndCropsName" resultType="int">
+        select sum(user_cropsacres) from field where user_tel=#{user_tel} and user_cropsname=#{user_cropsname}
     </select>
 </mapper>

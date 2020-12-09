@@ -4,18 +4,17 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dajun.springbootplatform.repository.registerRepository">
     <insert id="saveUser" parameterType="com.dajun.springbootplatform.entities.User" >
-        insert into user(user_name,user_pass,user_phone)
-        values (#{user_name},#{user_pass},#{user_phone})
+        insert into user(user_name,user_pass,user_tel,user_fieldacres)
+        values (#{user_name},#{user_pass},#{user_tel},0.0)
     </insert>
-    <update id="saveCrops" parameterType="User">
-        update user set user_card=#{user_card},user_fieldadress=#{user_fieldadress},
-                        user_fieldacres=#{user_fieldacres},user_cropsname=#{user_cropsname},
-                        user_cropstype=#{user_cropstype},user_cropsacres=#{user_cropsacres}
-        where user_phone=#{user_phone}
+    <update id="insertField" parameterType="field">
+        insert into field(user_tel,user_cropsacres,user_cropstype,user_cropsname)
+        values (#{user_tel},#{user_cropsacres},#{user_cropstype},#{user_cropsname})
     </update>
-    <update id="saveCrop" parameterType="User">
-        update user set user_fieldacres=#{user_fieldacres},user_cropsname=#{user_cropsname},
-                        user_cropstype=#{user_cropstype},user_cropsacres=#{user_cropsacres}
-        where user_phone=#{user_phone}
+<!--    # 虽然这个cardAndAddress位于other文件夹里但是你不能用other.cardAndAddress-->
+    <update id="saveCardAndAddress" parameterType="cardAndAddress">
+        update user set user_card=#{user_card},user_fieldadress=#{user_fieldadress}
+        where user_tel=#{user_tel}
     </update>
+
 </mapper>

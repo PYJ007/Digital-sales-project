@@ -9,11 +9,11 @@
     </select>
 
     <select id="findByAccount" parameterType="java.lang.String" resultType="User">
-        select * from user where user_phone=#{phone}
+        select * from user where user_tel=#{phone}
     </select>
 
     <select id="findName" parameterType="java.lang.String" resultType="java.lang.String">
-        select user_name from user where user_phone=#{phone}
+        select user_name from user where user_tel=#{phone}
     </select>
 
     <update id="upDate" parameterType="User">

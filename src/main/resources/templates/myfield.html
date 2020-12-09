@@ -132,27 +132,23 @@
                     </div>
                 </div>
                 <!--没有田间信息的提醒-->
-                <div th:if="${session.isNull==1}" style="background: wheat;width: 84%;height: 80px;margin-top: 10px;overflow: auto">
+                <div th:if="${session.numbers==1}" style="background: wheat;width: 84%;height: 80px;margin-top: 10px;overflow: auto">
                     <p style="font: 700 18px/20px Arial;color: rgba(43,43,43,0.62);height: 20px;margin: 25px 0 0 15px">您还没有田的信息，<a style="" href="/farmerReg">点击此处</a>完善信息</p>
                 </div>
                 <!--田的展示-->
-                <div th:if="${session.isNull!=1}" style="background: lightgoldenrodyellow;width: 84%;margin-top: 10px;overflow: auto;padding: 19px 10px">
-                    <a class="btn btn-primary btn-sm" style="float: right;margin-right: 10px" href="/farmerReg">修改信息</a>
-                    <p style="font: 700 18px/20px Arial;">位于<span style="color: chocolate" th:text="${session.field_address}">西夏区朔方路112号</span>田共有<span style="color: chocolate" th:text="${session.field_acres}">50</span>亩，其中作物有<span style="color: chocolate" th:text="${session.numbers}">1</span>种</p>
+                <div th:if="${session.numbers!=1}" style="background: lightgoldenrodyellow;width: 84%;margin-top: 10px;overflow: auto;padding: 19px 10px">
+                    <a class="btn btn-outline-primary btn-sm" style="float: right;" data-toggle="modal" data-target="#exampleModal">添加信息</a>
+                    <p style="font: 700 18px/20px Arial;">位于<span style="color: chocolate" th:text="${user.getUser_fieldadress()}">西夏区朔方路112号</span>田共有<span style="color: chocolate" th:text="${user.getUser_fieldacres()}">50</span>亩，其中作物有<span style="color: chocolate" th:text="${fieldList.size()}">1</span>种</p>
                     <hr/>
-                    <div th:each="userFieldInfos:${session.userFieldInfos}">
+                    <div th:each="userFieldInfos:${fieldList}">
                         <span style="padding: 5px 20px;font: 400 16px Arial, sans-serif">作物类型：<span style="color: chocolate" th:text="${userFieldInfos.getUser_cropstype()}">水稻</span>&nbsp;&nbsp;名称：<span th:text="${userFieldInfos.getUser_cropsname()}" style="color: chocolate">宁粳一号</span>&nbsp;&nbsp;占地<span th:text="${userFieldInfos.getUser_cropsacres()}" style="color: chocolate">10</span>亩</span>
+                        <button class="btn btn-outline-danger btn-sm" th:value="${userFieldInfos.getUser_cropsname()}" onclick="alert(this)" style="float: right">删除</button>
                         <hr/>
                     </div>
-<!--                    <div>-->
-<!--                        <span style="padding: 5px 20px;font: 400 16px Arial, sans-serif">作物类型：<span style="color: chocolate">水稻</span>&nbsp;&nbsp;名称：<span style="color: chocolate">宁粳一号</span>&nbsp;&nbsp;占地<span style="color: chocolate">10</span>亩</span>-->
-<!--                        <hr/>-->
-<!--                    </div>-->
-<!--                    <div>-->
-<!--                        <span style="padding: 5px 20px;font: 400 16px Arial, sans-serif">作物类型：<span style="color: chocolate">水稻</span>&nbsp;&nbsp;名称：<span style="color: chocolate">宁粳一号</span>&nbsp;&nbsp;占地<span style="color: chocolate">10</span>亩</span>-->
-<!--                        <hr/>-->
-<!--                    </div>-->
                 </div>
+                <form style="display: none" id="deleteForm" action="/deleteFieldInfo" method="post">
+                    <input name="cropsName" id="deleteInput">
+                </form>
                 <!--附近商点-->
                 <div class="position-relative" style="float: left; margin-top: 18px;border-bottom: rgba(1,1,1,0.2) 1px solid;width: 84%;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.19)">
                     <p style="font: 700 18px/20px Arial;color: rgba(43,43,43,0.8)">您的附近的种子公司</p>
@@ -176,76 +172,82 @@
                     </div>
                 </div>
                 <!--提示-->
-                <!--商品推送-->
-                <div class="media position-relative" style="float: left; margin-top: 18px;border-bottom: rgba(1,1,1,0.2) 1px solid;width: 84%;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.19);background: lightgoldenrodyellow">
-                    <svg width="30px" height="30px" style="margin-top: 10px;color: cornflowerblue;margin-left: 10px" class="bi" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                        <path fill-rule="evenodd" d="M6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06zM6 5.04L4.312 6.39A.5.5 0 0 1 4 6.5H2v3h2a.5.5 0 0 1 .312.11L6 10.96V5.04z"/>
-                        <path d="M11.536 14.01A8.473 8.473 0 0 0 14.026 8a8.473 8.473 0 0 0-2.49-6.01l-.708.707A7.476 7.476 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303l.708.707z"/>
-                        <path d="M10.121 12.596A6.48 6.48 0 0 0 12.025 8a6.48 6.48 0 0 0-1.904-4.596l-.707.707A5.483 5.483 0 0 1 11.025 8a5.483 5.483 0 0 1-1.61 3.89l.706.706z"/>
-                        <path d="M8.707 11.182A4.486 4.486 0 0 0 10.025 8a4.486 4.486 0 0 0-1.318-3.182L8 5.525A3.489 3.489 0 0 1 9.025 8 3.49 3.49 0 0 1 8 10.475l.707.707z"/>
-                    </svg>
-                    <span style="font: 400 16px Arial, sans-serif;line-height: 50px;margin-left: 15px">推荐您使用<a href="#" style="text-decoration: none;color: darkorange;padding: 0 10px">稻杰</a>进行喷药</span>
+                <!--判断是否有完善信息-->
+                <div th:if="${session.numbers==1}" style="background: wheat;width: 84%;height: 80px;margin-top: 10px;overflow: auto">
+                    <p style="font: 700 18px/20px Arial;color: rgba(43,43,43,0.62);height: 20px;margin: 25px 0 0 15px">您还没有田的信息，<a style="" href="/farmerReg">点击此处</a>完善信息</p>
                 </div>
-                <!--未完成-->
-                <div class="media position-relative" style="float: left; margin-top: 18px;border-bottom: rgba(1,1,1,0.2) 1px solid;width: 84%;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.19)">
-                    <a href="#">
-                        <img src="img/spraymed.jpg" th:src="@{img/spraymed.jpg}" class="mr-3" width="100px" height="100px" alt="加载失败">
-                    </a>
-                    <div class="media-body">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">5月30号</h5>
-                            <small style="margin-right: 6px;color: red;font: 800 14px Arial, sans-serif">未完成</small>
-                        </div>
-                        <p style="margin-top: 4px">喷药提醒</p>
-                        <p style="font: 400 16px Arial, sans-serif">您的<span style="color: chocolate">宁粳43号</span>共有<span style="color: chocolate">10</span>亩，需要喷洒农药<span style="color: chocolate">30</span>克，与水1:1000稀释，喷洒与叶片和根部</p>
-                        <div style="float: right;margin-bottom: 5px;margin-right: 6px">
-                            <button class="btn btn-success btn-sm">标记完成</button>
+                <div th:id="${session.numbers!=1}"><!--这个div框没啥用，就是限制是否完善了资料，不然不展示-->
+                    <!--商品推送-->
+                    <div class="media position-relative" style="float: left; margin-top: 18px;border-bottom: rgba(1,1,1,0.2) 1px solid;width: 84%;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.19);background: lightgoldenrodyellow">
+                        <svg width="30px" height="30px" style="margin-top: 10px;color: cornflowerblue;margin-left: 10px" class="bi" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06zM6 5.04L4.312 6.39A.5.5 0 0 1 4 6.5H2v3h2a.5.5 0 0 1 .312.11L6 10.96V5.04z"/>
+                            <path d="M11.536 14.01A8.473 8.473 0 0 0 14.026 8a8.473 8.473 0 0 0-2.49-6.01l-.708.707A7.476 7.476 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303l.708.707z"/>
+                            <path d="M10.121 12.596A6.48 6.48 0 0 0 12.025 8a6.48 6.48 0 0 0-1.904-4.596l-.707.707A5.483 5.483 0 0 1 11.025 8a5.483 5.483 0 0 1-1.61 3.89l.706.706z"/>
+                            <path d="M8.707 11.182A4.486 4.486 0 0 0 10.025 8a4.486 4.486 0 0 0-1.318-3.182L8 5.525A3.489 3.489 0 0 1 9.025 8 3.49 3.49 0 0 1 8 10.475l.707.707z"/>
+                        </svg>
+                        <span style="font: 400 16px Arial, sans-serif;line-height: 50px;margin-left: 15px">推荐您使用<a href="#" style="text-decoration: none;color: darkorange;padding: 0 10px">稻杰</a>进行喷药</span>
+                    </div>
+                    <!--未完成-->
+                    <div class="media position-relative" style="float: left; margin-top: 18px;border-bottom: rgba(1,1,1,0.2) 1px solid;width: 84%;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.19)">
+                        <a href="#">
+                            <img src="img/spraymed.jpg" th:src="@{img/spraymed.jpg}" class="mr-3" width="100px" height="100px" alt="加载失败">
+                        </a>
+                        <div class="media-body">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">5月30号</h5>
+                                <small style="margin-right: 6px;color: red;font: 800 14px Arial, sans-serif">未完成</small>
+                            </div>
+                            <p style="margin-top: 4px">喷药提醒</p>
+                            <p style="font: 400 16px Arial, sans-serif">您的<span style="color: chocolate">宁粳43号</span>共有<span style="color: chocolate">10</span>亩，需要喷洒农药<span style="color: chocolate">30</span>克，与水1:1000稀释，喷洒与叶片和根部</p>
+                            <div style="float: right;margin-bottom: 5px;margin-right: 6px">
+                                <button class="btn btn-success btn-sm">标记完成</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <!--已完成-->
-                <div class="media position-relative" style="float: left; margin-top: 18px;border-bottom: rgba(1,1,1,0.2) 1px solid;width: 84%;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.19)">
-                    <a href="#">
-                        <img src="img/plantseed.jpg" th:src="@{img/plantseed.jpg}" class="mr-3" width="100px" height="100px" alt="加载失败">
-                    </a>
-                    <div class="media-body">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">5月30号</h5>
-                            <small style="margin-right: 6px;color: green;font: 800 14px Arial, sans-serif">已完成</small>
-                        </div>
-                        <p style="margin-top: 4px">播种提醒</p>
-                        <p style="font: 400 16px Arial, sans-serif">您的<span style="color: chocolate">宁粳43号</span>到种植时间了，<span style="color: chocolate">10</span>亩田需要大约<span style="color: chocolate">30</span>克种子，采用半掩埋方式，切记不要播种后立刻浇水</p>
-                        <div style="float: right;margin-bottom: 5px;margin-right: 6px">
-                        </div>
-                    </div>
-                </div>
-                <div class="media position-relative" style="float: left; margin-top: 18px;border-bottom: rgba(1,1,1,0.2) 1px solid;width: 84%;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.19)">
-                    <a href="#">
-                        <img src="img/plantseed.jpg" th:src="@{img/plantseed.jpg}" class="mr-3" width="100px" height="100px" alt="加载失败">
-                    </a>
-                    <div class="media-body">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">5月30号</h5>
-                            <small style="margin-right: 6px;color: green;font: 800 14px Arial, sans-serif">已完成</small>
-                        </div>
-                        <p style="margin-top: 4px">播种提醒</p>
-                        <p style="font: 400 16px Arial, sans-serif">您的<span style="color: chocolate">宁粳43号</span>到种植时间了，<span style="color: chocolate">10</span>亩田需要大约<span style="color: chocolate">30</span>克种子，采用半掩埋方式，切记不要播种后立刻浇水</p>
-                        <div style="float: right;margin-bottom: 5px;margin-right: 6px">
+                    <!--已完成-->
+                    <div class="media position-relative" style="float: left; margin-top: 18px;border-bottom: rgba(1,1,1,0.2) 1px solid;width: 84%;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.19)">
+                        <a href="#">
+                            <img src="img/plantseed.jpg" th:src="@{img/plantseed.jpg}" class="mr-3" width="100px" height="100px" alt="加载失败">
+                        </a>
+                        <div class="media-body">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">5月30号</h5>
+                                <small style="margin-right: 6px;color: green;font: 800 14px Arial, sans-serif">已完成</small>
+                            </div>
+                            <p style="margin-top: 4px">播种提醒</p>
+                            <p style="font: 400 16px Arial, sans-serif">您的<span style="color: chocolate">宁粳43号</span>到种植时间了，<span style="color: chocolate">10</span>亩田需要大约<span style="color: chocolate">30</span>克种子，采用半掩埋方式，切记不要播种后立刻浇水</p>
+                            <div style="float: right;margin-bottom: 5px;margin-right: 6px">
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="media position-relative" style="float: left; margin-top: 18px;border-bottom: rgba(1,1,1,0.2) 1px solid;width: 84%;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.19)">
-                    <a href="#">
-                        <img src="img/plantseed.jpg" class="mr-3" width="100px" height="100px" alt="加载失败">
-                    </a>
-                    <div class="media-body">
-                        <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1">5月30号</h5>
-                            <small style="margin-right: 6px;color: green;font: 800 14px Arial, sans-serif">已完成</small>
+                    <div class="media position-relative" style="float: left; margin-top: 18px;border-bottom: rgba(1,1,1,0.2) 1px solid;width: 84%;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.19)">
+                        <a href="#">
+                            <img src="img/plantseed.jpg" th:src="@{img/plantseed.jpg}" class="mr-3" width="100px" height="100px" alt="加载失败">
+                        </a>
+                        <div class="media-body">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">5月30号</h5>
+                                <small style="margin-right: 6px;color: green;font: 800 14px Arial, sans-serif">已完成</small>
+                            </div>
+                            <p style="margin-top: 4px">播种提醒</p>
+                            <p style="font: 400 16px Arial, sans-serif">您的<span style="color: chocolate">宁粳43号</span>到种植时间了，<span style="color: chocolate">10</span>亩田需要大约<span style="color: chocolate">30</span>克种子，采用半掩埋方式，切记不要播种后立刻浇水</p>
+                            <div style="float: right;margin-bottom: 5px;margin-right: 6px">
+                            </div>
                         </div>
-                        <p style="margin-top: 4px">播种提醒</p>
-                        <p style="font: 400 16px Arial, sans-serif">您的<span style="color: chocolate">宁粳43号</span>到种植时间了，<span style="color: chocolate">10</span>亩田需要大约<span style="color: chocolate">30</span>克种子，采用半掩埋方式，切记不要播种后立刻浇水</p>
-                        <div style="float: right;margin-bottom: 5px;margin-right: 6px">
+                    </div>
+                    <div class="media position-relative" style="float: left; margin-top: 18px;border-bottom: rgba(1,1,1,0.2) 1px solid;width: 84%;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.19)">
+                        <a href="#">
+                            <img src="img/plantseed.jpg" class="mr-3" width="100px" height="100px" alt="加载失败">
+                        </a>
+                        <div class="media-body">
+                            <div class="d-flex w-100 justify-content-between">
+                                <h5 class="mb-1">5月30号</h5>
+                                <small style="margin-right: 6px;color: green;font: 800 14px Arial, sans-serif">已完成</small>
+                            </div>
+                            <p style="margin-top: 4px">播种提醒</p>
+                            <p style="font: 400 16px Arial, sans-serif">您的<span style="color: chocolate">宁粳43号</span>到种植时间了，<span style="color: chocolate">10</span>亩田需要大约<span style="color: chocolate">30</span>克种子，采用半掩埋方式，切记不要播种后立刻浇水</p>
+                            <div style="float: right;margin-bottom: 5px;margin-right: 6px">
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -411,36 +413,89 @@
     </div>
 </div>
 <!-- 田间信息的模态框 -->
-<!--<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" style="width: 100%">-->
-<!--    <div class="modal-dialog" style="max-width: 750px">-->
-<!--        <div class="modal-content">-->
-<!--            <div class="modal-header">-->
-<!--                <h5 class="modal-title" id="exampleModalLabel">田间信息</h5>-->
-<!--                <button type="button" class="close" data-dismiss="modal" aria-label="Close">-->
-<!--                    <span aria-hidden="true">&times;</span>-->
-<!--                </button>-->
-<!--            </div>-->
-<!--            <form th:action="@{/registerCropFurther}" method="post">-->
-<!--                <div class="input-group mb-3">-->
-<!--                    <div class="input-group-prepend">-->
-<!--                        <span class="input-group-text">具体作物</span>-->
-<!--                        <select aria-label="country" class="btn btn-outline-secondary crops" name="CropType" type="button">Button</select>-->
-<!--                        <select aria-label="country" class="btn btn-outline-secondary breeds" name="CropName" type="button">Button</select>-->
-<!--                        <span class="input-group-text" style="margin-left: 25px">田的面积</span>-->
-<!--                    </div>-->
-<!--                    <input type="text" class="form-control" placeholder="具体面积" name="CropAcres" aria-label="detail-area" aria-describedby="button-addon3">-->
-<!--                    <div class="input-group-append">-->
-<!--                        <span class="input-group-text">亩</span>-->
-<!--                    </div>-->
-<!--                </div>-->
-<!--                <div class="modal-footer">-->
-<!--                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>-->
-<!--                    <button type="submit" class="btn btn-primary">提交</button>-->
-<!--                </div>-->
-<!--            </form>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</div>-->
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog"  style="max-width: 750px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">作物信息</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <form th:action="@{/registerCropFurther}" method="post">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">具体作物</span>
+                        <select aria-label="country" class="btn btn-outline-secondary crops" name="CropType" type="button">Button</select>
+                        <select aria-label="country" class="btn btn-outline-secondary breeds" name="CropName" type="button">Button</select>
+                        <span class="input-group-text" style="margin-left: 25px">田的面积</span>
+                    </div>
+                    <input type="text" class="form-control" placeholder="具体面积" name="CropAcres" aria-label="detail-area" aria-describedby="button-addon3">
+                    <div class="input-group-append">
+                        <span class="input-group-text">亩</span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+                    <button type="submit" class="btn btn-primary">提交</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<!--弹窗，并提示是否删除-->
+<script>
+    window.alert=function (object) {
+        const cropsName = object.getAttribute("value");
+        var shield = document.createElement("DIV");
+        shield.id = "shield";
+        shield.style.position = "absolute";
+        shield.style.left = "40%";
+        shield.style.top = "40%";
+        shield.style.width = "250px";
+
+        shield.style.background = "#fff";
+        shield.style.textAlign = "center";
+        shield.style.zIndex = "299";
+
+        var alertFram = document.createElement("DIV");
+        alertFram.id="alertFram";
+        alertFram.style.position = "absolute";
+        alertFram.style.left = "40%";
+        alertFram.style.top = "40%";
+        alertFram.style.width="250px";
+        alertFram.style.background = "#fff";
+        alertFram.style.borderRadius = "8px";
+
+
+        //
+        strHtml = "<div style=\"width:100%;border-radius: 8px;padding: 5px 20px\">\n";
+        strHtml += "<p style='font: 500 18px Arial, sans-serif;color: chocolate'>您确定删除"+cropsName+"吗？</p>\n";
+        strHtml += "<hr style=\"margin: 10px 0 20px 0\">\n";
+        strHtml += " <button class='btn btn-warning btn-sm' style=\"margin-left: 20%\" onclick='f()'>确定</button>";
+        strHtml += " <button class='btn btn-primary btn-sm' onclick='doOk()'>关闭</button>";
+        strHtml += "</div>\n";
+        alertFram.innerHTML = strHtml;
+        document.body.appendChild(alertFram);
+        document.body.appendChild(shield);
+        this.doOk = function(){
+            alertFram.style.display = "none";
+            shield.style.display = "none";
+        }
+        this.f = function() {
+            const tagForm = document.getElementById("deleteForm");
+            const tagInput = document.getElementById("deleteInput");
+            tagInput.setAttribute("value",cropsName);
+            tagForm.submit();
+            alertFram.style.display = "none";
+            shield.style.display = "none";
+        }
+        alertFram.focus();
+        document.body.onselectstart = function(){return false;};
+    }
+
+</script>
 </body>
 
 <!--地区选择的js-->
