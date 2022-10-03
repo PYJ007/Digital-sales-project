@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dajun.springbootplatform.repository.adminRecommendMapper">
+    <select id="selectAdminByName" resultType="admin" parameterType="String">
+        select * from admin where admin_name=#{admin_name}
+    </select>
+    <select id="selectRecommendBySeedSpecialistAndSowMethod" resultType="recommend">
+        select * from recommendjude where specialist_id=#{specialist_id} and seed_id=#{seed_id}
+        and sowmethod=#{sowMethod}
+    </select>
+</mapper>
+

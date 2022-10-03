@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>种子信息管理</title>
+    <link rel="stylesheet" type="text/css" href="CSS/Specialist.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css"
+          integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+<body>
+<div id="top-logo">
+    <div class="logo">
+        <img th:src="@{img/ari-logo.png}" src="img/ari-logo.png" alt="加载失败">
+        <b>农业一体化智能平台</b>
+    </div>
+</div>
+<header>
+    <div class="navigation"
+         style="background: #333 linear-gradient(to right,  rgb(1,208,212), rgb(123,242,171));height: 30px;width: 100%;margin-bottom: 20px">
+        <span style="margin-left: 5%;font: 700 18px Arial;line-height: 30px;color: white">政策信息</span>
+        <a href="/specialistIndex" style="margin-right: 2%;float: right;font: 700 18px Arial;line-height: 30px;color: white">返回主页面</a>
+    </div>
+</header>
+<!--    准备三个框，查看种子信息，添加种子信息，添加种子产量-->
+<!--<div id="seedNavigation">-->
+<!--    <p class="container-p active" style="margin-top: 70px"><a onclick="showContainer(0)" type="button">已发布政策</a></p>-->
+<!--    <p class="container-p"><a onclick="showContainer(1)" type="button">发布政策</a></p>-->
+<!--</div>-->
+<!--右侧主要内容-->
+<div class="main-container" style="display: block;width: 95%;margin-left: 5%">
+    <form action="/policyPost" method="post" style="width: 65%;margin-left: 10px">
+        <div class="form-group">
+            <label for="exampleFormControlTextarea1">政策标题</label>
+            <textarea class="form-control" name="policyTitle" id="exampleFormControlTextarea1" rows="1"></textarea>
+        </div>
+        <div class="form-group">
+            <label for="exampleFormControlTextarea2">政策内容</label>
+            <textarea name="policyContent" class="form-control" id="exampleFormControlTextarea2" placeholder="政策内容和您的解读"
+                      rows="7"></textarea>
+        </div>
+        <!--        上传种子图片-->
+        <div class="form-group">
+            <label for="exampleFormControlTextarea3">原文链接</label>
+            <textarea class="form-control" name="link" id="exampleFormControlTextarea3" rows="1"></textarea>
+        </div>
+        <br>
+        <button class="btn btn-primary" type="submit" style="margin-left: 40%">提交</button>
+        <button class="btn btn-primary" type="reset" style="margin-left: 2%">重置</button>
+
+    </form>
+    <div style="width: 30%;position: absolute;top: 120px;right: 10px">
+        <div  style="width: 100%;background-color: #50bcb8;border-radius: 8px;height: 60px;padding-top: 15px;;text-align: center">
+            <span style="font: 500 18px Arial, sans-serif;color: snow">您的推荐历史</span>
+        </div>
+        <ul class="list-group" id="written-content" style="display:inline-block" >
+            <li class="list-group-item" th:if="${policyList.size()>0}" th:each="policy:${policyList}">
+                <span style="color: chocolate" th:text="${policy.getPolicy_title()}" >什么什么政策</span>
+                <div style="margin-bottom: 5px">
+                    <div class="text-truncate" th:text="${policy.getPolicy_content()}" style="width: 80%">需要氮肥需要氮磷钾需要金坷垃，需要需要需要</div>
+                    <span style="color: cornflowerblue" th:text="${policy.getPolicy_time()}">时间</span>
+                    <a type="button" class="btn btn-danger btn-sm" th:value="${policy.getPolicy_id()}" onclick="submitForm(2,this)" style="float: right;color: snow">删除</a>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+<!--隐藏的表单-->
+<form style="display: none"  id="deleteForm" method="post" action="/deletePolicy">
+    <label>
+        <input  name="policy_id" id="deleteFormInput" >
+    </label>
+</form>
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js"
+        integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/js/bootstrap.min.js"
+        integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI"
+        crossorigin="anonymous"></script>
+
+</body>
+<script>
+    function change() {
+        const tag = document.getElementById("upload-label");
+        var obj = document.getElementById("upload");
+        const tag1 = document.getElementById("fileName");
+        var len = obj.files.length;
+        for (var i = 0; i < len; i++) {
+            tag.innerHTML=obj.files[i].name;
+            tag1.value = obj.files[i].name;
+        }
+    }
+</script>
+
+<script>
+    //    提交修改或者删除的请求
+    function submitForm(x,object) {
+        //删除的a标签的value必须是id
+        let form = document.getElementById("deleteForm");
+        let tag = document.getElementById("deleteFormInput");
+        let id = object.getAttribute("value");
+        tag.setAttribute("value",id);
+        form.submit();
+    }
+
+
+    function showContainer(x) {
+        const tags = document.getElementsByClassName("main-container");
+        const tagsP = document.getElementsByClassName("container-p");
+        for (let i = 0; i < tags.length; i++) {
+            tags[i].style.display = 'none';
+            tagsP[i].classList.remove('active');
+        }
+        tagsP[x].classList.add('active');
+        tags[x].style.display = 'block';
+    }
+
+</script>
+</html>

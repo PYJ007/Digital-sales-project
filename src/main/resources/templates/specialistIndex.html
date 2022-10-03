@@ -24,30 +24,38 @@
     <section  class="container">
 <!--        栅格划分-->
         <div class="row" style="width: 1100px;margin: auto;">
+<!--            专家回答-->
+            <div class="card col" style="width: 120px;border: none;padding:30px 50px" th:if="${session.role==0}">
+                <img src="specialistCSS/7659/Bff6.png" th:src="@{specialistCSS/7659/Bff6.png}" class="card-img-top" alt="..." style="height: 130px;width: 120px">
+                <a class="btn btn-info" href="/connectUser" style="width: 140px;font: 500 18px Arial, sans-serif;margin-top: 10px">专家答疑</a>
+            </div>
 <!--            专家推送-->
-            <div class="card col" style="width: 120px;border: none;padding:30px 50px">
-                <img src="../static/specialistCSS/7659/Bff6.png" th:src="@{specialistCSS/7659/Bff6.png}" class="card-img-top" alt="..." style="height: 130px;width: 120px">
-                <a class="btn btn-dark" href="/recommendFirst" style="font: 500 18px Arial, sans-serif;margin-top: 10px">农技推荐</a>
+            <div class="card col" style="width: 120px;border: none;padding:30px 50px" th:if="${session.role==0}">
+                <img src="specialistCSS/7659/Bff6.png" th:src="@{specialistCSS/7659/Bff6.png}" class="card-img-top" alt="..." style="height: 130px;width: 120px">
+                <a class="btn btn-dark" href="/recommendFirst" style="width: 140px;font: 500 18px Arial, sans-serif;margin-top: 10px">农技推荐</a>
             </div>
 <!--            种子推送-->
-            <div class="card col" style="width: 120px;border: none;padding:30px 50px">
-                <img src="../static/specialistCSS/7659/Bff15.png" th:src="@{specialistCSS/7659/Bff15.png}" class="card-img-top" alt="..." style="height: 130px;width: 120px">
-                <button class="btn btn-warning"  style="font: 500 18px Arial, sans-serif;margin-top: 10px">种子推荐</button>
+            <div class="card col" style="width: 120px;border: none;padding:30px 50px" th:if="${1==1}">
+                <img src="specialistCSS/7659/Bff15.png" th:src="@{specialistCSS/7659/Bff15.png}" class="card-img-top" alt="..." style="height: 130px;width: 120px">
+                <button class="btn btn-warning"  style="width: 140px;font: 500 18px Arial, sans-serif;margin-top: 10px">种子推荐</button>
             </div>
 <!--           农机推送-->
-            <div class="card col" style="width: 120px;border: none;padding:30px 50px">
-                <img src="../static/specialistCSS/7659/Bff18.png" th:src="@{specialistCSS/7659/Bff18.png}" class="card-img-top" alt="..." style="height: 130px;width: 120px">
-                <button class="btn btn-success"  style="font: 500 18px Arial, sans-serif;margin-top: 10px">农资推荐</button>
+<!--            <div class="card col" style="width: 120px;border: none;padding:30px 50px" th:if="${session.role==2}">-->
+            <div class="card col" style="width: 120px;border: none;padding:30px 50px" th:if="${session.role==0}">
+                <img src="specialistCSS/7659/Bff18.png" th:src="@{specialistCSS/7659/Bff18.png}" class="card-img-top" alt="..." style="height: 130px;width: 120px">
+                <a href="/recommendNZ" class="btn btn-success"  style="width: 140px;font: 500 18px Arial, sans-serif;margin-top: 10px">农资推荐</a>
             </div>
 <!--            政策推送-->
-            <div class="card col" style="width: 120px;border: none;padding:30px 50px">
-                <img src="../static/specialistCSS/7674/Cbb24.png" th:src="@{specialistCSS/7674/Cbb24.png}" class="card-img-top" alt="..." style="height: 130px;width: 120px">
-                <button class="btn btn-primary"  style="font: 500 18px Arial, sans-serif;margin-top: 10px">政策推荐</button>
+<!--            <div class="card col" style="width: 120px;border: none;padding:30px 50px" th:if="${session.role==1}">-->
+            <div class="card col" style="width: 120px;border: none;padding:30px 50px" th:if="${session.role==0}">
+                <img src="specialistCSS/7674/Cbb24.png" th:src="@{specialistCSS/7674/Cbb24.png}" class="card-img-top" alt="..." style="height: 130px;width: 120px">
+                <a class="btn btn-primary" href="/recommendPolicy" style="width: 140px;font: 500 18px Arial, sans-serif;margin-top: 10px">政府政策推荐</a>
             </div>
 <!--            占位，没有内容-->
-            <div class="card col" style="width: 120px;border: none;padding:30px 50px">
-                <img src="../static/specialistCSS/7659/Bff3.png" th:src="@{specialistCSS/7659/Bff3.png}" class="card-img-top" alt="..." style="height: 130px;width: 120px">
-                <button class="btn btn-info"  style="font: 500 18px Arial, sans-serif;margin-top: 10px">种子信息</button>
+<!--            <div class="card col" style="width: 120px;border: none;padding:30px 50px" th:if="${session.role==2}">-->
+            <div class="card col" style="width: 120px;border: none;padding:30px 50px" th:if="${session.role==0}">
+                <img src="specialistCSS/7659/Bff3.png" th:src="@{specialistCSS/7659/Bff3.png}" class="card-img-top" alt="..." style="height: 130px;width: 120px">
+                <a href="/seedInfo" class="btn btn-info"  style="width: 140px;font: 500 18px Arial, sans-serif;margin-top: 10px">种子工作站</a>
             </div>
         </div>
     </section>

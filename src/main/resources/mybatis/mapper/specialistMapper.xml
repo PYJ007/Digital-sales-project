@@ -12,4 +12,10 @@
     <select id="findIdByPhone" resultType="int" parameterType="java.lang.String">
         select specialist_id from specialist where specialist_phone=#{phone}
     </select>
+    <select id="findNameById" resultType="String" parameterType="int">
+        select specialist_name from specialist where specialist_id=#{id}
+    </select>
+    <select id="findTypeByPhone" resultType="String" parameterType="java.lang.String">
+        select specialist_type from specialist where specialist_phone=#{phone}
+    </select>
 </mapper>

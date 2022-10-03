@@ -73,8 +73,67 @@
         <div class="input-group mb-3"  style="width: 60%;margin-left: 15%">
             <div class="input-group-prepend">
                 <span class="input-group-text">具体作物</span>
-                <select aria-label="country" name="crop_name1" class="btn btn-outline-secondary crops" type="button">Button</select>
-                <select aria-label="country" name="crop_name2" class="btn btn-outline-secondary breeds" type="button">Button</select>
+                <!--选择作物类别-->
+                <select aria-label="country" class="btn btn-outline-secondary crops" name="CropType" type="button">Button
+                    <!--枸杞，葡萄，向日葵,水稻，玉米，小麦，大豆,马铃薯-->
+                    <option onclick="showSelect('gq')" th:if="${wolfBerry!=null&&!wolfBerry.isEmpty()}">枸杞</option>
+                    <option onclick="showSelect('sd')" th:if="${paddyRice!=null&&!paddyRice.isEmpty()}">水稻</option>
+                    <option onclick="showSelect('pt')" th:if="${purple!=null&&!purple.isEmpty()}">葡萄</option>
+                    <option onclick="showSelect('ym')" th:if="${corn!=null&&!corn.isEmpty()}">玉米</option>
+                    <option onclick="showSelect('dd')" th:if="${soybean!=null&&!soybean.isEmpty()}">大豆</option>
+                    <option onclick="showSelect('mls')" th:if="${potato!=null&&!potato.isEmpty()}">马铃薯</option>
+                    <option onclick="showSelect('xrk')" th:if="${sunflower!=null&&!sunflower.isEmpty()}">向日葵</option>
+                    <option onclick="showSelect('xm')" th:if="${wheat!=null&&!wheat.isEmpty()}">小麦</option>
+                </select>
+                <!--这下面都是名称-->
+                <!--枸杞-->
+                <select aria-label="country" class="btn btn-outline-secondary breeds" id="gq"
+                        style="display: block" type="button">
+                    <option  th:if="${wolfBerry!=null}"
+                             th:each="cropsName:${wolfBerry}" th:value="${cropsName}" th:text="${cropsName}">宁夏枸杞</option>
+                </select>
+                <!--葡萄-->
+                <select aria-label="country" class="btn btn-outline-secondary breeds" id="pt"
+                        style="display: none" type="button">
+                    <option  th:if="${purple!=null}"
+                             th:each="cropsName:${purple}" th:value="${cropsName}" th:text="${cropsName}">宁夏枸杞</option>
+                </select>
+                <!--向日葵-->
+                <select aria-label="country" class="btn btn-outline-secondary breeds" id="xrk"
+                        style="display: none" type="button">
+                    <option  th:if="${sunflower!=null}" th:each="cropsName:${sunflower}"
+                             th:value="${cropsName}" th:text="${cropsName}">宁夏枸杞</option>
+                </select>
+                <!--水稻-->
+                <select aria-label="country" class="btn btn-outline-secondary breeds" id="sd"
+                        style="display: none" type="button">
+                    <option th:if="${paddyRice!=null}"
+                            th:each="cropsName:${paddyRice}" th:value="${cropsName}" th:text="${cropsName}">宁夏枸杞</option>
+                </select>
+                <!--玉米-->
+                <select aria-label="country" class="btn btn-outline-secondary breeds" id="ym"
+                        style="display: none" type="button">
+                    <option  th:if="${corn!=null}"
+                             th:each="cropsName:${corn}" th:value="${cropsName}" th:text="${cropsName}">宁夏枸杞</option>
+                </select>
+                <!--小麦-->
+                <select aria-label="country" class="btn btn-outline-secondary breeds" id="xm"
+                        style="display: none" type="button">
+                    <option  th:if="${wheat!=null}"
+                             th:each="cropsName:${wheat}" th:value="${cropsName}" th:text="${cropsName}">宁夏枸杞</option>
+                </select>
+                <!--大豆-->
+                <select aria-label="country" class="btn btn-outline-secondary breeds" id="dd"
+                        style="display: none" type="button">
+                    <option  th:if="${soybean!=null}"
+                             th:each="cropsName:${soybean}" th:value="${cropsName}" th:text="${cropsName}">宁夏枸杞</option>
+                </select>
+                <!--马铃薯-->
+                <select aria-label="country" class="btn btn-outline-secondary breeds" id="mls"
+                        style="display: none" type="button">
+                    <option th:if="${potato!=null}"
+                            th:each="cropsName:${potato}" th:value="${cropsName}" th:text="${cropsName}">宁夏枸杞</option>
+                </select>
                 <span class="input-group-text" style="margin-left: 25px">田的面积</span>
             </div>
             <input type="text" class="form-control" name="crop_acres" placeholder="具体面积 0.00" aria-label="detail-area" aria-describedby="button-addon3">
@@ -87,24 +146,30 @@
     <!--提交和重置按钮-->
     <div style="width: 30%;margin-left: 35%;text-align: center;margin-top:20px;margin-bottom: 20px">
         <div id="crop-sub-button">
-            <button type="submit" class="btn btn-secondary">提交</button>
+            <a type="submit" onclick="alertMsg()" class="btn btn-secondary">提交</a>
             <button class="btn btn-secondary" type="reset" value="Reset" style="margin-left:15%">重置</button>
         </div>
     </div>
 </form>
 
-<!--&lt;!&ndash;  添加按钮  &ndash;&gt;-->
-<!--<div id="add-button" class="input-group mb-3" style="width: 60%;margin-left: 15%;margin-top: 30px;height: 40px;line-height: 40px">-->
-<!--    <button type="button" class="btn" data-toggle="modal" data-target="#exampleModal" style="font: 400 18px/20px Arial;">-->
-<!--        <svg class="bi bi-plus-circle" width="25px" height="25px" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">-->
-<!--            <path fill-rule="evenodd" d="M8 3.5a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5H4a.5.5 0 0 1 0-1h3.5V4a.5.5 0 0 1 .5-.5z"/>-->
-<!--            <path fill-rule="evenodd" d="M7.5 8a.5.5 0 0 1 .5-.5h4a.5.5 0 0 1 0 1H8.5V12a.5.5 0 0 1-1 0V8z"/>-->
-<!--            <path fill-rule="evenodd" d="M8 15A7 7 0 1 0 8 1a7 7 0 0 0 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>-->
-<!--        </svg>-->
-<!--        继续添加田间信息-->
-<!--    </button>-->
-<!--</div>-->
-
+<script>
+    function alertMsg() {
+        const tag = document.getElementById("farmerProfile");
+        alert('感谢注册，现在将返回登陆页面。');
+        tag.submit();
+    }
+    function showSelect(name) {
+        //所有作物名称的选择框，置为不展示和移除name属性
+        const tags = document.getElementsByClassName("breeds");
+        for (let i=0;i<tags.length;i++){
+            tags[i].style.display = 'none';
+            tags[i].removeAttribute("name");
+        }
+        const tag = document.getElementById(name);
+        tag.style.display= 'block';
+        tag.setAttribute("name","CropName");
+    }
+</script>
 <script type="text/javascript" th:src="@{JS/location.js}"></script>
 <!--bootstrap的js文件-->
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

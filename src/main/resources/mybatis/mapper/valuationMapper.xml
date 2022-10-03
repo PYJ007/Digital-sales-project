@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dajun.springbootplatform.repository.valuationRepository">
+<!--    <insert id="saveValuation">-->
+<!--        insert into valuation-->
+<!--        value (#{seed_id},#{purity},#{neatness},#{germinationrate},#{wet},#{rank},#{grade})-->
+<!--    </insert>-->
+<!--    不存在该id的种子质量信息就插入，存在则更新-->
+    <insert id="saveValuation">
+        INSERT INTO valuation
+        value (#{seed_id},#{purity},#{neatness},#{germinationrate},#{wet},#{rank},#{grade})
+        ON DUPLICATE KEY UPDATE purity=#{purity},neatness=#{neatness},germinationrate=#{germinationrate},wet=#{wet},rank=#{rank},grade=#{grade};
+    </insert>
+    <select id="findValuationById" resultType="com.dajun.springbootplatform.entities.valuate.valuation">
+        SELECT * FROM valuation WHERE seed_id=#{id};
+    </select>
+</mapper>

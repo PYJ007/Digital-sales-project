@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link rel="shortcut icon" type="image/x-icon" href="img/ari-logo.png"/>
+
+<head>
+    <meta charset="UTF-8">
+    <title>时间轴</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+</head>
+<body>
+<style>
+    .specialist-tag{margin-left: 10%;width: 80%;background: lightgoldenrodyellow;border-radius: 12px;padding: 10px}
+</style>
+<!--推荐历史(时间轴)-->
+<div class="main-context">
+    <!--时间轴-->
+    <div style="width: 84%;float: left;margin-top: 20px">
+        <p class="specialist-tag">化肥名称：<span th:text="${fertilizer.getFertilizer_name()}"></span></p>
+        <p class="specialist-tag">化肥类别：<span th:text=" ((${fertilizer.getFertilizer_type()} == 0)? '无机肥' : '有机肥')"></span></p>
+        <p class="specialist-tag">氮的含量：<span th:text="${fertilizer.getFertilizer_n()}"></span></p>
+        <p class="specialist-tag">磷的含量：<span th:text="${fertilizer.getFertilizer_p()}"></span></p>
+        <p class="specialist-tag">钾的含量：<span th:text="${fertilizer.getFertilizer_k()}"></span></p>
+        <p class="specialist-tag">其他元素含量：<span th:text="${fertilizer.getFertilizer_other()}"></span></p>
+        <p class="specialist-tag">肥料介绍：<span th:text="${fertilizer.getFertilizer_instructions()}"></span></p>
+        <p class="specialist-tag">肥料价格：<span th:text="${fertilizer.getFertilizer_price()}"></span></p>
+        <p class="specialist-tag">制造商：<span th:text="${fertilizer.getFertilizer_manufacturer()}"></span></p>
+        <p class="specialist-tag">制造商电话：<span th:text="${fertilizer.getFertilizer_phone()}"></span></p>
+        <p class="specialist-tag">制造商地址：<span th:text="${fertilizer.getFertilizer_address()}"></span></p>
+        <p class="specialist-tag">生产日期：<span th:text="${#dates.format(fertilizer.getFertilizer_productiondate(),'yyyy-MM-dd')}"></span></p>
+        <p class="specialist-tag">保质期：<span th:text="${fertilizer.getFertilizer_shelflife()}"></span></p>
+        <p class="specialist-tag">适用作物：<span th:text="${fertilizer.getFertilizer_moderatecrop()}"></span></p>
+        <p class="specialist-tag">填写时间：<span th:text="${#dates.format(fertilizer.getRecommend_data(),'yyyy-MM-dd')}"></span></p>
+    </div>
+    <!-- 右侧浮动元素，提醒框啥的 -->
+    <div style="width: 14%;background: wheat;float: right;margin-top: 10px;text-align: center;font: 400 15px Arial;padding: 10px 5px 10px 5px;overflow: auto">
+        <p>今天是<span id="datetime" style="color: chocolate">2020-01-12</span></p>
+        <p>正在浏览<span th:text="${fertilizer.getFertilizer_name()}" style="color: chocolate">富源四号</span>的信息</p>
+        <br>
+        <p>
+            <a class="btn-sm btn-success" th:href="@{/admin/passFertilizer(fertilizer_id=${fertilizer.getFertilizer_id()})}">过审</a>
+        </p>
+    </div>
+</div>
+</body>
+<!--添加日期的js-->
+<script>
+    window.onload = function() {
+        const date = new Date();
+        const year = date.getFullYear();// 年
+        const month = date.getMonth() + 1; // 月
+        const day  = date.getDate(); // 日
+
+        document.getElementById("datetime").innerHTML = year + "年" + month + "月" + day + "日";
+    };
+
+
+    //筛选信息
+    // 1 插秧,2 保墒旱直播,3 播后上水,4 催芽撒播,0 全部
+    function filterInfo(index) {
+        const tagsIco = document.getElementsByClassName("lzc_icon");
+        const tagsSow1 = document.getElementsByClassName("sow1");
+        const tagsSow2 = document.getElementsByClassName("sow2");
+        const tagsSow3 = document.getElementsByClassName("sow3");
+        const tagsSow4 = document.getElementsByClassName("sow0");
+        for(let i=0;i<tagsIco.length;i++) {
+            tagsIco[i].parentNode.style.display = 'none';
+        }
+        switch (index) {
+            case 0:{
+                for(let i=0;i<tagsIco.length;i++){
+                    tagsIco[i].parentNode.style.display='block';
+                }break;
+            }
+            case 1:{
+                for(let i=0;i<tagsIco.length;i++){
+                    tagsSow1[i].parentNode.style.display='block';
+                }break;
+            }
+            case 2:{
+                for(let i=0;i<tagsIco.length;i++){
+                    tagsSow2[i].parentNode.style.display='block';
+                }break;
+            }
+            case 3:{
+                for(let i=0;i<tagsIco.length;i++){
+                    tagsSow3[i].parentNode.style.display='block';
+                }break;
+            }
+            case 4:{
+                for(let i=0;i<tagsIco.length;i++){
+                    tagsSow4[i].parentNode.style.display='block';
+                }break;
+            }
+        }
+
+    }
+</script>
+</html>

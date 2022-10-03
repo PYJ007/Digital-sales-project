@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<link rel="shortcut icon" type="image/x-icon" href="img/ari-logo.png"/>
+
+<head>
+    <meta charset="UTF-8">
+    <title>我的田</title>
+    <link rel="stylesheet" type="text/css" href="CSS/collection.css">
+    <script type="text/javascript" src="JS/my-js.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <link href="asserts/css/dashboard.css" rel="stylesheet">
+</head>
+<body>
+
+<!--因为本人技术限制，现在所有下拉框以及主产品展示框的唤醒都是通过id来定位的，所以请注意id命名的规范-->
+<!--下拉框：id一致-->
+<!--主界面唤醒：唤醒id=触发id + main-->
+
+<!--logo-->
+<div id="top-logo">
+    <div class="logo">
+        <img th:src="@{img/ari-logo.png}" src="../../static/img/ari-logo.png" alt="加载失败">
+        <b>农业一体化智能平台</b>
+    </div>
+    <div class="nav_span">
+        <ul id="nav-list">
+            <li class="nav first"><span>欢迎您，</span><span th:text="${session.userName}" style="color: chocolate">臭弟弟</span></li>
+            <li class="nav"><a href="#">收藏</a></li>
+            <li class="nav"><a href="#">消息</a></li>
+            <li class="nav end"><a href="#">反馈</a></li>
+        </ul>
+    </div>
+</div>
+
+<!--最上方导航栏-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background: linear-gradient(90deg,#00d0d4 19%,#00c5c3 58%,#9effa4 100%);">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto" style="margin: 0">
+            <li class="nav-item">
+                <a class="nav-link"  href="/">主页</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/collect">个人中心</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/myField">
+                    我的田
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/reco">
+                    智能推荐
+                </a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0" style="margin: 0">
+            <input class="form-control mr-sm-2" type="search" placeholder="搜索" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0"  type="submit">
+                <svg class="bi bi-search" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="vertical-align:revert">
+                    <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z" clip-rule="evenodd"/>
+                    <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" clip-rule="evenodd"/>
+                </svg></button>
+        </form>
+    </div>
+</nav>
+
+<!--侧栏和主区域-->
+<div class="container-fluid">
+    <div class="row">
+        <!--左侧功能框-->
+        <nav class="col-md-2 d-none d-md-block bg-light sidebar" style="float: left">
+            <div class="sidebar-sticky">
+                <ul class="nav flex-column">
+                    <!--田的管理-->
+                    <li class="nav-item">
+                        <button class="nav-link btn" disabled id="main"  href="#">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="feather" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M14 3H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V4a1 1 0 0 0-1-1zM2 2a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H2z"/>
+                                <path d="M2 5.5a.5.5 0 0 1 .5-.5h2a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-2a.5.5 0 0 1-.5-.5v-1z"/>
+                                <path fill-rule="evenodd" d="M2 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1h-5a.5.5 0 0 1-.5-.5zm0 2a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5zm3 0a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 0 1h-1a.5.5 0 0 1-.5-.5z"/>
+                            </svg>
+                            田的管理
+                        </button>
+                    </li>
+                    <!--田间管理-->
+                    <li class="nav-item  active">
+                        <a class="nav-link active" id="manger"  href="#">
+                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="feather" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                                <path fill-rule="evenodd" d="M15.817.613A.5.5 0 0 1 16 1v13a.5.5 0 0 1-.402.49l-5 1a.502.502 0 0 1-.196 0L5.5 14.51l-4.902.98A.5.5 0 0 1 0 15V2a.5.5 0 0 1 .402-.49l5-1a.5.5 0 0 1 .196 0l4.902.98 4.902-.98a.5.5 0 0 1 .415.103zM10 2.41l-4-.8v11.98l4 .8V2.41zm1 11.98l4-.8V1.61l-4 .8v11.98zm-6-.8V1.61l-4 .8v11.98l4-.8z"/>
+                            </svg>
+                            田间管理
+                        </a>
+                    </li>
+                    <!--投产估算-->
+                    <li class="nav-item">
+                        <button class="nav-link btn" disabled href="#" id="evaluation" >
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-bar-chart-2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+                            我的估算
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+
+        <!--        主内容页面-->
+        <main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+            <!--田间管理-->
+            <div class="main-context" id="mangermain" style="display: block;overflow: auto">
+                <p style="width: 100%;margin-top: 30px;font: 600 20px Arial, sans-serif;text-align: center">
+                    选择您的<span style="color: chocolate">富源四号</span>的种植方式</p>
+                <div>
+                    <!--     1234分别表示插秧、保墒旱直播、播后上水、催芽撒播               -->
+                    <a class="btn btn-outline-info" style="margin-left: 25%" type="button" href="/fieldReco/1">插秧</a>
+                    <a class="btn btn-outline-info" style="margin-left: 4%" type="button" href="/fieldReco/2">保墒旱直播</a>
+                    <a class="btn btn-outline-info" style="margin-left: 4%" type="button" href="/fieldReco/3">播后上水</a>
+                    <a class="btn btn-outline-info" style="margin-left: 4%" type="button" href="/fieldReco/4">催芽撒播</a>
+                </div>
+            </div>
+        </main>
+        <!-- - - - - - - - - - -->
+    </div>
+</div>
+</body>
+
+
+<script >
+    function setMap(object) {
+        const tags = document.getElementsByClassName("list-group-item");
+        for (let i=0;i<tags.length;i++){
+            tags[i].classList.remove("active");
+        }
+        object.classList.add("active");
+        // return new BMap.Point(106.252098, 38.253581);
+        var sContent ="<p style='text-align: center;color: #CC5522'>销售地点</p>" +
+            "<p>地址：王太堡XXX公司</p>" +
+            "<p>科泰种业有限公司</p>" +
+            "<p>电话：188888888</p>";
+        var map = new BMap.Map("l-map");          			// 创建地图实例
+        var point = new BMap.Point(106.252098,38.253581);  	// 创建点坐标
+        map.centerAndZoom(point, 17);
+        map.enableScrollWheelZoom();             		// 初始化地图，设置中心点坐标和地图级别
+
+        map.addControl(new BMap.NavigationControl());
+        map.addControl(new BMap.ScaleControl());
+        map.addControl(new BMap.OverviewMapControl());
+        map.addControl(new BMap.MapTypeControl());
+
+        var mapType1 = new BMap.MapTypeControl({mapTypes: [BMAP_NORMAL_MAP,BMAP_HYBRID_MAP]});
+        var mapType2 = new BMap.MapTypeControl({anchor: BMAP_ANCHOR_TOP_LEFT});
+        var overView = new BMap.OverviewMapControl();
+        var overViewOpen = new BMap.OverviewMapControl({isOpen:true, anchor: BMAP_ANCHOR_BOTTOM_RIGHT});
+        //添加地图类型和缩略图
+
+        map.addControl(mapType1);     //2D图，卫星图
+        // map.addControl(mapType2);     //左上角，默认地图控件
+        map.setCurrentCity("");    //由于有3D图，需要设置城市哦
+        // map.addControl(overView);     //添加默认缩略地图控件
+        // map.addControl(overViewOpen);   //右下角，打开
+
+        var navigationControl = new BMap.NavigationControl({
+            // 靠左上角位置
+            anchor: BMAP_ANCHOR_TOP_LEFT,
+            // LARGE类型
+            type: BMAP_NAVIGATION_CONTROL_LARGE,
+            // 启用显示定位
+            enableGeolocation: true // 会多出一个点
+        });
+        map.addControl(navigationControl);
+        // 添加定位控件
+        var geolocationControl = new BMap.GeolocationControl();
+        geolocationControl.addEventListener("locationSuccess", function(e){
+            // 定位成功事件
+            var address = '';
+            address += e.addressComponent.province;
+            address += e.addressComponent.city;
+            address += e.addressComponent.district;
+            address += e.addressComponent.street;
+            address += e.addressComponent.streetNumber;
+        });
+        geolocationControl.addEventListener("locationError",function(e){
+            // 定位失败事件
+            alert(e.message);
+        });
+        map.addControl(geolocationControl);
+
+        var infoWindow = new BMap.InfoWindow(sContent);  	// 创建信息窗口对象
+        map.openInfoWindow(infoWindow,point); 				// 开启信息窗口
+
+        var marker = new BMap.Marker(point,{icon:new BMap.Icon("http://api.map.baidu.com/lbsapi/createmap/images/icon.png",new BMap.Size(20,25),{
+                imageOffset: new BMap.Size(-46,-21)
+            })});
+        map.addOverlay(marker);                     		// 将标注添加到地图中
+        marker.addEventListener("click", function(){        // 给标注添加点击事件
+            this.openInfoWindow(infoWindow);
+        });
+    }
+</script>
+
+</html>

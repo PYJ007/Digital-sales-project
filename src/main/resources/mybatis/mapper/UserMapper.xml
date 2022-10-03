@@ -4,6 +4,20 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.dajun.springbootplatform.repository.userRepository">
 <!--    原本对象应该是com.dajun.springboot.entities.User,因为都是指向一个实例类，可以提出来-->
+    <select id="findBuyerBySellerPhone" resultType="User">
+        SELECT user.`user_name`,user.`user_tel` FROM
+        (SELECT b_phone FROM buyers_seller WHERE s_phone=#{phone}) bp
+        LEFT JOIN USER
+        ON bp.b_phone=user.`user_tel`
+    </select>
+
+    <select id="findSellerBybuyerPhone" resultType="User">
+        SELECT user.`user_name`,user.`user_tel` FROM
+        (SELECT s_phone FROM buyers_seller WHERE b_phone=#{phone}) bp
+        LEFT JOIN USER
+        ON bp.s_phone=user.`user_tel`
+    </select>
+
     <select id="findAll" resultType="User">
         select * from user
     </select>
@@ -12,16 +26,38 @@
         select * from user where user_tel=#{phone}
     </select>
 
+    <select id="findByName" parameterType="java.lang.String" resultType="User">
+        select * from user where user_name=#{name}
+    </select>
+
     <select id="findName" parameterType="java.lang.String" resultType="java.lang.String">
         select user_name from user where user_tel=#{phone}
     </select>
 
+    <select id="findSpecialistTel" parameterType="java.lang.String" resultType="java.lang.String">
+        select specialist_tel from user where user_tel=#{phone}
+    </select>
+
+    <select id="findUserTel" parameterType="java.lang.String" resultType="java.lang.String">
+        select user_tel from user where specialist_tel=#{phone} limit 1
+    </select>
+
+    <select id="findUserName" parameterType="java.lang.String" resultType="java.lang.String">
+        select user_name from user where specialist_tel=#{phone}
+    </select>
+
     <update id="upDate" parameterType="User">
-        update user set user_name=#{user_name},user_card=#{user_card},user_pass=#{user_pass},user_phone=#{user_phone},
-                        user_fieldacres=#{user_fieldacres},user_fieldadress=#{user_fieldadress} where user_id=#{user_id}
+        update user set user_name=#{user_name},user_card=#{user_card},user_pass=#{user_pass},user_tel=#{user_phone},
+                        user_fieldacres=#{user_fieldacres},user_fieldadress=#{user_fieldadress} where user_tel=#{user_id}
     </update>
 
-    <delete id="deleteById" parameterType="java.lang.Long">
-        delete from user where user_id=#{id}
+    <delete id="deleteById" parameterType="String">
+        delete from user where user_tel=#{user_tel}
     </delete>
+    <select id="findPhoneByName" parameterType="java.lang.String" resultType="java.lang.String">
+        select user_tel from user where user_name=#{name}
+    </select>
+    <insert id="insertBrowsing" statementType="CALLABLE">
+        {call browsingH(#{user_phone},#{seed_id})}
+    </insert>
 </mapper>

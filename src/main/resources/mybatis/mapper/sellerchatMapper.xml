@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dajun.springbootplatform.repository.sellerchatRepository">
+    <select id="findAnswerByPhone" resultType="sellerChat" >
+        SELECT * FROM sellerchat WHERE s_phone=#{sellerPhone} AND b_phone=#{buyerPhone} ORDER BY id DESC
+    </select>
+
+    <select id="findBuyerPhoneBySellerPhone" resultType="String" >
+        SELECT b_phone FROM buyers_seller WHERE s_phone=#{sellerPhone} LIMIT 1
+    </select>
+    <insert id="saveAnswer">
+        INSERT	INTO sellerchat(s_chat,b_phone,s_phone,state) VALUE(#{answer},#{buyerPhone},#{sellerPhone},#{state})
+    </insert>
+    <select id="findMassageStateByPhone" resultType="int" >
+        SELECT COUNT(*) FROM sellerchat WHERE s_phone=#{sellerPhone} AND b_phone=#{buyerPhone} AND state=0;
+    </select>
+</mapper>

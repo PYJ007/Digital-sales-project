@@ -46,6 +46,11 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/reco">
+                    专家推荐
+                </a>
+            </li>
+            <li class="nav-item">
+                <a target="_blank" class="nav-link" href="http://127.0.0.1:1026/test">
                     智能推荐
                 </a>
             </li>
@@ -113,9 +118,9 @@
         <li class="tools" id="paddy"><a href="#"><img src="img/paddy1.png" alt=""><br/>水稻病害诊断</a></li>
         <li class="tools" id="knowledge"><a href="#"><img src="img/knowledge.png" alt=""><br/>知识检索</a></li>
         <li class="tools" id="question-platform"><a href="#"><img src="img/question.png" alt=""><br/>智能问答</a></li>
-        <li class="tools" id="evaluate-margin"><a href="#"><img src="img/margin.png" alt=""><br/>效益估算</a></li>
-        <li class="tools" id="profession"><a href="#"><img src="img/zhuanjia1.png" alt=""><br/>专家答疑</a></li>
-        <li class="tools" id="trade-platform"><a href="#"><img src="img/trade.png" alt=""><br/>交易大厅</a></li>
+        <li class="tools" id="evaluate-margin"><a href="/jump"><img src="img/margin.png" alt=""><br/>效益估算</a></li>
+        <li class="tools" id="profession"><a href="/collect"><img src="img/zhuanjia1.png" alt=""><br/>专家答疑</a></li>
+        <li class="tools" id="trade-platform"><a th:href="@{/dealLobby/index2(name=${session.userName})}"><img src="img/trade.png" alt=""><br/>交易大厅</a></li>
         <li class="tools" id="ai-recommendation"><a href="#"><img src="img/rec.png" alt=""><br/>智能推荐</a></li>
     </ul>
 </section>

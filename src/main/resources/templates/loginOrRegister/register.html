@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<link rel="shortcut icon" type="image/x-icon" href="img/ari-logo.png"/>
 <head>
     <meta charset="UTF-8">
     <title>用户注册</title>
@@ -47,13 +48,14 @@
 </header>
 <body>
 <!--基础信息部分-->
-<form th:action="@{/registerSub}" method="post" name="basic-information">
+<form th:action="@{/registerSub}" id="inputForm" method="post" name="basic-information">
+    <p style="color: red;width: 100%;text-align: center" th:text="${msg!=null?msg:''} "></p>
     <!--用户名-->
     <div class="input-group mb-3" style="width: 60%;margin-left: 15%">
         <div class="input-group-prepend">
-            <span class="input-group-text" id="basic-addon1">姓名</span>
+            <span class="input-group-text" id="basic-addon1">称呼</span>
         </div>
-        <input type="text" class="form-control" name="userName" placeholder="如何称呼您" aria-label="Username" aria-describedby="basic-addon1">
+        <input type="text" class="form-control" name="userName" placeholder="姓名或者公司名称" aria-label="Username" aria-describedby="basic-addon1">
     </div>
 
     <!--用户手机-->
@@ -61,7 +63,7 @@
         <div class="input-group-prepend">
             <span class="input-group-text" id="basic-addon2">手机</span>
         </div>
-        <input type="text" class="form-control" name="userPhone" placeholder="您的电话号码" aria-label="telephone" aria-describedby="basic-addon2">
+        <input type="text" id="user_tel" class="form-control" name="userPhone" placeholder="您的电话号码" aria-label="telephone" aria-describedby="basic-addon2">
     </div>
 
     <!--用户密码-->
@@ -81,7 +83,7 @@
     <!--提交和重置按钮-->
     <div style="width: 30%;margin-left: 35%;text-align: center;margin-top:20px;margin-bottom: 20px">
         <div id="res-sub-button">
-            <button type="submit" class="btn btn-secondary">提交</button>
+            <button onclick="test_()" type="button" class="btn btn-secondary">提交</button>
             <button class="btn btn-secondary" type="reset" value="Reset" style="margin-left:15%">重置</button>
         </div>
     </div>
@@ -97,6 +99,21 @@
 <!--</div>-->
 
 
+
+<!--//手机号是否合理-->
+<script type="text/javascript">
+    function test_(){
+        const user_tel=document.getElementById("user_tel").value;
+        const fromTag = document.getElementById("inputForm");
+        const p1=/^(13[0-9]\d{8}|15[0-35-9]\d{8}|18[0-9]\{8}|14[57]\d{8})$/;
+        if(p1.test(user_tel)===false) {
+            alert('请填写正确电话号码!!');
+            //清空输入的数据
+            document.getElementById("user_tel").value="";
+        }
+        else fromTag.submit();
+    }
+</script>
 
 <!--自己写的js脚本-->
 <script>

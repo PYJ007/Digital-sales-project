@@ -5,12 +5,12 @@
 <mapper namespace="com.dajun.springbootplatform.repository.recommendRepository">
 <!--    这个有限制返回的数据数-->
     <select id="findBySeedIdAndSpecialistIdLimit" resultType="recommend" parameterType="specialistAndSeedId">
-        select * from recommend where seed_id=#{seed_id} and specialist_id=#{specialist_id}
+        select * from recommendjude where seed_id=#{seed_id} and specialist_id=#{specialist_id}
         order by recommend_id desc limit 6;
     </select>
 <!--    这个不限制返回的数据数-->
     <select id="findBySeedIdAndSpecialistId" resultType="recommend" parameterType="specialistAndSeedId">
-        select * from recommend where seed_id=#{seed_id} and specialist_id=#{specialist_id}
+        select * from recommendjude where seed_id=#{seed_id} and specialist_id=#{specialist_id}
         order by recommend_id desc;
     </select>
 <!--    插入水表-->
@@ -20,18 +20,24 @@
         values
             (#{specialist_id},#{recommend_time},#{recommend_endtime},#{seed_id},#{recommend_type},#{recommend_readed},#{detail},#{notice},#{stage},#{sowmethod})
     </insert>
+    <insert id="insertJudgeBySeedId" parameterType="recommend" useGeneratedKeys="true" keyColumn="recommend_id" keyProperty="recommend_id">
+        insert into recommendjude
+        (specialist_id,recommend_time,recommend_endtime,seed_id,recommend_type,recommend_readed,detail,notice,stage,sowmethod,judge)
+        values
+        (#{specialist_id},#{recommend_time},#{recommend_endtime},#{seed_id},#{recommend_type},#{recommend_readed},#{detail},#{notice},#{stage},#{sowmethod},0)
+    </insert>
     <delete id="deleteByRecommendId" parameterType="int">
         delete from recommend where recommend_id=#{recommend_id}
     </delete>
     <select id="findRecommendIdBySpecialistId" parameterType="int" resultType="int">
-        select recommend_id from recommend where specialist_id=#{specialistId}
+        select recommend_id from recommendjude where specialist_id=#{specialistId}
         order by recommend_id desc limit 1;
     </select>
     <insert id="saveElements" parameterType="recommendElements">
         insert into
-            recommendfertilizer (recommend_id,element,element_type,element_volume)
+            recommendfertilizer (recommend_id,K_volume,N_volume,P_volume)
         values
-            (#{recommend_id},#{element},#{element_type},#{element_volume})
+            (#{recommend_id},#{K_volume},#{N_volume},#{P_volume})
     </insert>
     <insert id="savePesticide" parameterType="recommendPesticide">
         insert into
@@ -44,7 +50,31 @@
     <select id="findPesticideById" parameterType="int" resultType="recommendPesticide">
         select * from recommendpesticide where recommend_id=#{id}
     </select>
-    <select id="findRecommendByCropsAndTime" resultType="recommend" parameterType="int">
-        select * from recommend
+    <select id="findRecommendByCropsAndTime" resultType="recommend" parameterType="String">
+        select * from recommend where
+--             curdate()>recommend_time and recommend_endtime>curdate() and
+             seed_id in(select seed_id from seed where seed_name in
+             (select user_cropsname from field where user_tel = #{user_tel}))
+        order by recommend_time desc;
+    </select>
+    <select id="recommendReadOrNot" parameterType="recommendIdAndTel" resultType="Integer">
+        select 1 from recommendread where recommend_id=#{recommend_id} and user_tel=#{user_tel} limit 1;
+    </select>
+    <insert id="insertRecommendRead" parameterType="recommendIdAndTel">
+        insert into recommendread(recommend_id, user_tel) values (#{recommend_id},#{user_tel})
+    </insert>
+    <insert id="savePolicy" useGeneratedKeys="true" keyColumn="policy_id" keyProperty="policy_id" parameterType="policy" >
+        insert into policy(policy_time, policy_title, policy_content, specialist_id)
+        VALUES (#{policy_time},#{policy_title},#{policy_content},#{specialist_id})
+    </insert>
+    <insert id="savePolicyFile" parameterType="String">
+        insert into policyfile(policyfile_location, policyfile_read) values (#{location},0)
+    </insert>
+<!--    根据推荐的ID获取推荐的内容-->
+    <select id="findRecommendById" parameterType="int" resultType="recommend">
+        select * from recommend where recommend_id=#{id}
+    </select>
+    <select id="findAllFiles" resultType="String">
+        select policyfile_location from policyfile;
     </select>
 </mapper>

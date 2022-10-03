@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+<!--    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">-->
+<!--    <link rel="stylesheet" href="../../static/CSS/fa/all.min.css">-->
+<!--    <link rel="stylesheet" type="text/css" href="CSS/collection.css">-->
+<!--    <link href="asserts/css/dashboard.css" rel="stylesheet">-->
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">-->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <link rel="stylesheet" href="../../static/CSS/fa/all.min.css">
+<!--    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">-->
+    <style>
+        a{
+            text-decoration:none;
+            display: block;
+        }
+        .sign{
+            font-size: 24px;
+            margin-right: 18px;
+            color: #1a437e;
+        }
+        .navbar{
+            margin-top: -20px;
+        }
+    </style>
+</head>
+<body>
+<div class="page-header" style="margin-top: 10px">
+    <div style="margin-left: 120px">
+        <span class="glyphicon glyphicon-grain sign"></span><span class="sign" th:text="${type}+类农作物">农作物类型</span>
+    </div>
+</div>
+
+<!--顶部导航条-->
+<nav class="navbar " style="background: linear-gradient(90deg,#00d0d4 19%,#00c5c3 58%,#9effa4 100%);">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav" style="margin-left: 80px">
+                <li ><a class="glyphicon glyphicon-shopping-cart" href="/dealLobby/shopCar2">购物车</a></li>
+            </ul>
+            <form class="navbar-form navbar-left" action="/dealLobby/shopSearch" method="post">
+                <div class="form-group">
+                    <!--                    <input type="text" class="form-control" placeholder="商品搜索">-->
+                    <select class="form-control" style="width: 200px;height: 35px" name="cereal">
+                        <option selected>请选择作物种类</option>
+                        <div th:each="seedType:${seedTypes}">
+                            <option th:text="${seedType}" th:name="${seedType}" th:value="${seedType}"></option>
+                        </div>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-default">搜索</button>
+            </form>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 80px">
+                <li ><a class="glyphicon glyphicon-comment" href="#" th:href="@{/dealLobby/connect}">消息</a></li>
+                <li ><a class="glyphicon glyphicon-user" href="/personalCenter/index">个人中心</a></li>
+                <li ><a class="glyphicon glyphicon-home" th:href="@{/dealLobby/index2(name=${session.userName})}">返回交易大厅</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+
+<!--<div th:if="${seedList.size()>0}" th:each="seed:${seedList}" class="media position-relative" style="float: left; margin-top: 18px;margin-left: 120px;border-bottom: rgba(1,1,1,0.2) 1px solid;width: 84%;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.19)">-->
+<!--    <a href="#">-->
+<!--        <img th:src="@{'/img/'+${seed.getSeed_image()}}" class="mr-3" width="100px" height="100px" alt="加载失败">-->
+<!--    </a>-->
+<!--    <div class="media-body">-->
+<!--        <div class="d-flex w-100 justify-content-between">-->
+<!--            <h5 th:text="${seed.getSeed_name()}" class="mb-1">宁粳43号</h5>-->
+<!--            <small  style="margin-right: 6px">2020-03-15</small>-->
+<!--        </div>-->
+<!--        <p th:text="${seed.getSeed_introduce()}" style="width: 100%;overflow: hidden"> 宁粳43号具有抗倒伏，耐旱耐寒，且产量高，味道甜，在市场上具有一定的人气和市场。</p>-->
+<!--        <div style="float: right;width: 100px;margin-bottom: 5px;font: 500 14px Arial, sans-serif ">-->
+<!--            <a style="text-decoration: none" th:href="'/seedRecInfo/'+${seed.getSeed_id()}" target="_blank" href="/">查看更多</a>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<div th:if="${seedList.size()>0}" th:each="seed:${seedList}" style="margin-left: 150px" >
+    <div style="float: left;width: 400px;height: 500px;background-color: wheat;border-bottom: rgba(1,1,1,0.2) 1px solid;margin-right: 20px">
+        <a href="#" style="display: block">
+            <img th:src="@{'/img/seed'+${seed.getSeed_id()}+'.jpg'}" style="width: 400px;height: 300px" alt="加载失败">
+        </a>
+        <div >
+            <div >
+                <h5 th:text="${seed.getSeed_name()}" >宁粳43号</h5>
+            </div>
+            <p th:text="${seed.getSeed_introduce()}" style="width: 100%;overflow: auto;height: 120px"> 宁粳43号具有抗倒伏，耐旱耐寒，且产量高，味道甜，在市场上具有一定的人气和市场。</p>
+            <div >
+                <a style="text-decoration: none;margin-left: 300px" th:href="'/seedRecInfo/'+${seed.getSeed_id()}" target="_blank" href="/">查看更多</a>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<nav aria-label="Page navigation" style="margin-left: 150px;display: block;margin-top: 530px">
+    <ul class="pagination">
+        <li>
+            <a th:href="@{/dealLobby/shopSearch2(star=1)}" aria-label="Previous">
+                <span aria-hidden="true">首页</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/dealLobby/shopSearch2(star=${star}-1)}" aria-label="Previous">
+                <span aria-hidden="true">上一页</span>
+            </a>
+        </li>
+        <li th:each="i:${#numbers.sequence(1,numb)}"><a th:text="${i}" th:href="@{/dealLobby/shopSearch2(star=${i})}">1</a></li>
+        <li>
+            <a th:href="@{/dealLobby/shopSearch2(star=${star}+1)}" aria-label="Next">
+                <span aria-hidden="true">下一页</span>
+            </a>
+        </li>
+        <li>
+            <a th:href="@{/dealLobby/shopSearch2(star=${numb})}" aria-label="Next">
+                <span aria-hidden="true">末页</span>
+            </a>
+        </li>
+    </ul>
+</nav>
+
+</body>
+</html>

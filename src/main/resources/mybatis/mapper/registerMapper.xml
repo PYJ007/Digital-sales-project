@@ -16,5 +16,9 @@
         update user set user_card=#{user_card},user_fieldadress=#{user_fieldadress}
         where user_tel=#{user_tel}
     </update>
-
+    <insert id="saveSpecialist" useGeneratedKeys="true" keyProperty="specialist_id" keyColumn="specialist_id" parameterType="Specialist">
+        insert into specialist
+            (specialist_name, specialist_pass, specialist_phone, specialist_address, specialist_instructions, specialist_type)
+        values (#{specialist_name},#{specialist_pass},#{specialist_phone},#{specialist_address},#{specialist_instructions},#{specialist_type})
+    </insert>
 </mapper>

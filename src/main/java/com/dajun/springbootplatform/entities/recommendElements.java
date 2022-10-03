@@ -4,8 +4,8 @@ import lombok.Data;
 
 @Data
 public class recommendElements {
-    private String element;
-    private String element_type;
-    private String element_volume;
+    private double N_volume;
+    private double P_volume;
+    private double K_volume;
     private int recommend_id;
 }

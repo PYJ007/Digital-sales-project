@@ -4,22 +4,26 @@ import lombok.Data;
 
 import java.util.Date;
 
+
 @Data
 public class Seed {
-    int seed_id;
-    String seed_name;
-    String seed_introduce;
-    String seed_plantarea;
-    String seed_method;
-    Double seed_price;
-    String seed_manufacturer;
-    String note;
-    String seed_store;
-    String seed_phone;
-    Date seed_productiondate;
-    int seed_shelflife;
-    String seed_plantnumber;
-    String seed_type;
-    String seed_image;
-    int specialist_id;
+    private int seed_id;
+    private String seed_name;
+    private String seed_introduce;
+    private String seed_plantarea;
+    private String seed_method;
+    private Double seed_price;
+    private String seed_manufacturer;
+    private String seed_note;
+    private String seed_store;
+    private String seed_phone;
+    private Date seed_productiondate;
+    private int seed_shelflife;
+    private String seed_plantnumber;
+    private String seed_type;
+//    private String seed_image;
+    private byte[] seed_image;
+    private int specialist_id;
+    private int seed_state;
+
 }

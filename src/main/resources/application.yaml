@@ -1,0 +1,5 @@
+# 解决静态资源中文乱码问题！
+server:
+  servlet:
+    encoding:
+      force: true

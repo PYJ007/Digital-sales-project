@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
+<link rel="shortcut icon" type="image/x-icon" href="img/ari-logo.png"/>
+
 <head>
     <meta charset="UTF-8">
     <title>时间轴</title>
@@ -41,7 +43,6 @@
                         <div style="margin-top:8px;font: 600 16px/18px Arial;color: coral"  th:text="${converse.operationConverse(recommend.getRecommend_type())}">施肥操作</div>
                         <div style="margin-top:8px;font: 600 16px/18px Arial">种植方式：<span  th:text="${converse.sowMethodConverse(recommend.getSowmethod())}" style="color: coral;margin-right: 100px">不知道不知道</span>生长期:<span th:text="${recommend.getStage()}" style="color: coral">不知道</span></div>
                         <div style="margin-top:8px;font: 400 15px Arial;width: 85%" th:text="${recommend.getDetail()}">适合施肥堆土，堆土5cm深，根部不应有暴露,堆土5cm深，根部不应有暴露,堆土5cm深，根部不应有暴露,堆土5cm深，根部不应有暴露,堆土5cm深，根部不应有暴露,堆土5cm深，根部不应有暴露,堆土5cm深，根部不应有暴露,堆土5cm深，根部不应有暴露,</div>
-                        <a type="button" th:value="${recommend.getRecommend_id()}" class="btn btn-warning btn-sm" onclick="submitForm(1,this)" style="float: right;">修改</a>
                         <a type="button" th:value="${recommend.getRecommend_id()}" class="btn btn-danger btn-sm" onclick="submitForm(2,this)" style="float: right;color: snow">删除</a>
 <!--                        <div style="position:absolute;right: 8px;bottom:10px;width: 12%"><a href="#" style="text-decoration: none;color: dimgrey;font: 500 14px Arial">查看更多>></a></div>-->
                         <form style="display: none" th:id="${recommend.getRecommend_id()}" method="post" action="/specialistForm">
@@ -64,10 +65,10 @@
         <p style="margin-bottom: 0;color: #005cbf;font-weight: 700">筛选种植方式：</p>
         <ul class="list-group">
             <li><a class="dropdown-item" onclick="filterInfo(0)">显示全部</a></li>
-            <li><a class="dropdown-item" onclick="filterInfo(1)">插秧</a></li>
-            <li><a class="dropdown-item" onclick="filterInfo(2)">保墒旱直播</a></li>
-            <li><a class="dropdown-item" onclick="filterInfo(3)">播后上水</a></li>
-            <li><a class="dropdown-item" onclick="filterInfo(4)">催芽撒播</a></li>
+            <li><a class="dropdown-item" onclick="filterInfo(1)">保墒旱直播</a></li>
+            <li><a class="dropdown-item" onclick="filterInfo(2)">播后上水</a></li>
+            <li><a class="dropdown-item" onclick="filterInfo(3)">催芽撒播</a></li>
+            <li><a class="dropdown-item" onclick="filterInfo(4)">插秧</a></li>
         </ul>
         <br>
         <p style="text-align: center"><a href="/specialistReco" style="text-decoration: none;color:cornflowerblue;">返回上一级</a></p>
@@ -105,7 +106,7 @@
         const tagsSow1 = document.getElementsByClassName("sow1");
         const tagsSow2 = document.getElementsByClassName("sow2");
         const tagsSow3 = document.getElementsByClassName("sow3");
-        const tagsSow4 = document.getElementsByClassName("sow4");
+        const tagsSow4 = document.getElementsByClassName("sow0");
         for(let i=0;i<tagsIco.length;i++) {
             tagsIco[i].parentNode.style.display = 'none';
         }

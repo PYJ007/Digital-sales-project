@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>政策推送二级</title>
+    <link rel="stylesheet" type="text/css" href="../CSS/推送二级.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+<!--头和导航-->
+<div id="top-logo">
+    <div class="logo">
+        <img src="../img/ari-logo.png" alt="加载失败">
+        <b>农业一体化智能平台</b>
+    </div>
+</div>
+<!--介绍区-->
+<section class="intro">
+    <div class="banner"  style="background: #00c5c3"><span>政策详情</span></div>
+    <p style="background: lightgoldenrodyellow;width: 94%;margin-left: 40px;margin-top:20px;
+    font-family: Arial, sans-serif ;font-size: 25px;font-weight: 700;border-bottom: #4e555b 2px solid;padding: 10px" th:text="${policy.getPolicy_title()}">有关税率下调的政策</p>
+    <div style="background: lightgoldenrodyellow;width: 94%;margin-left: 40px;padding: 0 20px 5px 20px;margin-top: 0;
+           line-height: 35px">
+        <span>&nbsp;&nbsp;&nbsp;</span>
+        <span th:text="${policy.getPolicy_content()}" style="padding: 10px 20px">日前召开的国务院常务会强调，阶段性减免企业养老、失业、工伤保险单位缴费，以减轻疫情对企业特别是中小微企业的影响，使企业恢复生产后有一个缓冲期。6月底前，企业可申请缓缴住房公积金，
+        在此期间对职工因受疫情影响未能正常还款的公积金贷款，不作逾期处理。
+
+        2月18日召开的国务院常务会决定，阶段性减免企业社保费和实施企业缓缴住房公积金政策，多措并举稳企业稳就业。对此，业内专家表示，此政策超乎预期，是对稳就业政策的进一步延续，有望帮助
+        经营困难的企业渡过难关。短期有望立竿见影
+
+        从具体内容看，会议确定，阶段性减免企业养老、失业、工伤保险单位缴费，除湖北外各省份，从2月到6月可对中小微企业免征上述3项费，从2月到4月可对大型企业减半征收；湖北省从2月到6月可对
+        各类参保企业实行免征。
+
+        国务院发展研究中心研究员冯文猛对记者表示，目前疫情防控处于关键时期，疫情对企业和就业的影响在逐渐显现。特别是处于停产停工状态的中小微企业，本身抗风险能力较弱，一旦失去收入来源，
+        生存发展将出现困难。在此背景下，阶段性减免企业社保费，直接目的是为了减轻疫情对企业特别是中小微企业的影响，使企业复产后有自我恢复的缓冲期，最终目的则是为了稳企业、稳就业。
+
+        “从中小企业的成本支出来看，人力成本占了大头，而社保费用是除工资之外人力成本的重要组成部分。让占比较高的社保支出有实质性下降，短期内将产生立竿见影的政策效果。”冯文猛认为。
+
+        对外经贸大学公共管理学院教授李长安指出，减免社保费是近些年来政府推出的减税降费系列组合拳的一项重要内容，在减轻企业负担方面发挥了积极的作用。据人社部门统计，2015年以来，我国先后
+        5次降低或阶段性降低社保费率，以减轻企业缴费负担。
+
+        “此次更大力度地减免企业社保费，既是前期为企业减负政策的延续，又是应对疫情冲击的有力武器，可谓抓住了稳企业、稳就业的‘牛鼻子’。”李长安对经济日报记者说。
+
+        体现施策精准原则 专家表示，此次阶段性减免政策与以往相比明显的区别是，政策力度更大，针对性更强。
+
+        李长安认为，在过去的社保降费措施中，更多的是通过降低一定幅度的社保费率，达到降低企业社保负担的目的。此次为应对疫情冲击推出的阶段性减免社保费举措，则直接提出了免征或减半征收的强力做法。
+
+        “由于中小微企业承受风险能力较弱，此次针对中小微企业的社保费用减免幅度更大，优惠期也更长。此外还根据疫情的轻重，对湖北和湖北以外的地区在社保费减免方面作出了区别性的对待，体现了精准
+        施策的原则。”李长安说。
+
+        冯文猛认为，此次阶段性减免社保缴费，涉及到养老保险、失业保险及工伤保险3个项目，针对的是减免企业养老、失业、工伤保险的单位缴费，考虑了实际可操作等因素。根据人社部统计，截至2019年底，基
+        本养老、失业、工伤保险3项社会保险基金总收入5.82万亿元，总支出5.41万亿元，年底基金累计结余6.85万亿元，3项基金运行总体较为平稳。阶段性减免这3项基金缴费，在精算平衡方面有可操作性基础。
+
+        确保养老金按时足额发放
+
+        疫情期间，减免社保费用会不会影响养老金按时足额发放？也是社会广为关注的话题。对此，人社部近期下发《关于切实做好新型冠状病毒感染的肺炎疫情防控期间社会保险经办工作的通知》，明确要求确保各
+        项社会保险待遇按时足额发放。同时，上述通知提出，对于领取待遇人员未按期办理资格认证的，不暂停待遇的发放。对于未能及时办理新增退休人员申报的，经审核后，自审核次月起补发养老金。
+
+        “值得注意的是，此次实施减免社保费的政策，已经充分考虑了我国社保基金的结余等情况，对于养老金等各项社保待遇按时足额发放并不会产生实质性影响。这就是说，疫情暂时的冲击和阶段性的减免社保费
+        不会危害到整个社保体系的安全。”李长安说。</span>
+    </div>
+    <div style="background: lightgoldenrodyellow;width: 94%;margin-left: 40px;padding: 10px 20px 5px 20px">
+        <p style="font-family: Arial, sans-serif ;font-size: 25px;font-weight: 700;width: 100%;border-bottom: #4e555b 2px solid">相关下载</p>
+        <img src="../img/rec.png" width="40px" style="margin-left: 10%">
+        <a style="margin: 20px;" href="/getDownload" target="_blank">什么政策</a>
+    </div>
+    <div style="width: 94%;height: 120px;padding: 10px 20px 5px 20px;background: lightgoldenrodyellow;margin-left: 40px;margin-top: 10px">
+        <img src="../img/zhuanjia1.png" style="width: 110px;height: 110px;float: left">
+        <p style="font-family: Arial,sans-serif;font-size: 18px;padding-left: 30px;padding-bottom: 5px">信息推送专家：<span style="color: chocolate" th:text="${sName}">大俊</span>专家</p>
+        <p style="font-family: Arial,sans-serif;font-size: 18px;padding-left: 15px;padding-bottom: 5px">信息推送时间：<span style="color: chocolate" th:text="${policy.getPolicy_time()}">2020/01/12</span></p>
+        <button type="button" class="btn btn-success btn-sm">联系专家</button>
+    </div>
+</section>
+<!--页脚-->
+<footer>
+    <div id="address">
+        <p>
+            COPYRIGHT©大数据集成与可视化团队<br/><br/>
+            联系邮箱110@nun.edu.cn<br/><br/>
+            建议使用chrome，firefox或者IE&nbsp;11以上浏览器
+        </p>
+    </div>
+    <div id="poster">
+        <a href="#">
+            <img src="img/data-logo.png" alt="" style="width: 160px;height: 120px">
+            <p style="float: right;padding: 10px 0 0 10px">&nbsp;大<br/>&nbsp;数<br/>&nbsp;据<br/>&nbsp;团<br/>&nbsp;队<br/></p>
+        </a>
+    </div>
+    <div id="return-top">
+        <a href="#">
+            <img src="img/jiantou.png" alt="">
+            <span>返回顶部</span>
+        </a>
+    </div>
+</footer>
+</body>
+</html>

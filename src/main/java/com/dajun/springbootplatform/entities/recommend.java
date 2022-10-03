@@ -1,6 +1,5 @@
 package com.dajun.springbootplatform.entities;
 import lombok.Data;
-import java.util.Date;
 
 @Data
 public class recommend {
@@ -13,7 +12,7 @@ public class recommend {
 //    结束时间
     private String recommend_endtime;
 //    种子ID
-    private int seed_id;
+    private Integer seed_id;
 //    推荐的类型（肥、药、水、其他）
     private int recommend_type;
 //    推荐是否被用户读取

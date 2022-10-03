@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title >文件下载</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+</head>
+<body>
+<h1 style="text-align: center;">下载文件</h1>
+<hr/>
+<form class="form-signin" th:action="@{download}" method="post" th:each="name:${names}">
+    <span style="margin-left: 60px" th:text="${name}">1.png</span>
+    <span style="margin-left: 30px"><input class="btn btn-primary btn-sm" type="submit" name="name" th:value="${name}" value="下载"/></span>
+    <hr>
+<!--    <p style="color: red" th:text="${result}" th:if="${not #strings.isEmpty(result)}"></p>-->
+</form>
+
+</body>
+</html>

@@ -7,4 +7,163 @@
     <select id="findSeedIdByName" resultType="int" parameterType="String">
         select seed_id from seed where seed_name=#{seed_name}
     </select>
+    <insert id="saveSeedInfo" parameterType="seed" useGeneratedKeys="true" keyProperty="seed_id" keyColumn="seed_id" >
+        insert into seed
+            ( seed_name, seed_introduce, seed_plantarea, seed_method, seed_price, seed_note,
+             seed_productiondate, Seed_shelflife, seed_plantnumber, seed_type, seed_image, specialist_id,seed_manufacturer,seed_store,seed_phone)
+        values(#{seed_name},#{seed_introduce},#{seed_plantarea},#{seed_method},0.0,#{seed_note},
+               '2021-03-11',2,#{seed_plantnumber},#{seed_type},#{seed_image},#{specialist_id},#{seed_manufacturer},'宁夏农林科学院农作物研究所',#{seed_phone})
+    </insert>
+<!--    返回的是Seed类型的列表-->
+    <select id="findAllSeed" resultType="Seed">
+        select * from seed ORDER BY seed_id DESC;
+    </select>
+    <select id="findThreeSeed" resultType="Seed">
+        select * from seed where seed_id &lt; 2100 limit 3;
+    </select>
+    <select id="findSeedByState" resultType="Seed">
+        select * from seed where seed_state=1 ORDER BY seed_id DESC;
+    </select>
+    <select id="getPrice" resultType="double">
+        select seed_price from seed where seed_name=#{name};
+    </select>
+<!--    由于<符号无法解析，用&lt;代替，mybatis给的-->
+<!--    根据ID删除种子信息-->
+    <delete id="deleteSeedById" parameterType="int">
+        delete from seed where seed_id=#{seedId}
+    </delete>
+<!--    根据ID查询种子名称-->
+    <select id="findSeedNameById" parameterType="int" resultType="String">
+        select seed_name from seed where seed_id=#{id}
+    </select>
+<!--    根据类型名返回作物名（多个）-->
+    <select id="findDetailNameByTypeName" parameterType="String" resultType="String">
+        select distinct seed_name from seed where seed_type=#{typeName} and seed_id &lt; 21000
+    </select>
+    <!--    根据ID查询种子-->
+    <select id="findSeedById" parameterType="int" resultType="Seed">
+        select * from seed where seed_id=#{id}
+    </select>
+<!--    根据买家的姓名选出该买家购物车中的种子-->
+    <select id="findSeedFromCar" resultType="Seed">
+        SELECT * FROM seed WHERE seed_id IN ( SELECT shopcar.`seed_id` FROM shopcar WHERE b_phone=( SELECT user_tel FROM USER WHERE user_name=#{userName})) ORDER BY seed_id DESC
+    </select>
+
+    <select id="findSeedFromCar2" resultType="Seed">
+        SELECT * FROM seed WHERE seed_id IN ( SELECT shopcar.`seed_id` FROM shopcar WHERE b_phone=( SELECT user_tel FROM USER WHERE user_name=#{userName})) ORDER BY seed_id DESC limit #{star},#{count}
+    </select>
+
+    <select id="getType" resultType="String">
+        SELECT seed_type FROM seed GROUP BY seed_type
+    </select>
+
+    <select id="findSeedByType2"  resultType="Seed">
+        select * from seed where seed_type=#{type} ORDER BY seed_id DESC limit #{star},#{count}
+    </select>
+
+    <select id="findSeedByType" parameterType="String" resultType="Seed">
+        select * from seed where seed_type=#{type} ORDER BY seed_id desc limit 1
+    </select>
+
+    <select id="findRandSeedByType" parameterType="String" resultType="Seed">
+        select * from seed where seed_type=#{type} ORDER BY RAND() LIMIT 6
+    </select>
+
+    <select id="findBrowsingHistory" parameterType="String" resultType="browsingHistory">
+        SELECT a.seed_type,seedtype.`numb`,a.total FROM (SELECT seed.`seed_type` AS seed_type,SUM(total) AS total
+	    FROM (SELECT * FROM browsinghistory WHERE user_phone=#{user_phone})AS b LEFT JOIN seed ON b.`seed_id`=seed.`seed_id` GROUP BY seed.`seed_type`)AS a
+        LEFT JOIN seedtype ON a.seed_type=seedtype.`seed_type` ORDER BY a.total DESC;
+    </select>
+
+    <select id="findSeedFromBrowsingHistory" parameterType="String" resultType="Seed">
+        SELECT * FROM seed WHERE seed.`seed_type`=( SELECT seed.`seed_type` FROM (SELECT * FROM browsinghistory WHERE user_phone=#{user_phone})AS b
+        LEFT JOIN seed ON b.`seed_id`=seed.`seed_id` GROUP BY seed.`seed_type` ORDER BY SUM(total) DESC LIMIT 1) ORDER BY seed_id DESC;
+    </select>
+
+    <select id="findSeedByPhone" parameterType="String" resultType="Seed">
+        SELECT * FROM seed WHERE seed_phone=#{phone} ORDER BY seed_id DESC
+    </select>
+
+    <insert id="addShopCar">
+        INSERT INTO shopcar SELECT user.`user_tel`,#{id} FROM USER WHERE user.`user_name`=#{userName} AND (SELECT user.`user_tel`,#{id} FROM USER WHERE user.`user_name`=#{userName}) NOT IN(SELECT * FROM shopcar)
+    </insert>
+
+    <delete id="deleteShopCar">
+        DELETE FROM shopcar WHERE b_phone=(SELECT user.`user_tel` FROM USER WHERE user.`user_name`=#{userName}) AND seed_id=#{id}
+    </delete>
+
+    <select id="findPhotoBySeedName" parameterType="String" resultType="String">
+        SELECT seed_image FROM seed WHERE seed_name=#{seedname}
+    </select>
+
+    <select id="findCount" resultType="int">
+        SELECT count(*) FROM seed WHERE seed_id IN ( SELECT shopcar.`seed_id` FROM shopcar WHERE b_phone=( SELECT user_tel FROM USER WHERE user_name=#{userName}))
+    </select>
+
+    <select id="findCountByType" resultType="int">
+        SELECT count(*) FROM seed WHERE seed_type=#{type}
+    </select>
+
+    <insert id="saveCandidate" parameterType="com.dajun.springbootplatform.entities.valuate.candidateSeed" >
+        insert into candidateseed
+            ( seed_name, seed_introduce, seed_plantarea, seed_method, seed_price,seed_productiondate, seed_type, seed_image,user_phone,seed_manufacturer)
+        values(#{seed_name},#{seed_introduce},#{seed_plantarea},#{seed_method},#{seed_price},#{seed_productiondate},#{seed_type},#{seed_image},#{user_phone},#{seed_manufacturer})
+    </insert>
+
+    <select id="getCandidate1" resultType="com.dajun.springbootplatform.entities.valuate.candidateSeed">
+        SELECT * FROM candidateseed WHERE state=0 and user_phone=#{phone}
+    </select>
+
+    <select id="getCandidate2" resultType="com.dajun.springbootplatform.entities.valuate.candidateSeed">
+        SELECT * FROM candidateseed WHERE state=-1 and user_phone=#{phone}
+    </select>
+
+    <select id="getCandidate3" resultType="com.dajun.springbootplatform.entities.valuate.candidateSeed">
+        SELECT * FROM candidateseed WHERE state=0
+    </select>
+
+    <select id="getCandidate4" resultType="com.dajun.springbootplatform.entities.valuate.candidateSeed">
+        SELECT * FROM candidateseed WHERE state=-1
+    </select>
+
+    <select id="fondCSeedById" resultType="com.dajun.springbootplatform.entities.valuate.candidateSeed">
+        SELECT * FROM candidateseed WHERE seed_id=#{id}
+    </select>
+
+    <update id="updateCSeed">
+        update candidateseed set state=-1,reason=#{reason} where seed_id=#{id}
+    </update>
+
+    <insert id="changeCSeedToSeed">
+        insert into seed(seed_id,seed_name,seed_introduce,seed_plantarea,seed_method,seed_price,seed_manufacturer,seed_phone,seed_productiondate,seed_type,seed_image)
+        value(#{seed_id},#{seed_name},#{seed_introduce},#{seed_plantarea},#{seed_method},#{seed_price},#{seed_manufacturer},#{user_phone},#{seed_productiondate},#{seed_type},#{seed_image})
+    </insert>
+
+    <update id="deleteCSeed">
+        update candidateseed set state=1 where seed_id=#{id}
+    </update>
+
+    <select id="getCandidateByManufacture" resultType="com.dajun.springbootplatform.entities.valuate.candidateSeed">
+        SELECT * FROM candidateseed
+        <where>
+            <if test="userName != null and userName != ''">
+                seed_manufacturer LIKE "%${userName}%"
+            </if>
+            and state=0
+        </where>
+    </select>
+
+    <select id="getRejectCandidateByManufacture" resultType="com.dajun.springbootplatform.entities.valuate.candidateSeed">
+        SELECT * FROM candidateseed
+        <where>
+            <if test="userName != null and userName != ''">
+                seed_manufacturer LIKE "%${userName}%"
+            </if>
+            and state=-1
+        </where>
+    </select>
+
+    <update id="saveCandidateFileById">
+        update candidateseed set certificate=#{file} where seed_id=#{seed_id}
+    </update>
 </mapper>

@@ -17,6 +17,7 @@
     <header>
         <div class="navigation" style="background: #333 linear-gradient(to right,  rgb(1,208,212), rgb(123,242,171));height: 30px;width: 100%;margin-bottom: 20px">
             <span style="margin-left: 5%;font: 700 18px Arial;line-height: 30px;color: white">信息推送</span>
+            <a href="/specialistIndex" style="margin-right: 2%;float: right;font: 700 18px Arial;line-height: 30px;color: white">返回主页面</a>
         </div>
     </header>
 <!--    选择类型-->
@@ -60,13 +61,7 @@
         <!--        生长阶段选择-->
         <div class="form-group">
             <label for="exampleFormControlSelect2">生长时期</label>
-            <select class="form-control" name="stage" id="exampleFormControlSelect2" >
-                <option value="种子露白">种子露白</option>
-                <option value="三叶期">三叶期</option>
-                <option value="四叶期">四叶期</option>
-                <option value="成熟期">成熟期</option>
-                <option>.....</option>
-            </select>
+            <input class="form-control" name="stage" id="exampleFormControlSelect2" />
         </div>
         <!--        具体操作-->
         <div class="input-group" style="margin-top: 30px">
@@ -115,13 +110,7 @@
 <!--        生长阶段选择-->
         <div class="form-group">
             <label for="exampleFormControlSelect1">生长时期</label>
-            <select class="form-control" name="stage" id="exampleFormControlSelect1">
-                <option>种子露白</option>
-                <option>三叶期</option>
-                <option>四叶期</option>
-                <option>成熟期</option>
-                <option>.....</option>
-            </select>
+            <input class="form-control" name="stage" id="exampleFormControlSelect1"/>
         </div>
         <span style="margin-right: 20px">包含的营养元素:</span>
         <!--        第一种元素-->
@@ -138,9 +127,9 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="ingredient1-child2">所需量(KG):</label>
+                <label class="col-sm-2 col-form-label" for="ingredient1-child2">所需量(KG/亩):</label>
                 <div class="col-sm-10">
-                    <input class="form-control" type="text" id="ingredient1-child2" name="ingredient-volume" placeholder="例如:5kg~8kg /亩">
+                    <input class="form-control" type="text" id="ingredient1-child2" name="ingredient-volume" placeholder="例如:5 KG/亩(只填写数字)">
                 </div>
             </div>
         </div>
@@ -158,9 +147,9 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="ingredient2-child2">所需量(KG):</label>
+                <label class="col-sm-2 col-form-label" for="ingredient2-child2">所需量(KG/亩):</label>
                 <div class="col-sm-10">
-                    <input class="form-control" type="text" id="ingredient2-child2" name="ingredient-volume" placeholder="例如:5kg~8kg">
+                    <input class="form-control" type="text" id="ingredient2-child2" name="ingredient-volume" placeholder="例如:5 KG/亩">
                 </div>
             </div>
         </div>
@@ -178,9 +167,9 @@
                 </div>
             </div>
             <div class="form-group row">
-                <label class="col-sm-2 col-form-label" for="ingredient3-child2">所需量(KG):</label>
+                <label class="col-sm-2 col-form-label" for="ingredient3-child2">所需量(KG/亩):</label>
                 <div class="col-sm-10">
-                    <input class="form-control" type="text" id="ingredient3-child2" name="ingredient-volume" placeholder="例如:5kg~8kg">
+                    <input class="form-control" type="text" id="ingredient3-child2" name="ingredient-volume" placeholder="例如:5 KG/亩">
                 </div>
             </div>
         </div>
@@ -219,13 +208,7 @@
         <!--        生长阶段选择-->
         <div class="form-group">
             <label for="exampleFormControlSelect3">生长时期</label>
-            <select class="form-control" name="stage" id="exampleFormControlSelect3">
-                <option>种子露白</option>
-                <option>三叶期</option>
-                <option>四叶期</option>
-                <option>成熟期</option>
-                <option>.....</option>
-            </select>
+            <input class="form-control" name="stage" id="exampleFormControlSelect3"/>
         </div>
 <!--        预防的疾病-->
         <div class="form-group">
@@ -272,13 +255,7 @@
         <!--        生长阶段选择-->
         <div class="form-group">
             <label for="exampleFormControlSelect5">生长时期</label>
-            <select class="form-control" name="stage" id="exampleFormControlSelect5">
-                <option>种子露白</option>
-                <option>三叶期</option>
-                <option>四叶期</option>
-                <option>成熟期</option>
-                <option>.....</option>
-            </select>
+            <input class="form-control" name="stage" id="exampleFormControlSelect5"/>
         </div>
         <!--        具体操作-->
         <div class="input-group" style="margin-top: 30px">
@@ -314,8 +291,9 @@
                 <div style="margin-bottom: 5px">
                     <span th:text="${recommend.getStage()}">三叶期</span>&nbsp;&nbsp;&nbsp; 种植方式：<span style="color: black" th:text="${converse.sowMethodConverse(recommend.getSowmethod())}">插秧</span>
                     <div class="text-truncate" th:text="${recommend.getDetail()}" style="width: 80%">需要氮肥需要氮磷钾需要金坷垃，需要需要需要</div>
-                    <a type="button" th:value="${recommend.getRecommend_id()}" class="btn btn-warning btn-sm" onclick="submitForm(1,this)" style="float: right;">修改</a>
+<!--                    <a type="button" th:value="${recommend.getRecommend_id()}" class="btn btn-warning btn-sm" onclick="submitForm(1,this)" style="float: right;">修改</a>-->
                     <a type="button" th:value="${recommend.getRecommend_id()}" class="btn btn-danger btn-sm" onclick="submitForm(2,this)" style="float: right;color: snow">删除</a>
+                    <!--隐藏的表单-->
                     <form style="display: none" th:id="${recommend.getRecommend_id()}" method="post" action="/specialistForm">
                         <label>
                             <input  th:id="${recommend.getRecommend_id()+'Operation'}" name="operation" value="delete">

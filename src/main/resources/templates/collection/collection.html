@@ -11,6 +11,14 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <link th:href="@{asserts/css/dashboard.css}" rel="stylesheet">
+    <style>
+        #question{
+            display:none;
+        }
+        .display{
+            display: block;
+        }
+    </style>
 </head>
 <body>
 
@@ -51,6 +59,11 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/reco">
+                    专家推荐
+                </a>
+            </li>
+            <li class="nav-item">
+                <a target="_blank" class="nav-link" href="http://127.0.0.1:1026/index">
                     智能推荐
                 </a>
             </li>
@@ -167,7 +180,7 @@
                         <span class="my-text-span">我的提问</span>
                         <hr style="margin-bottom: 2px;background:linear-gradient(to right, rgb(0,208,212), rgb(123,242,171));margin-top: 4px;height: 1px"/>
                         <!--提问具体内容-->
-                        <div class="card " style="max-width: 740px;margin-bottom: 0">
+                        <div class="card " style="max-width: 740px;margin-bottom: 0" th:each="question:${questions}">
                             <div class="row no-gutters">
                                 <div style="padding: 1.25rem">
                                     <svg style="margin: 0" class="bi bi-chat-square-dots" width="30px" height="30px" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -177,35 +190,21 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div >
-                                        <p class="card-text">富源四号的施肥频率，施什么肥比较合适，在什么时候施肥比较好。</p>
-                                        <p class="card-text"><small class="text-muted">更新于3分钟前</small></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card " style="max-width: 740px;margin-bottom: 0">
-                            <div class="row no-gutters">
-                                <div style="padding: 1.25rem">
-                                    <svg style="margin: 0" class="bi bi-chat-square-dots" width="30px" height="30px" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2.5a2 2 0 0 1 1.6.8L8 14.333 9.9 11.8a2 2 0 0 1 1.6-.8H14a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" clip-rule="evenodd"/>
-                                        <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
-                                    </svg>
-                                </div>
-                                <div class="col-md-8">
-                                    <div >
-                                        <p class="card-text">富源四号的施肥频率，施什么肥比较合适，在什么时候施肥比较好。</p>
+                                        <p class="card-text" th:text="${question.getQuestion()}"></p>
+                                        <a  th:href="@{/deleteMessageq(id=${question.getId()})}" class="btn btn-primary" style="font-size: 10px;margin-top: -10px">删除</a>
                                         <p class="card-text"><small class="text-muted">更新于3分钟前</small></p>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
+
                     </div>
                     <div id="my-answer">
-                        <span class="my-text-span">我的回答</span>
+                        <span class="my-text-span">专家回答</span>
                         <hr style="margin-bottom: 2px;background:linear-gradient(to right, rgb(0,208,212), rgb(123,242,171));margin-top: 4px;height: 1px"/>
                         <!--问答具体内容-->
-                        <div class="card " style="max-width: 740px;margin-bottom: 0">
+                        <div class="card " style="max-width: 740px;margin-bottom: 0" th:each="answer:${answers}">
                             <div class="row no-gutters">
                                 <div style="padding: 1.25rem">
                                     <svg class="bi bi-chat-dots" width="30" height="30" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
@@ -215,28 +214,16 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div >
-                                        <p class="card-text">富源四号的施肥频率，施什么肥比较合适，在什么时候施肥比较好。</p>
+                                        <p class="card-text" th:text="${answer.getAnswer()}"></p>
+                                        <a th:if="${answer.getA_state()}==0" th:href="@{/setMessageA2(id=${answer.getId()})}" class="btn btn-primary" style="font-size: 10px;margin-top: -10px">未读</a>
+                                        <a th:if="${answer.getA_state()}==1" style="font-size: 10px;margin-top: -10px">已读</a>
+                                        <a  th:href="@{/deleteMessageA(id=${answer.getId()})}" class="btn btn-primary" style="font-size: 10px;margin-top: -10px">删除</a>
                                         <p class="card-text"><small class="text-muted">更新于3分钟前</small></p>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="card " style="max-width: 740px;margin-bottom: 0">
-                            <div class="row no-gutters">
-                                <div style="padding: 1.25rem">
-                                    <svg class="bi bi-chat-dots" width="30" height="30" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                        <path fill-rule="evenodd" d="M2.678 11.894a1 1 0 0 1 .287.801 10.97 10.97 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8.06 8.06 0 0 0 8 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894zm-.493 3.905a21.682 21.682 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105z" clip-rule="evenodd"/>
-                                        <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
-                                    </svg>
-                                </div>
-                                <div class="col-md-8">
-                                    <div >
-                                        <p class="card-text">富源四号的施肥频率，施什么肥比较合适，在什么时候施肥比较好。</p>
-                                        <p class="card-text"><small class="text-muted">更新于3分钟前</small></p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+
 
                     </div>
                     <div id="my-expert">
@@ -250,9 +237,13 @@
                                 </div>
                                 <div class="col-md-8">
                                     <div class="card-body">
-                                        <h5 class="card-title">王俊专家</h5>
-                                        <p class="card-text">王俊专家毕业于北方民族大学，在农业专业研究10余年，曾发表多篇论文，被宇宙农业组织引用多次，在水稻和病害方面颇有成就。</p>
-                                        <button type="button" class="btn btn-primary btn-sm">联系专家</button>
+                                        <h5 class="card-title" th:text="${specialist.getSpecialist_name()}">王俊专家</h5>
+                                        <p class="card-text" th:text="${specialist.getSpecialist_instructions()}">王俊专家毕业于北方民族大学，在农业专业研究10余年，曾发表多篇论文，被宇宙农业组织引用多次，在水稻和病害方面颇有成就。</p>
+                                        <button type="button" class="btn btn-primary btn-sm" onclick="connect()">联系专家</button>
+                                        <form method="post" action="/question" id="question">
+                                            <input type="text" style="margin-top: 10px;width: 500px;height: 100px" name="question"><br>
+                                            <input type="submit" value="提交问题" style="margin-top: 10px">
+                                        </form>
                                     </div>
                                 </div>
                             </div>
@@ -265,7 +256,7 @@
                         <img th:src="@{img/profile1.jpg}" src="img/profile1.jpg" class="card-img-top" alt="profile" style="width: 100px">
                     </div>
                     <span style="font: 700 18px/20px Arial;color: white;margin-bottom: 12px" th:text="${session.userName}">臭弟弟</span>
-                    <div class="card-body" th:if="${session.numbers==1}" style="padding: 15px 1.2rem 12px 1.2rem;background: #4e555b">
+                    <div class="card-body"  style="padding: 15px 1.2rem 12px 1.2rem;background: #4e555b;display: none">
                         <p class="card-text" style="font: 600 16px/20px Arial;color: goldenrod;float: left;width: 49%">完善个人信息享受私人定制</p>
                         <a href="/farmerReg" class="btn btn-warning btn-sm" style="float: right;margin: 5px 0 0 3px">完善信息</a>
                     </div>
@@ -285,26 +276,26 @@
             <!--这里是收藏-->
             <!--种子收藏-->
             <div class="main-context" id="collect1main" style="display: none">
-                <div th:each="seeds:${seeds}" class="media position-relative" style="margin-top: 18px;border-bottom: rgba(1,1,1,0.2) 1px solid">
+                <div th:each="seed:${seeds}" class="media position-relative" style="margin-top: 18px;border-bottom: rgba(1,1,1,0.2) 1px solid">
                     <a href="#">
-                    <img th:src="${seeds.seed_image}" class="mr-3" width="100px" height="100px" alt="加载失败">
+                    <img th:src="${seed.seed_image}" class="mr-3" width="100px" height="100px" alt="加载失败">
                     </a>
                     <div class="media-body">
                         <div class="d-flex w-100 justify-content-between">
-                            <h5 class="mb-1" th:text="${seeds.seed_name}">富源一号</h5>
+                            <h5 class="mb-1" th:text="${seed.seed_name}">富源一号</h5>
                             <small>收藏于 3-20</small>
                         </div>
-                        <p th:text="${seeds.seed_introduce}">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
+                        <p th:text="${seed.seed_introduce}">Cras sit amet nibh libero, in gravida nulla. Nulla vel metus scelerisque ante sollicitudin. Cras purus odio, vestibulum in vulputate at, tempus viverra turpis. Fusce condimentum nunc ac nisi vulputate fringilla. Donec lacinia congue felis in faucibus.</p>
                          <!--这里是下拉按钮-->
                         <div style="float: right;width: 100px;margin-bottom: 5px">
-                        <a style="width: 100%;color: gray;text-decoration: none" data-toggle="collapse" th:href="'#collection'+${seeds.seed_id}" role="button" aria-expanded="false" aria-controls="collapseMore">
+                        <a style="width: 100%;color: gray;text-decoration: none" data-toggle="collapse" th:href="'#collection'+${seed.seed_id}" role="button" aria-expanded="false" aria-controls="collapseMore">
                             <svg class="bi bi-list-task" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                                 <path fill-rule="evenodd" d="M2 2.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5V3a.5.5 0 0 0-.5-.5H2zM3 3H2v1h1V3z" clip-rule="evenodd"/>
                                 <path d="M5 3.5a.5.5 0 0 1 .5-.5h9a.5.5 0 0 1 0 1h-9a.5.5 0 0 1-.5-.5zM5.5 7a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9zm0 4a.5.5 0 0 0 0 1h9a.5.5 0 0 0 0-1h-9z"/>
                                 <path fill-rule="evenodd" d="M1.5 7a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5V7zM2 7h1v1H2V7zm0 3.5a.5.5 0 0 0-.5.5v1a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-1a.5.5 0 0 0-.5-.5H2zm1 .5H2v1h1v-1z" clip-rule="evenodd"/>
                             </svg>
                             更多操作</a>
-                            <div class="collapse dropdown" th:id="'collection'+${seeds.seed_id}" style="width: 100px;border: 1px rgba(1,1,1,0.2) solid;border-top: none ;">
+                            <div class="collapse dropdown" th:id="'collection'+${seed.seed_id}" style="width: 100px;border: 1px rgba(1,1,1,0.2) solid;border-top: none ;">
                                 <a class="dropdown-item" href="#">取消收藏</a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#">移动到</a>
@@ -452,5 +443,13 @@
 <!-- - - - - - - - - - -->
 </div>
 </div>
+
+<script type="text/javascript">
+    function connect() {
+
+            document.getElementById("question").id="display";
+    }
+</script>
+
 </body>
 </html>

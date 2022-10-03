@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" type="text/css" th:href="@{specialistCSS/Specialist.css}" href="../static/specialistCSS/Specialist.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.5.0/dist/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    <style>
+        #question{
+            display:none;
+        }
+        .display{
+            display: block;
+        }
+    </style>
+</head>
+<body>
+    <div style="width: 12%;float: left;margin-top: 10px;margin-left: 20px;margin-right: 100px">
+        <div class="alert alert-info" role="alert" >
+            我的用户列表
+        </div>
+        <div style="width: 100%;margin-right: 1%;float: left;margin-bottom: 10px;height: 50px" th:if="${nameAndnumb.size()>0}" th:each="nAnd:${nameAndnumb}" >
+            <a th:text="${nAnd.getName()}" th:href="@{/newAnswer(name=${nAnd.getName()})}" class="btn btn-primary"></a>
+            未读<a th:text="${nAnd.getNumb()}"></a>
+        </div>
+    </div>
+
+    <div style="width: 70%;margin-right: 1%;float: left;margin-top: 10px">
+        <div id="my-question">
+            <span class="my-text-span">用户提问</span>
+            <hr style="margin-bottom: 2px;background:linear-gradient(to right, rgb(0,208,212), rgb(123,242,171));margin-top: 4px;height: 1px"/>
+            <!--提问具体内容-->
+            <div class="card " style="max-width: 740px;margin-bottom: 0" th:if="${questions.size()>0}" th:each="question:${questions}">
+                <div class="row no-gutters" >
+                    <div style="padding: 1.25rem">
+                        <svg style="margin: 0" class="bi bi-chat-square-dots" width="30px" height="30px" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M14 1H2a1 1 0 0 0-1 1v8a1 1 0 0 0 1 1h2.5a2 2 0 0 1 1.6.8L8 14.333 9.9 11.8a2 2 0 0 1 1.6-.8H14a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1zM2 0a2 2 0 0 0-2 2v8a2 2 0 0 0 2 2h2.5a1 1 0 0 1 .8.4l1.9 2.533a1 1 0 0 0 1.6 0l1.9-2.533a1 1 0 0 1 .8-.4H14a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z" clip-rule="evenodd"/>
+                            <path d="M5 6a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                        </svg>
+                    </div>
+                    <div class="col-md-8">
+                        <div>
+                            <p class="card-text" th:text="${question.getQuestion()}"></p>
+                            <a th:if="${question.getQ_state()}==0" th:href="@{/setMessage(id=${question.getId()})}" class="btn btn-primary" style="font-size: 10px;margin-top: -10px">未读</a>
+                            <a th:if="${question.getQ_state()}==1" style="font-size: 10px;margin-top: -10px">已读</a>
+                            <a  th:href="@{/deleteMessage(id=${question.getId()})}" class="btn btn-primary" style="font-size: 10px;margin-top: -10px">删除</a>
+                            <p class="card-text"><small class="text-muted">更新于3分钟前</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div id="my-answer">
+            <span class="my-text-span">我的回答</span>
+            <hr style="margin-bottom: 2px;background:linear-gradient(to right, rgb(0,208,212), rgb(123,242,171));margin-top: 4px;height: 1px"/>
+            <!--问答具体内容-->
+            <div class="card " style="max-width: 740px;margin-bottom: 0" th:if="${answers.size()>0}" th:each="answer:${answers}">
+                <div class="row no-gutters">
+                    <div style="padding: 1.25rem">
+                        <svg class="bi bi-chat-dots" width="30" height="30" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                            <path fill-rule="evenodd" d="M2.678 11.894a1 1 0 0 1 .287.801 10.97 10.97 0 0 1-.398 2c1.395-.323 2.247-.697 2.634-.893a1 1 0 0 1 .71-.074A8.06 8.06 0 0 0 8 14c3.996 0 7-2.807 7-6 0-3.192-3.004-6-7-6S1 4.808 1 8c0 1.468.617 2.83 1.678 3.894zm-.493 3.905a21.682 21.682 0 0 1-.713.129c-.2.032-.352-.176-.273-.362a9.68 9.68 0 0 0 .244-.637l.003-.01c.248-.72.45-1.548.524-2.319C.743 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.52.263-1.639.742-3.468 1.105z" clip-rule="evenodd"/>
+                            <path d="M5 8a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0zm4 0a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                        </svg>
+                    </div>
+                    <div class="col-md-8">
+                        <div >
+                            <p class="card-text" th:text="${answer.getAnswer()}"></p>
+                            <a  th:href="@{/deleteMessage2(id=${answer.getId()})}" class="btn btn-primary" style="font-size: 10px;margin-top: -10px">删除</a>
+                            <p class="card-text"><small class="text-muted">更新于3分钟前</small></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+        <div id="my-expert" th:if="${nameAndnumb.size()>0}">
+            <span class="my-text-span">我的用户</span>
+            <hr style="margin-bottom: 2px;background:linear-gradient(to right, rgb(0,208,212), rgb(123,242,171));margin-top: 4px;height: 1px"/>
+            <!--专家具体内容-->
+            <div class="card mb-3" style="max-width: 740px;">
+                <div class="row no-gutters">
+                    <div class="col-md-4" style="flex: 0 0 20%">
+                        <img src="img/zhuanjia1.png" th:src="@{/img/zhuanjia1.png}" style="width: 150px" class="card-img" alt="...">
+                    </div>
+                    <div class="col-md-8">
+                        <div class="card-body">
+                            <h5 class="card-title" th:text="${user.getUser_name()}">用户名</h5>
+                            <p class="card-text" th:text="${user.getUser_fieldadress()}"></p>
+                            <button type="button" class="btn btn-primary btn-sm" onclick="connect()">联系用户</button>
+                            <form method="post" action="/specialanswer" id="question">
+                                <input type="hidden" th:value="${user.getUser_tel()}" name="usertel">
+                                <input type="hidden" th:value="${user.getUser_name()}" name="name">
+                                <input type="text" style="margin-top: 10px;width: 500px;height: 100px" name="answer"><br>
+                                <input type="submit" value="发表回答" style="margin-top: 10px">
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        function connect() {
+
+            document.getElementById("question").id="display";
+        }
+    </script>
+</body>
+</html>

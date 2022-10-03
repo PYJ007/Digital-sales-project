@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dajun.springbootplatform.repository.FertilizerMapper">
+    <select id="selectfertilizerList" resultType="Fertilizer">
+        select * from fertilizer limit 5; #我限制成了五个，因为要遍历出来在前端页面显示，不能太多
+    </select>
+
+    <select id="selecthuafeilistbynull" resultType="Fertilizer">
+        select * from fertilizer
+    </select>
+
+    <insert id="insertfertilizer" useGeneratedKeys="true" keyColumn="fertilizer_id" keyProperty="fertilizer_id">
+        insert into fertilizer(fertilizer_name,fertilizer_type,fertilizer_n,fertilizer_p,fertilizer_k,fertilizer_other,fertilizer_instructions,fertilizer_price,fertilizer_manufacturer,fertilizer_phone,fertilizer_address,fertilizer_productiondate,fertilizer_shelflife,fertilizer_moderatecrop,recommend_data)
+        values(#{fertilizer_name},#{fertilizer_type},#{fertilizer_n},#{fertilizer_p},#{fertilizer_k},#{fertilizer_other},#{fertilizer_instructions},#{fertilizer_price},#{fertilizer_manufacturer},#{fertilizer_phone},#{fertilizer_address},#{fertilizer_productiondate},#{fertilizer_shelflife},#{fertilizer_moderatecrop},#{recommend_data})
+    </insert>
+
+    <delete id="deleterFertilizerById" parameterType="int">
+        delete from fertilizer where fertilizer_id=#{id};
+    </delete>
+</mapper>

@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>详情界面</title>
+    <link rel="stylesheet" type="text/css" th:href="@{../CSS/推送二级.css}" href="CSS/推送二级.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+<style>
+    .relative {
+        position: relative;
+    }
+
+    .showMain {
+        margin-left: 32px;
+        padding: 30px 0;
+        margin-right: 42px;
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 35px;
+    }
+</style>
+</head>
+<body style="background-color:#F1F1F1; ">
+<!--头和导航-->
+<div id="top-logo">
+    <div class="logo">
+        <img src="../img/ari-logo.png" alt="加载失败">
+        <b>农业一体化智能平台</b>
+    </div>
+</div>
+<!--商品介绍区-->
+<section class="intro">
+    <div class="banner" style="background: #00c5c3"><span>种子详情</span></div>
+    <div class="intro-product">
+        <div class="ad-pic">
+            <img th:src="@{'/img/seed'+${seed.getSeed_id()}+'.jpg'}" src="ad-img/fu_yuan.jfif" alt="" style="height: 350px ;width: 380px">
+            <span th:text="${seed.getSeed_name()}" >富源4号</span>
+        </div>
+        <div class="seller-introduction" style="background-color: white">
+            <ul>
+                <li style="background-color: white;color: #778a99;font-size: 20px;">价格：<span class="price" th:text="${seed.getSeed_price()}" style="color: black">2</span><span class="unit" style="color: black">&nbsp;元/斤</span></li>
+                <li style="background-color: white;color: #778a99;font-size: 20px;">审定编号：<span  style="color: black">宁审稻200208</span></li>
+                <li style="background-color: white;color: #778a99;font-size: 20px;">联系方式: <span th:text="${seed.getSeed_phone()}" style="color: black">188888888</span></li>
+                <li style="background-color: white;color: #778a99;font-size: 20px;">生产产家：<span th:text="${seed.getSeed_manufacturer()}" style="color: black"></span></li>
+                <li style="border-bottom: none;text-align: center;background-color: white"><a href="#"><img src="ad-img/company-pic.png" alt="" style="width: 250px"></a></li>
+            </ul>
+            <div class="do-buy" style="margin-left: 180px">
+                <div style="float: left">
+                <form method="get" th:action="@{/alipay}">
+                    <input type="hidden" th:value="${seed.getSeed_name()}" name="seedName">
+                    <input type="hidden" name="money" th:value="${seed.getSeed_price()}"> <br>
+                    <input type="submit" class="i-buy" value="购买" style="margin-right: 20px">
+                </form>
+                </div>
+<!--                <input type="submit" class="i-buy" value="购买" style="margin-right: 20px">-->
+                <div style="float: left">
+                <input style="margin-top: 23px" type="submit" onclick="add()" class="i-do" id="i-do" value="收藏">
+                </div>
+            </div>
+        </div>
+        <input type="hidden" id="uname" th:value="${userName}">
+        <input type="hidden" id="uid" th:value="${seedId}">
+        <div class="pro-introduction" style="width: 310px;margin-left: 20px;margin-right: 20px;background-color: white">
+            <img th:src="@{'/img/证书'+${seed.getSeed_id()}+'.jpg'}" style="height: 350px;width: 300px">
+<!--        <div class="showMain relative" style="margin-top: -20px">-->
+<!--            <p style="margin-bottom: 10px;">-->
+<!--                <span style="color: #778a99;font-size: 16px;">纯&nbsp;&nbsp;度：&nbsp;&nbsp;&nbsp;&nbsp;</span><span th:text="${valuation.getPurity()}+' %'"></span>-->
+<!--            </p>-->
+<!--            <p style="margin-bottom: 10px;">-->
+<!--                <span style="color: #778a99;font-size: 16px;">净&nbsp;&nbsp;度：&nbsp;&nbsp;&nbsp;&nbsp;</span><span th:text="${valuation.getNeatness()}+' %'"></span>-->
+<!--            </p>-->
+<!--            <p style="margin-bottom: 10px;">-->
+<!--                <span style="color: #778a99;font-size: 16px;">出苗率：&nbsp;&nbsp;&nbsp;&nbsp;</span><span th:text="${valuation.getGerminationrate()}+' %'"></span>-->
+<!--            </p>-->
+<!--            <p style="margin-bottom: 10px;">-->
+<!--                <span style="color: #778a99;font-size: 16px;">含水量：&nbsp;&nbsp;&nbsp;&nbsp;</span><span th:text="${valuation.getWet()}+' %'"></span>-->
+<!--            </p>-->
+<!--            <p style="margin-bottom: 10px;">-->
+<!--                <span style="color: #778a99;font-size: 16px;">级&nbsp;&nbsp;别：&nbsp;&nbsp;&nbsp;&nbsp;</span><span th:text="${valuation.getRank()}"></span>-->
+<!--            </p>-->
+<!--            <p style="margin-bottom: 10px;">-->
+<!--                <span style="color: #778a99;font-size: 16px;">品&nbsp;&nbsp;质：&nbsp;&nbsp;&nbsp;&nbsp;</span><span th:text="${valuation.getGrade()}"></span>-->
+<!--            </p>-->
+<!--        </div>-->
+        </div>
+        <div class="baidu-map">
+            <div class="contactmain" data-scroll-reveal="enter bottom over 1s and move 300px after 0.3s">
+                <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=WZpXju2om1G7NL6QlnxNuZGX6G4eEq5G"></script>
+                <div id="l-map" style="width:350px;height:350px;font-size:12px" ></div>
+                <script th:inline="javascript" type="text/javascript">
+                    var address = [[${seed.getSeed_store()}]];
+                    var phone = [[${seed.getSeed_phone()}]];
+                    var sContent ="<span style='text-align: center;color: #CC5522'>销售地点<br/></span><br>地址："+address+"<br><br>电话："+phone;
+                    var map = new BMap.Map("l-map");          			// 创建地图实例
+                    var point = new BMap.Point(106.252098,38.253581);  	// 创建点坐标
+                    map.centerAndZoom(point, 17);
+                    map.enableScrollWheelZoom();             		// 初始化地图，设置中心点坐标和地图级别
+
+                    map.addControl(new BMap.NavigationControl());
+                    map.addControl(new BMap.ScaleControl());
+                    map.addControl(new BMap.OverviewMapControl());
+                    map.addControl(new BMap.MapTypeControl());
+
+                    var mapType1 = new BMap.MapTypeControl({mapTypes: [BMAP_NORMAL_MAP,BMAP_HYBRID_MAP]});
+                    var mapType2 = new BMap.MapTypeControl({anchor: BMAP_ANCHOR_TOP_LEFT});
+                    var overView = new BMap.OverviewMapControl();
+                    var overViewOpen = new BMap.OverviewMapControl({isOpen:true, anchor: BMAP_ANCHOR_BOTTOM_RIGHT});
+                    //添加地图类型和缩略图
+
+                    map.addControl(mapType1);     //2D图，卫星图
+                    // map.addControl(mapType2);     //左上角，默认地图控件
+                    map.setCurrentCity("");    //由于有3D图，需要设置城市哦
+                    // map.addControl(overView);     //添加默认缩略地图控件
+                    // map.addControl(overViewOpen);   //右下角，打开
+
+                    var navigationControl = new BMap.NavigationControl({
+                        // 靠左上角位置
+                        anchor: BMAP_ANCHOR_TOP_LEFT,
+                        // LARGE类型
+                        type: BMAP_NAVIGATION_CONTROL_LARGE,
+                        // 启用显示定位
+                        enableGeolocation: true // 会多出一个点
+                    });
+                    map.addControl(navigationControl);
+                    // 添加定位控件
+                    var geolocationControl = new BMap.GeolocationControl();
+                    geolocationControl.addEventListener("locationSuccess", function(e){
+                        // 定位成功事件
+                        var address = '';
+                        address += e.addressComponent.province;
+                        address += e.addressComponent.city;
+                        address += e.addressComponent.district;
+                        address += e.addressComponent.street;
+                        address += e.addressComponent.streetNumber;
+                    });
+                    geolocationControl.addEventListener("locationError",function(e){
+                        // 定位失败事件
+                        alert(e.message);
+                    });
+                    map.addControl(geolocationControl);
+
+                    var infoWindow = new BMap.InfoWindow(sContent);  	// 创建信息窗口对象
+                    map.openInfoWindow(infoWindow,point); 				// 开启信息窗口
+
+                    var marker = new BMap.Marker(point,{icon:new BMap.Icon("http://api.map.baidu.com/lbsapi/createmap/images/icon.png",new BMap.Size(20,25),{
+                            imageOffset: new BMap.Size(-46,-21)
+                        })});
+                    map.addOverlay(marker);                     		// 将标注添加到地图中
+                    marker.addEventListener("click", function(){        // 给标注添加点击事件
+                        this.openInfoWindow(infoWindow);
+                    });
+                </script>
+            </div>
+        </div>
+    </div>
+    <div class="details" style="font-family: Arial,sans-serif;background-color: white">
+        <p style="font-family: Arial, sans-serif ;font-size: 25px;font-weight: 700;width: 100%">商品详情</p>
+        <p>种子名称：<span th:text="${seed.getSeed_name()}">富源四号</span></p>
+        <p>所属类别：<span th:text="${seed.getSeed_type()}">水稻</span></p>
+        <p>适种区域：<span th:text="${seed.getSeed_plantarea()}">永宁，什么，什么的</span></p>
+        <p>种子介绍：<span th:text="${seed.getSeed_introduce()}">啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊</span></p>
+        <p>播种方式：<span th:text="${seed.getSeed_method()}">旱栽</span></p>
+        <p>注意事项：<span th:text="${seed.getSeed_note()}">嗯嗯嗯嗯恩</span></p>
+    </div>
+    <div style="width: 94%;height: 120px;padding: 10px 20px 5px 20px;background: white;margin-left: 14px;margin-top: 10px">
+        <img src="../img/zhuanjia1.png" style="width: 110px;height: 110px;float: left">
+        <p style="font-family: Arial,sans-serif;font-size: 18px;padding-left: 30px;padding-bottom: 5px">农作物供应商：<span style="color: chocolate" th:text="${seller.getUser_name()}">大俊</span></p>
+        <p style="font-family: Arial,sans-serif;font-size: 18px;padding-left: 15px;padding-bottom: 5px">信息推送时间：<span style="color: chocolate" th:text="${ft.format(seed.getSeed_productiondate())}">2020/01/12</span></p>
+        <a th:href="@{/dealLobby/establish(sellerPhone=${seller.getUser_tel()})}">
+            <button type="button" class="btn btn-success btn-sm">联系商家</button>
+        </a>
+    </div>
+</section>
+<!--页脚-->
+<footer>
+    <div id="address">
+        <p>
+            COPYRIGHT©大数据集成与可视化团队<br/><br/>
+            联系邮箱110@nun.edu.cn<br/><br/>
+            建议使用chrome，firefox或者IE&nbsp;11以上浏览器
+        </p>
+    </div>
+    <div id="poster">
+        <a href="#">
+            <img src="../img/data-logo.png" alt="" style="width: 160px;height: 120px">
+            <p style="float: right;padding: 10px 0 0 10px">&nbsp;大<br/>&nbsp;数<br/>&nbsp;据<br/>&nbsp;团<br/>&nbsp;队<br/></p>
+        </a>
+    </div>
+    <div id="return-top">
+        <a href="#">
+            <img src="img/jiantou.png" alt="">
+            <span>返回顶部</span>
+        </a>
+    </div>
+</footer>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    function add(){
+        var seedId= $("#uid").val();
+        var userName = $("#uname").val();
+        $.ajax({
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            url:"/addShopCar",
+            data:{"seedId":seedId,"userName":userName},
+            type:"POST",
+            dataType:"text",
+            success: function (result) {
+                if (result) {
+                    alert("收藏成功")
+                }
+
+            },
+            error:function(data, XMLHttpRequest, textStatus, errorThrown){
+                alert("有误");
+            }
+        })
+    }
+</script>
+</body>
+</html>

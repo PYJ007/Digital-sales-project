@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <style>
+        .sign{
+            font-size: 24px;
+            margin-right: 18px;
+            color: #1a437e;
+        }
+        .navbar{
+            margin-top: -20px;
+        }
+        .image1 {
+            position: absolute;
+            right: 550px;
+            top: 630px;
+            overflow: hidden;
+            background-color: white;
+        }
+        .image2 {
+            position: absolute;
+            right: 550px;
+            top: 930px;
+            overflow: hidden;
+            background-color: white;
+        }
+        .image3 {
+            position: absolute;
+            right: 550px;
+            top: 1230px;
+            overflow: hidden;
+            background-color: white;
+        }
+    </style>
+</head>
+<body>
+<div class="page-header" style="margin-top: 10px">
+    <div style="margin-left: 120px">
+        <span class="glyphicon glyphicon-edit sign"></span><span class="sign">添加商品</span>
+    </div>
+</div>
+
+<!--顶部导航条-->
+<nav class="navbar " style="background: linear-gradient(90deg,#00d0d4 19%,#00c5c3 58%,#9effa4 100%);">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav" style="margin-left: 80px">
+                <li style="margin-right: 60px"><a class="glyphicon glyphicon-user" th:href="@{/personalCenter/connect}" href="#">顾客列表</a></li>
+                <li style="margin-right: 60px"><a class="glyphicon glyphicon-piggy-bank" href="/personalCenter/getCandidate">审核情况</a></li>
+                <li style="margin-right: 60px"><a class="glyphicon glyphicon-piggy-bank" href="#">订单交易</a></li>
+                <li ><a class="glyphicon glyphicon-pencil" href="/personalCenter/addCrop">添加商品</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 80px">
+                <li ><a class="glyphicon glyphicon-globe" href="/personalCenter/index" style="float: left">返回个人主页</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4" style="margin-left: 200px;height: auto">
+    <div class="main-context" id="evaluationmain" style="overflow: auto">
+        <div class="position-relative" style="float: left; margin-top: 18px;border-bottom: rgba(1,1,1,0.2) 1px solid;width: 90%;background: lightgoldenrodyellow;overflow: auto;height: 1600px">
+            <!--选择作物-->
+            <form action="/personalCenter/saveCandidataSeed" enctype="multipart/form-data" method="post" style="height: auto">
+                <div style="font: 400 18px/20px Arial;color: darkslategrey;margin: 25px 0 25px 0px;float: left;height: 40px;width: 90%">
+                    <div class="input-group mb-3" style="float: left;width: 50%;margin-left: 200px">
+                        <div class="input-group-prepend">
+                            <label class="input-group-text" for="inputGroupSelect01">添加商品</label>
+                        </div>
+                        <select class="custom-select" id="inputGroupSelect01" name="type"  >
+                            <option selected>请选择种子类型</option>
+                            <div th:each="type:${types}">
+                                <option th:text="${type}"></option>
+                            </div>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="input-group mb-3"  style="width: 50%;margin-top: 80px;margin-left: 200px">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="margin-left: 25px">种子名称</span>
+                    </div>
+                    <input name="name" type="text" class="form-control"  aria-label="detail-area" aria-describedby="button-addon3">
+                    <div class="input-group-append">
+                    </div>
+                </div>
+
+                <div class=""  style="width: 50%;margin-top: 30px;margin-left: 200px">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="margin-left: 25px">种子简介</span>
+                    </div>
+                    <input type="text" name="introduce" class="form-control" >
+                    <div class="">
+                    </div>
+                </div>
+
+                <div class=""  style="width: 50%;margin-top: 30px;margin-left: 200px">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="margin-left: 25px">播种方法</span>
+                    </div>
+                    <input type="text" name="method" class="form-control" >
+                    <div class="">
+                    </div>
+                </div>
+
+                <div class=""  style="width: 50%;margin-top: 30px;margin-left: 200px">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="margin-left: 25px">发源地</span>
+                    </div>
+                    <input type="text" name="plantarea" class="form-control" >
+                    <div class="">
+                    </div>
+                </div>
+
+
+                <div class=""  style="width: 50%;margin-top: 30px;margin-left: 200px">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="margin-left: 25px">种子价格</span>
+                    </div>
+                    <input type="text" name="price" class="form-control" >
+                    <div class="">
+                    </div>
+                </div>
+
+                <div class=""  style="width: 50%;margin-top: 30px;margin-left: 200px">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="margin-left: 25px">生产时间</span>
+                    </div>
+                    <input type="date" name="time" class="form-control" >
+                    <div class="">
+                    </div>
+                </div>
+
+                <div class=""  style="width: 50%;margin-top: 70px;margin-left: 200px">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="margin-left: 25px;">种子图片</span>
+                    </div>
+                    <input type="file" name="file" id="chooseImage1">
+                    <div class="">
+                    </div>
+                </div>
+                <p class="image1">
+                    <img width="240" height="284" id="cropedBigImg1" value='custom' data-address=''>
+                </p>
+
+                <div class=""  style="width: 50%;margin-top: 270px;margin-left: 200px">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="margin-left: 25px">检疫证</span>
+                    </div>
+                    <input type="file" name="file2" id="chooseImage2">
+                    <div class="">
+                    </div>
+                </div>
+                <p class="image2">
+                    <img width="240" height="284" id="cropedBigImg2" value='custom' data-address=''>
+                </p>
+
+                <div class=""  style="width: 50%;margin-top: 250px;margin-left: 200px">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text" style="margin-left: 25px">审批文件</span>
+                    </div>
+                    <input type="file" name="file3" id="chooseImage3">
+                    <div class="">
+                    </div>
+                </div>
+                <p class="image3">
+                    <img width="240" height="284" id="cropedBigImg3" value='custom' data-address=''>
+                </p>
+
+                <div style="width: 30%;margin-left: 35%;text-align: center;margin-top:250px;margin-bottom: 20px;">
+                    <div id="res-sub-button" >
+                        <button type="submit" class="btn btn-secondary">提交</button>
+                        <button class="btn btn-secondary" type="reset"  style="margin-left:15%">重置</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <!--星级评价-->
+
+    </div>
+</main>
+
+<script type="text/javascript">
+    $('#chooseImage1').on('change',function(){
+        var filePath = $(this).val(),         //获取到input的value，里面是文件的路径
+            fileFormat = filePath.substring(filePath.lastIndexOf(".")).toLowerCase(),
+            src = window.URL.createObjectURL(this.files[0]); //转成可以在本地预览的格式
+
+        // 检查是否是图片
+        if( !fileFormat.match(/.png|.jpg|.jpeg/) ) {
+            error_prompt_alert('上传错误,文件格式必须为：png/jpg/jpeg');
+            return;
+        }
+
+        $('#cropedBigImg1').attr('src',src);
+    });
+    $('#chooseImage2').on('change',function(){
+        var filePath = $(this).val(),         //获取到input的value，里面是文件的路径
+            fileFormat = filePath.substring(filePath.lastIndexOf(".")).toLowerCase(),
+            src = window.URL.createObjectURL(this.files[0]); //转成可以在本地预览的格式
+
+        // 检查是否是图片
+        if( !fileFormat.match(/.png|.jpg|.jpeg/) ) {
+            error_prompt_alert('上传错误,文件格式必须为：png/jpg/jpeg');
+            return;
+        }
+
+        $('#cropedBigImg2').attr('src',src);
+    });
+    $('#chooseImage3').on('change',function(){
+        var filePath = $(this).val(),         //获取到input的value，里面是文件的路径
+            fileFormat = filePath.substring(filePath.lastIndexOf(".")).toLowerCase(),
+            src = window.URL.createObjectURL(this.files[0]); //转成可以在本地预览的格式
+
+        // 检查是否是图片
+        if( !fileFormat.match(/.png|.jpg|.jpeg/) ) {
+            error_prompt_alert('上传错误,文件格式必须为：png/jpg/jpeg');
+            return;
+        }
+
+        $('#cropedBigImg3').attr('src',src);
+    });
+</script>
+</body>
+</html>

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>信息完善</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        /*顶部logo区*/
+        #top-logo{
+            width: 100%;
+            height: 70px;
+        }
+        #top-logo .logo{
+            margin-left: 0;
+            height: 70px;
+            /*background: #50bcb8;*/
+            width: 25%;
+            float: left;
+        }
+        #top-logo .logo img,b{
+            float: left;
+            height: 70px;
+            /*margin: 5px auto 5px 10px;*/
+        }
+        #top-logo .logo b{
+            float: left;
+            text-align: center;
+            line-height: 70px;
+            color: #333333;
+            font-family: 幼圆, serif;
+            font-weight: bold;
+            font-size: 26px;
+            margin-left: 5px;
+        }
+    </style>
+
+</head>
+<div id="top-logo">
+    <div class="logo">
+        <img th:src="@{../img/ari-logo.png}" src="img/ari-logo.png" alt="加载失败">
+        <b>农业一体化智能平台</b>
+    </div>
+</div>
+<header>
+    <div class="navigation" style="background: #333 linear-gradient(to right,  rgb(1,208,212), rgb(123,242,171));height: 30px;width: 100%;margin-bottom: 20px">
+        <span style="margin-left: 5%;font: 700 18px Arial;line-height: 30px;color: white">用户注册</span>
+    </div>
+</header>
+<body>
+<!--农民的进一步注册界面-->
+<form  id="farmerProfile" method="post" enctype="multipart/form-data" style="display: block" th:action="@{/registerSpecialist}" >
+    <!--农民身份证信息-->
+
+    <!--农民的具体地址-->
+    <label for="farmer-address" style="margin-left: 15%;" th:text="((${role}==1)?'推广站地址':'商户地址')">填写您的地址</label>
+    <div class="input-group mb-3" id="farmer-address" style="width: 60%;margin-left: 15%">
+        <div class="input-group-prepend" id="button-addon3">
+            <select aria-label="province" name="user_prov" class="btn btn-outline-secondary prov" type="button">Button</select>
+            <select aria-label="city"  name="user_city" class="btn btn-outline-secondary city" type="button">Button</select>
+            <select aria-label="country" name="user_country" class="btn btn-outline-secondary country" type="button">Button</select>
+        </div>
+        <input type="text" class="form-control" name="user_address" placeholder="具体位置" aria-label="detail-road" aria-describedby="button-addon3">
+    </div>
+
+    <!--  !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!  -->
+    <div class="field-details">
+        <!--田的位置，作物-->
+        <label style="margin-left: 15%;" th:text="((${role}==1)?'推广简介':'商户简介')">您的简介</label>
+        <div class="input-group mb-3" style="margin-left: 15%;width: 60%">
+
+            <textarea type="text" class="form-control" name="intro" placeholder="简要的介绍自己或公司" aria-label="fieldAddress" aria-describedby="basic-addon2"></textarea>
+        </div>
+
+<!--        <div class="input-group mb-3"  style="width: 60%;margin-left: 15%">-->
+<!--            <div class="input-group-prepend">-->
+<!--                <span class="input-group-text">您擅长的领域</span>-->
+<!--                <select aria-label="country" name="domain" class="btn btn-outline-secondary" type="button">-->
+<!--                    <option value="水稻">水稻</option>-->
+<!--                    <option value="枸杞">枸杞</option>-->
+<!--                    <option value="土豆">土豆</option>-->
+<!--                    <option value="玉米">玉米</option>-->
+<!--                    <option value="小麦">小麦</option>-->
+<!--                    <option value="向日葵">向日葵</option>-->
+<!--                    <option value="多领域">多领域</option>-->
+<!--                </select>-->
+<!--            </div>-->
+<!--        </div>-->
+    </div>
+    <input style="display:none;" name="domain" value="null">
+    <input style="display: none" name="role" th:value="${role}" value="1"/>
+    <p   style="width: 60%;margin-left: 15%">工作证明/职称证等证明</p>
+    <div class="bd-example"   style="width: 60%;margin-left: 15%">
+        <div class="custom-file">
+            <input type="file" onchange="change()" name="file" class="custom-file-input" id="upload">
+            <label class="custom-file-label" id="upload-label" for="upload">选择文件</label>
+        </div>
+    </div>
+
+    <!--提交和重置按钮-->
+    <div style="width: 30%;margin-left: 35%;text-align: center;margin-top:20px;margin-bottom: 20px">
+        <div id="crop-sub-button">
+            <button type="submit" onclick="alert('感谢注册，现在将返回登陆页面。')" class="btn btn-secondary">提交</button>
+            <button class="btn btn-secondary" type="reset" value="Reset" style="margin-left:15%">重置</button>
+        </div>
+    </div>
+</form>
+<script>
+    function change() {
+        const tag = document.getElementById("upload-label");
+        var obj = document.getElementById("upload");
+        const tag1 = document.getElementById("fileName");
+        var len = obj.files.length;
+        for (var i = 0; i < len; i++) {
+            tag.innerHTML=obj.files[i].name;
+            tag1.value = obj.files[i].name;
+        }
+    }
+</script>
+<script type="text/javascript" th:src="@{../JS/location.js}"></script>
+<!--bootstrap的js文件-->
+<script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+</body>
+</html>

@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>详情界面</title>
+    <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" th:href="@{../CSS/推送二级.css}" href="CSS/推送二级.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        #question{
+            display:none;
+        }
+        .display{
+            display: block;
+        }
+
+        .relative {
+            position: relative;
+        }
+
+        .showMain {
+            margin-left: 32px;
+            padding: 30px 0;
+            margin-right: 42px;
+        }
+
+        .showMain .title {
+            color: #344659;
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 35px;
+        }
+
+        .showMain p span:first-child {
+            display: inline-block;
+            margin-right: 20px;
+            color: #778a99;
+            width: 85px;
+        }
+
+
+        .showMain .image {
+            position: absolute;
+            right: 0px;
+            top: 80px;
+            overflow: hidden;
+        }
+        #a{
+            position: absolute;
+            right: 90px;
+            top: 370px;
+            overflow: hidden;
+        }
+    </style>
+</head>
+<body style="background-color: #F1F1F1;">
+<!--头和导航-->
+<div id="top-logo">
+    <div class="logo">
+        <img src="../img/ari-logo.png" alt="加载失败">
+        <b>农业一体化智能平台</b>
+    </div>
+</div>
+<!--商品介绍区-->
+<section class="intro">
+    <div class="banner" style="background: #00c5c3"><span>种子详情</span></div>
+    <div class="intro-product" style="margin-left: 150px;">
+        <div class="ad-pic">
+            <img th:src="@{'/img/seed'+${seed.getSeed_id()}+'.jpg'}" alt="" style="height: 350px ;width: 380px">
+            <span th:text="${seed.getSeed_name()}">富源4号</span>
+        </div>
+
+        <div style="width: 800px;height: 710px;float: left;margin-top: 10px;margin-left: 20px;">
+            <div class="btn-group btn-group-lg" role="group" aria-label="Basic example">
+                <button onclick="rice();" id="rice" type="button" class="btn btn-secondary">水稻</button>
+                <button onclick="wheat();" id="wheat" type="button" class="btn btn-secondary">小麦</button>
+                <button onclick="corn();" id="corn" type="button" class="btn btn-secondary">玉米</button>
+                <button onclick="bean();" id="bean" type="button" class="btn btn-secondary">大豆</button>
+                <button onclick="medlar();" id="medlar" type="button" class="btn btn-secondary">枸杞</button>
+            </div>
+
+            <div id="rice1" style="background-color: white;width: 800px;height: 600px;margin-top: 10px;">
+            <form method="post" action="/valuation/saveValuation" enctype="multipart/form-data">
+                <div class="showMain relative">
+                    <div id="title" class="title">水&nbsp;稻&nbsp;种&nbsp;子</div>
+                    <p style="margin-bottom: 20px;">
+                        <span>纯&nbsp;&nbsp;度%：</span>
+                        <div class="form-group" style="margin-top: -35px;margin-bottom: 60px;">
+                            <input name="purity" onclick="change1();" type="range" class="form-control-range" id="formControlRange1" style="width: 350px;margin-left: 90px;">
+                            <input type="text" id="value1" style="width: 35px;float: left;">
+                        </div>
+                    </p>
+                    <p style="margin-bottom: 20px;">
+                        <span>净&nbsp;&nbsp;度%：</span>
+                        <div class="form-group" style="margin-top: -35px;margin-bottom: 60px;">
+                            <input name="neatness" onclick="change2();" type="range" class="form-control-range" id="formControlRange2" style="width: 350px;margin-left: 90px;">
+                            <input type="text" id="value2" style="width: 35px;float: left;">
+                        </div>
+                    </p>
+                    <p style="margin-bottom: 20px;">
+                        <span>出苗率%：</span>
+                        <div class="form-group" style="margin-top: -35px;margin-bottom: 60px;">
+                            <input name="germinationrate" onclick="change3();" type="range" class="form-control-range" id="formControlRange3" style="width: 350px;margin-left: 90px;">
+                            <input type="text" id="value3" style="width: 35px;float: left;">
+                        </div>
+                    </p>
+                    <p style="margin-bottom: 20px;">
+                        <span>水&nbsp;&nbsp;分：</span>
+                        <div class="input-group mb-3" style="margin-top: -45px;width:300px;">
+                            <div class="input-group-prepend">
+                                <button style="margin-left: 90px;" class="btn btn-outline-secondary" type="button" id="button-addon1">含水量%</button>
+                            </div >
+                            <input id="wet" name="wet" style="width: 50px;" type="text" class="form-control" placeholder="" aria-label="Example text with button addon" aria-describedby="button-addon1">
+                        </div>
+                    </p>
+                    <div id="p1" style="margin-bottom: 40px;margin-top: 40px;">
+                        <span style="color: #778a99;">级&nbsp;&nbsp;别：</span>
+                        <div class="form-check form-check-inline" style="margin-left: 30px;top: 0px;">
+                            <input class="form-check-input" type="radio" id="inlineCheckbox1" value="常规种" name="rank1">
+                            <label class="form-check-label" for="inlineCheckbox1">常规种</label>
+                        </div>
+                        <div class="form-check form-check-inline" style="top: 0px;">
+                            <input class="form-check-input" type="radio" id="inlineCheckbox2" value="不育系" name="rank1">
+                            <label class="form-check-label" for="inlineCheckbox2">不育系</label>
+                        </div>
+                        <div class="form-check form-check-inline" style="top: 0px;">
+                            <input class="form-check-input" type="radio" id="inlineCheckbox3" value="保持系" name="rank1">
+                            <label class="form-check-label" for="inlineCheckbox3">保持系</label>
+                        </div>
+                        <div class="form-check form-check-inline" style="top: 0px;">
+                            <input class="form-check-input" type="radio" id="inlineCheckbox4" value="恢复系" name="rank1">
+                            <label class="form-check-label" for="inlineCheckbox4">恢复系</label>
+                        </div>
+                        <div class="form-check form-check-inline" style="top: 0px;">
+                            <input class="form-check-input" type="radio" id="inlineCheckbox5" value="杂交种" name="rank1">
+                            <label class="form-check-label" for="inlineCheckbox5">杂交种</label>
+                        </div>
+
+                    </div>
+                    <div id="p2" style="display: none;margin-bottom: 40px;margin-top: 40px;">
+                        <span style="color: #778a99;">级&nbsp;&nbsp;别：</span>
+                        <div class="form-check form-check-inline" style="margin-left: 30px;top: 0px;">
+                            <input class="form-check-input" type="radio" id="inlineCheckbox6" value="原种" name="rank2">
+                            <label class="form-check-label" for="inlineCheckbox6">原种</label>
+                        </div>
+                        <div class="form-check form-check-inline" style="top: 0px;">
+                            <input class="form-check-input" type="radio" id="inlineCheckbox7" value="良种" name="rank2">
+                            <label class="form-check-label" for="inlineCheckbox7">良种</label>
+                        </div>
+                    </div>
+                    <div id="p3" style="display: none;margin-bottom: 40px;margin-top: 40px;">
+                        <span style="color: #778a99;">级&nbsp;&nbsp;别：</span>
+                        <div class="form-check form-check-inline" style="margin-left: 30px;top: 0px;">
+                            <input class="form-check-input" type="radio" id="inlineCheckbox8" value="常规种" name="rank3">
+                            <label class="form-check-label" for="inlineCheckbox8">常规种</label>
+                        </div>
+                        <div class="form-check form-check-inline" style="top: 0px;">
+                            <input class="form-check-input" type="radio" id="inlineCheckbox9" value="自交系" name="rank3">
+                            <label class="form-check-label" for="inlineCheckbox9">自交系</label>
+                        </div>
+                        <div class="form-check form-check-inline" style="top: 0px;">
+                            <input class="form-check-input" type="radio" id="inlineCheckbox10" value="单交种" name="rank3">
+                            <label class="form-check-label" for="inlineCheckbox10">单交种</label>
+                        </div>
+                        <div class="form-check form-check-inline" style="top: 0px;">
+                            <input class="form-check-input" type="radio" id="inlineCheckbox11" value="双交种" name="rank3">
+                            <label class="form-check-label" for="inlineCheckbox11">双交种</label>
+                        </div>
+                        <div class="form-check form-check-inline" style="top: 0px;">
+                            <input class="form-check-input" type="radio" id="inlineCheckbox12" value="三交种" name="rank3">
+                            <label class="form-check-label" for="inlineCheckbox12">三交种</label>
+                        </div>
+                    </div>
+                    <div id="p4" style="display: none;margin-bottom: 40px;margin-top: 40px;">
+                        <span style="color: #778a99;">级&nbsp;&nbsp;别：</span>
+                        <div class="form-check form-check-inline" style="margin-left: 30px;top: 0px;">
+                            <input class="form-check-input" type="radio" id="inlineCheckbox13" value="原种" name="rank4">
+                            <label class="form-check-label" for="inlineCheckbox13">原种</label>
+                        </div>
+                        <div class="form-check form-check-inline" style="top: 0px;">
+                            <input class="form-check-input" type="radio" id="inlineCheckbox14" value="良种" name="rank4">
+                            <label class="form-check-label" for="inlineCheckbox14">良种</label>
+                        </div>
+                    </div>
+                    <div id="p5" style="display: none;margin-bottom: 40px;margin-top: 40px;">
+                        <span style="color: #778a99;">级&nbsp;&nbsp;别：</span>
+                        <div class="form-check form-check-inline" style="margin-left: 30px;top: 0px;">
+                            <input class="form-check-input" type="radio" id="inlineCheckbox15" value="原种" name="rank5">
+                            <label class="form-check-label" for="inlineCheckbox15">原种</label>
+                        </div>
+                        <div class="form-check form-check-inline" style="top: 0px;">
+                            <input class="form-check-input" type="radio" id="inlineCheckbox16" value="良种" name="rank5">
+                            <label class="form-check-label" for="inlineCheckbox16">良种</label>
+                        </div>
+                    </div>
+                    <p>
+                        <span>品&nbsp;&nbsp;质：</span>
+                        <div class="form-check form-check-inline" style="margin-left: 90px;top: -22px;">
+                            <input class="form-check-input" type="radio" id="inlineCheckbox6" value="优质" name="grade">
+                            <label class="form-check-label" for="inlineCheckbox6">优质</label>
+                        </div>
+                        <div class="form-check form-check-inline" style="top: -22px;">
+                            <input class="form-check-input" type="radio" id="inlineCheckbox7" value="较优质" name="grade">
+                            <label class="form-check-label" for="inlineCheckbox7">较优质</label>
+                        </div>
+                        <div class="form-check form-check-inline" style="top: -22px;">
+                            <input class="form-check-input" type="radio" id="inlineCheckbox8" value="中等" name="grade">
+                            <label class="form-check-label" for="inlineCheckbox8">中等</label>
+                        </div>
+                        <div class="form-check form-check-inline" style="top: -22px;">
+                            <input class="form-check-input" type="radio" id="inlineCheckbox9" value="合格" name="grade">
+                            <label class="form-check-label" for="inlineCheckbox9">合格</label>
+                        </div>
+                        <div class="form-check form-check-inline" style="top: -22px;">
+                            <input class="form-check-input" type="radio" id="inlineCheckbox10" value="不合格" name="grade">
+                            <label class="form-check-label" for="inlineCheckbox10">不合格</label>
+                        </div>
+
+                    </p>
+                    <p class="image">
+                        <img width="240" height="284" id="cropedBigImg" value='custom' data-address=''>
+                    </p>
+                    <a id="a" th:href="'/img/证书'+${seed.getSeed_id()}+'.jpg'" download="证书.jpg">点击下载</a>
+<!--                    <input onclick="showPhoto()" type="button" id="button" value="生成证书">-->
+                    <input onclick="showPhoto()" type="button" class="btn btn-secondary" id="button" value="生成证书" style="margin-top: 0px"></input>
+                    <input class="file" type="file" name="file" style="margin-left: 20px;margin-top: 20px">
+<!--                    id="chooseImage"-->
+                    <input type="submit" value="提交" class="btn btn-secondary" style="margin-left: 585px;margin-top: -60px">
+                    <input type="hidden" id="hid" name="hid">
+                    <input type="hidden" th:value="${seed.getSeed_id()}" name="seed_id" id="seedId">
+                    <input type="hidden" th:value="${seed.getSeed_name()}" id="seedName">
+                </div>
+            </form>
+            </div>
+
+        </div>
+
+        <div style="background-color: white;width: 380px;height: 298px;float: left;margin-top: -350px;margin-left: 10px;">
+
+            <div class="showMain relative">
+                <p style="margin-bottom: 20px;">
+                    <span>价&nbsp;&nbsp;格：</span><span th:text="${seed.getSeed_price()}"></span>
+                </p>
+                <p style="margin-bottom: 20px;">
+                    <span>生产厂家：</span><span th:text="${seed.getSeed_manufacturer()}"></span>
+                </p>
+                <p style="margin-bottom: 20px;">
+                    <span>联系方式：</span><span th:text="${seed.getUser_phone()}"></span>
+                </p>
+                <p style="margin-bottom: 20px;">
+                    <span>生产时间：</span><span th:text="${seed.getSeed_productiondate()}"></span>
+                </p>
+            </div>
+
+        </div>
+    </div>
+</section>
+
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript">
+    function rice() {
+        p1.style.display = 'none'
+        p2.style.display = 'none'
+        p3.style.display = 'none'
+        p4.style.display = 'none'
+        p5.style.display = 'none'
+        p1.style.display = 'block'
+        document.getElementById('wheat').style.backgroundColor = '#6c757d'
+        document.getElementById('wheat').style.color = '#fff'
+        document.getElementById('corn').style.backgroundColor = '#6c757d'
+        document.getElementById('corn').style.color = '#fff'
+        document.getElementById('bean').style.backgroundColor = '#6c757d'
+        document.getElementById('bean').style.color = '#fff'
+        document.getElementById('medlar').style.backgroundColor = '#6c757d'
+        document.getElementById('medlar').style.color = '#fff'
+        document.getElementById('rice').style.backgroundColor = 'white'
+        document.getElementById('rice').style.color = 'orange'
+        document.getElementById('hid').setAttribute('value',"1");
+        document.getElementById('title').innerHTML = "水 稻 种 子";
+    }
+    function wheat() {
+        p1.style.display = 'none'
+        p2.style.display = 'none'
+        p3.style.display = 'none'
+        p4.style.display = 'none'
+        p5.style.display = 'none'
+        p2.style.display = 'block'
+        document.getElementById('corn').style.backgroundColor = '#6c757d'
+        document.getElementById('corn').style.color = '#fff'
+        document.getElementById('rice').style.backgroundColor = '#6c757d'
+        document.getElementById('rice').style.color = '#fff'
+        document.getElementById('bean').style.backgroundColor = '#6c757d'
+        document.getElementById('bean').style.color = '#fff'
+        document.getElementById('medlar').style.backgroundColor = '#6c757d'
+        document.getElementById('medlar').style.color = '#fff'
+        document.getElementById('wheat').style.backgroundColor = 'white'
+        document.getElementById('wheat').style.color = 'orange'
+        document.getElementById('hid').setAttribute('value',"2");
+        document.getElementById('title').innerHTML = "小 麦 种 子";
+    }
+    function corn() {
+        p1.style.display = 'none'
+        p2.style.display = 'none'
+        p3.style.display = 'none'
+        p4.style.display = 'none'
+        p5.style.display = 'none'
+        p3.style.display = 'block'
+        document.getElementById('wheat').style.backgroundColor = '#6c757d'
+        document.getElementById('wheat').style.color = '#fff'
+        document.getElementById('rice').style.backgroundColor = '#6c757d'
+        document.getElementById('rice').style.color = '#fff'
+        document.getElementById('bean').style.backgroundColor = '#6c757d'
+        document.getElementById('bean').style.color = '#fff'
+        document.getElementById('medlar').style.backgroundColor = '#6c757d'
+        document.getElementById('medlar').style.color = '#fff'
+        document.getElementById('corn').style.backgroundColor = 'white'
+        document.getElementById('corn').style.color = 'orange'
+        document.getElementById('hid').setAttribute('value',"3");
+        document.getElementById('title').innerHTML = "玉 米 种 子";
+    }
+    function bean() {
+        p1.style.display = 'none'
+        p2.style.display = 'none'
+        p3.style.display = 'none'
+        p4.style.display = 'none'
+        p5.style.display = 'none'
+        p4.style.display = 'block'
+        document.getElementById('wheat').style.backgroundColor = '#6c757d'
+        document.getElementById('wheat').style.color = '#fff'
+        document.getElementById('corn').style.backgroundColor = '#6c757d'
+        document.getElementById('corn').style.color = '#fff'
+        document.getElementById('rice').style.backgroundColor = '#6c757d'
+        document.getElementById('rice').style.color = '#fff'
+        document.getElementById('medlar').style.backgroundColor = '#6c757d'
+        document.getElementById('medlar').style.color = '#fff'
+        document.getElementById('bean').style.backgroundColor = 'white'
+        document.getElementById('bean').style.color = 'orange'
+        document.getElementById('hid').setAttribute('value',"4");
+        document.getElementById('title').innerHTML = "大 豆 种 子";
+    }
+    function medlar() {
+        p1.style.display = 'none'
+        p2.style.display = 'none'
+        p3.style.display = 'none'
+        p4.style.display = 'none'
+        p5.style.display = 'none'
+        p5.style.display = 'block'
+        document.getElementById('wheat').style.backgroundColor = '#6c757d'
+        document.getElementById('wheat').style.color = '#fff'
+        document.getElementById('corn').style.backgroundColor = '#6c757d'
+        document.getElementById('corn').style.color = '#fff'
+        document.getElementById('bean').style.backgroundColor = '#6c757d'
+        document.getElementById('bean').style.color = '#fff'
+        document.getElementById('rice').style.backgroundColor = '#6c757d'
+        document.getElementById('rice').style.color = '#fff'
+        document.getElementById('medlar').style.backgroundColor = 'white'
+        document.getElementById('medlar').style.color = 'orange'
+        document.getElementById('hid').setAttribute('value',"5");
+        document.getElementById('title').innerHTML = "枸 杞 种 子";
+    }
+    function change1() {
+        var value = document.getElementById('formControlRange1').value ;
+        document.getElementById('value1').value = value;
+    }
+    function change2() {
+        var value = document.getElementById('formControlRange2').value ;
+        document.getElementById('value2').value = value;
+    }
+    function change3() {
+        var value = document.getElementById('formControlRange3').value ;
+        document.getElementById('value3').value = value;
+    }
+    window.onload=function () {
+        document.getElementById('hid').setAttribute('value',"1");
+        var value1 = document.getElementById('formControlRange1').value ;
+        var value2 = document.getElementById('formControlRange2').value ;
+        var value3 = document.getElementById('formControlRange3').value ;
+        document.getElementById('value1').value = value1;
+        document.getElementById('value2').value = value2;
+        document.getElementById('value3').value = value3;
+    }
+    $('#chooseImage').on('change',function(){
+        var filePath = $(this).val(),         //获取到input的value，里面是文件的路径
+            fileFormat = filePath.substring(filePath.lastIndexOf(".")).toLowerCase(),
+            src = window.URL.createObjectURL(this.files[0]); //转成可以在本地预览的格式
+
+        // 检查是否是图片
+        if( !fileFormat.match(/.png|.jpg|.jpeg/) ) {
+            error_prompt_alert('上传错误,文件格式必须为：png/jpg/jpeg');
+            return;
+        }
+
+        $('#cropedBigImg').attr('src',src);
+    });
+
+    function showPhoto(){
+        var hid = "rank"+$("#hid").val();
+        var m3 = $("input[name="+hid+"]:checked").val();
+        var m2=$("#seedName").val()
+        var m1=$("input[name='grade']:checked").val();
+        var m4=$("#value3").val();
+        var m5=$("#wet").val();
+        var m6=$("#value1").val();
+        var m7=$("#value2").val();
+        var m8=$("#seedId").val();
+        if(m1 == "" || m2 == ""|| m3 == ""|| m4 == ""|| m5 == ""|| m6 == ""|| m7 == ""|| m8 == ""){
+            alert("信息未完善！");
+            throw SyntaxError(); //如果验证不通过，则不执行后面
+        }
+        $.ajax({
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            url: "/createCertification",
+            data: {"m1":m1,"m2":m2,"m3":m3,"m4":m4,"m5":m5,"m6":m6,"m7":m7,"m8":m8},
+            type: "POST",
+            dataType: "text",
+            success: function(data){
+                $("#cropedBigImg").attr('src','/img/证书'+m8+".jpg");
+            },
+            error: function (){
+                alert("失败");
+            },
+        });
+    };
+
+</script>
+
+</body>
+</html>

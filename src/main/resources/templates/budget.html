@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+</head>
+<body>
+<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-4">
+<div class="main-context" id="evaluationmain" style="overflow: auto">
+    <!--预测-->
+    <div class="position-relative" style="float: left; margin-top: 18px;border-bottom: rgba(1,1,1,0.2) 1px solid;width: 90%;background: lightgoldenrodyellow;overflow: auto">
+        <!--选择作物-->
+        <div style="font: 400 18px/20px Arial;color: darkslategrey;margin: 25px 0 0 25px;float: left;height: 40px;width: 90%">
+            <div class="input-group mb-3" style="float: left;width: 50%">
+                <div class="input-group-prepend">
+                    <label class="input-group-text" for="inputGroupSelect01">选择预测作物</label>
+                </div>
+                <select class="custom-select" id="inputGroupSelect01" name="crop"  >
+                    <option selected>请选择</option>
+                    <div th:each="seed:${seeds}">
+                        <option th:text="${seed.getSeed_name()}" th:name="${seed.getSeed_id()}"></option>
+                    </div>
+                </select>
+            </div>
+            <div  style="float: left;margin-left: 10px;line-height: 40px">预测价格为<span id="forecast-price" style="color:chocolate;" >未选择</span>元/斤</div>
+        </div>
+        <!--价格输入-->
+        <div class="input-group mb-3"  style="width: 50%;margin-top: 80px">
+            <div class="input-group-prepend">
+                <span class="input-group-text" style="margin-left: 25px">肥药花费</span>
+            </div>
+            <input id="fertilizer" name="fertilizer" type="text" class="form-control" placeholder="具体价格 0.00" aria-label="detail-area" aria-describedby="button-addon3">
+            <div class="input-group-append">
+                <span class="input-group-text">元</span>
+            </div>
+        </div>
+        <div class="input-group mb-3"  style="width: 50%;margin-top: 15px">
+            <div class="input-group-prepend">
+                <span class="input-group-text" style="margin-left: 25px">水电花费</span>
+            </div>
+            <input id="waterElectricity" name="waterElectricity" type="text" class="form-control" placeholder="具体价格 0.00" aria-label="detail-area" aria-describedby="button-addon3">
+            <div class="input-group-append">
+                <span class="input-group-text">元</span>
+            </div>
+        </div>
+        <div class="input-group mb-3"  style="width: 50%;margin-top: 15px">
+            <div class="input-group-prepend">
+                <span class="input-group-text" style="margin-left: 25px">人工花费</span>
+            </div>
+            <input id="artifical" name="artifical" type="text" class="form-control" placeholder="具体价格 0.00" aria-label="detail-area" aria-describedby="button-addon3">
+            <div class="input-group-append">
+                <span class="input-group-text">元</span>
+            </div>
+        </div>
+        <div class="input-group mb-3"  style="width: 50%;margin-top: 15px">
+            <div class="input-group-prepend">
+                <span class="input-group-text" style="margin-left: 25px">种子花费</span>
+            </div>
+            <input id="seedFee" name="seedFee" type="text" class="form-control" placeholder="具体价格 0.00" aria-label="detail-area" aria-describedby="button-addon3">
+            <div class="input-group-append">
+                <span class="input-group-text">元</span>
+            </div>
+        </div>
+        <div  style="font: 700 18px/20px Arial;margin-left: 30px;line-height: 40px">预测收益为<span id="sum-price change" style="color:#d2691e;"></span>元</div>
+        <!--提交和重置按钮-->
+        <div style="width: 30%;margin-left: 35%;text-align: center;margin-top:20px;margin-bottom: 20px">
+            <div id="res-sub-button">
+                <button type="button" class="btn btn-secondary" onclick="login01()">提交</button>
+                <button class="btn btn-secondary" type="reset" value="Reset" style="margin-left:15%">重置</button>
+            </div>
+        </div>
+    </div>
+    <!--星级评价-->
+    <div  class="position-relative" style="float: left; margin-top: 18px;border-bottom: rgba(1,1,1,0.2) 1px solid;width: 90%;">
+        <span style="height: 30px;line-height: 30px;font: 500 20px Arial, sans-serif;margin-right: 10px">您的评价</span>
+        <!--第1个星星-->
+        <a href="javascript:void(0)" class="stars" style="height: 35px" onclick="stars(1)">
+            <svg style="padding-bottom: 5px" width="28px" height="28px" viewBox="0 0 16 16" class="bi bi-star" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.523-3.356c.329-.314.158-.888-.283-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767l-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288l1.847-3.658 1.846 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.564.564 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+            </svg>
+        </a>
+        <!--第2个星星-->
+        <a href="javascript:void(0)" class="stars" style="height: 35px" onclick="stars(2)">
+            <svg style="padding-bottom: 5px" width="28px" height="28px" viewBox="0 0 16 16" class="bi bi-star" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.523-3.356c.329-.314.158-.888-.283-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767l-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288l1.847-3.658 1.846 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.564.564 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+            </svg>
+        </a>
+        <!--第3个星星-->
+        <a href="javascript:void(0)" class="stars" style="height: 35px" onclick="stars(3)">
+            <svg style="padding-bottom: 5px" width="28px" height="28px" viewBox="0 0 16 16" class="bi bi-star" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.523-3.356c.329-.314.158-.888-.283-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767l-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288l1.847-3.658 1.846 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.564.564 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+            </svg>
+        </a>
+        <!--第4个星星-->
+        <a href="javascript:void(0)" class="stars" style="height: 35px" onclick="stars(4)">
+            <svg style="padding-bottom: 5px" width="28px" height="28px" viewBox="0 0 16 16" class="bi bi-star" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.523-3.356c.329-.314.158-.888-.283-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767l-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288l1.847-3.658 1.846 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.564.564 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+            </svg>
+        </a>
+        <!--第5个星星-->
+        <a href="javascript:void(0)" class="stars" style="height: 35px" onclick="stars(5)">
+            <svg style="padding-bottom: 5px" width="28px" height="28px" viewBox="0 0 16 16" class="bi bi-star" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
+                <path fill-rule="evenodd" d="M2.866 14.85c-.078.444.36.791.746.593l4.39-2.256 4.389 2.256c.386.198.824-.149.746-.592l-.83-4.73 3.523-3.356c.329-.314.158-.888-.283-.95l-4.898-.696L8.465.792a.513.513 0 0 0-.927 0L5.354 5.12l-4.898.696c-.441.062-.612.636-.283.95l3.523 3.356-.83 4.73zm4.905-2.767l-3.686 1.894.694-3.957a.565.565 0 0 0-.163-.505L1.71 6.745l4.052-.576a.525.525 0 0 0 .393-.288l1.847-3.658 1.846 3.658a.525.525 0 0 0 .393.288l4.052.575-2.906 2.77a.564.564 0 0 0-.163.506l.694 3.957-3.686-1.894a.503.503 0 0 0-.461 0z"/>
+            </svg>
+        </a>
+    </div>
+    <!--内容评价-->
+    <div  class="position-relative" style="float: left; margin-top: 18px;border-bottom: rgba(1,1,1,0.2) 1px solid;width: 90%;">
+        <div class="input-group">
+            <div class="input-group-prepend">
+                <span class="input-group-text">您的建议</span>
+            </div>
+            <textarea class="form-control" aria-label="With textarea"></textarea>
+            <button class="btn btn-info btn-sm" style="float: right">提交</button>
+        </div>
+    </div>
+</div>
+    </main>
+<script>
+    function stars(num) {
+        const tags = document.getElementsByClassName("stars");
+        for(let i=0;i<num;i++){
+            tags[i].innerHTML = "<svg width=\"28px\" style=\"padding-bottom: 5px\" height=\"28px\" viewBox=\"0 0 16 16\" class=\"bi bi-star-fill\" fill=\"currentColor\" xmlns=\"http://www.w3.org/2000/svg\">\n" +
+                "  <path d=\"M3.612 15.443c-.386.198-.824-.149-.746-.592l.83-4.73L.173 6.765c-.329-.314-.158-.888.283-.95l4.898-.696L7.538.792c.197-.39.73-.39.927 0l2.184 4.327 4.898.696c.441.062.612.636.283.95l-3.523 3.356.83 4.73c.078.443-.36.79-.746.592L8 13.187l-4.389 2.256z\"/>\n" +
+                "</svg>";
+        }
+    }
+</script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script>
+    function login01(){
+        var predict = $("#inputGroupSelect01").find("option:selected").val();
+        var fertilizer = $("#fertilizer").val();
+        var waterElectricity = $("#waterElectricity").val();
+        var artifical = $("#artifical").val();
+        var seedFee= $("#seedFee").val();
+        $.ajax({
+            contentType: "application/x-www-form-urlencoded; charset=utf-8",
+            url:"/budget",
+            data:{"predict":predict,"fertilizer":fertilizer,"waterElectricity":waterElectricity,"artifical":artifical,"seedFee":seedFee},
+            type:"POST",
+            dataType:"text",
+            success: function (result) {
+                if (result) {
+                    document.getElementById("sum-price change").innerText=result;
+                }
+
+            },
+            error:function(data, XMLHttpRequest, textStatus, errorThrown){
+                alert("输入有误");
+            }
+        })
+    }
+</script>
+</body>
+</html>

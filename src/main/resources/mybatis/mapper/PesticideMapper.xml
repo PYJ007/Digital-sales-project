@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dajun.springbootplatform.repository.PesticideMapper">
+    <select id="selectnongyaolistbynull" resultType="Pesticide">
+        select *
+        from pesticide
+    </select>
+
+    <insert id="insertpesticide" useGeneratedKeys="true" keyProperty="pesticide_id" keyColumn="pesticide_id" parameterType="Pesticide">
+        insert into pesticide(pesticide_name,pesticide_composition,pesticide_dosage,pesticide_content,pesticide_predisease,pesticide_instructions,pesticide_price,pesticide_manufacturer,pesticide_licensenumber,pesticide_address,pesticide_productiondate,pesticide_moderatecrop,pesticide_virulence,pesticide_note,pesticide_phone,pesticide_Shelflife,recommend_data)
+        values(#{pesticide_name},#{pesticide_composition},#{pesticide_dosage},#{pesticide_content},#{pesticide_predisease},#{pesticide_instructions},#{pesticide_price},#{pesticide_manufacturer},#{pesticide_licensenumber},#{pesticide_address},#{pesticide_productiondate},#{pesticide_moderatecrop},#{pesticide_virulence},#{pesticide_note},#{pesticide_phone},#{pesticide_Shelflife},#{recommend_data})
+    </insert>
+
+    <!--  删除与批量删除-->
+    <delete id="deletonepesticide" parameterType="int">
+        delete from pesticide
+        where pesticide_id=#{pesticideId}
+    </delete>
+</mapper>

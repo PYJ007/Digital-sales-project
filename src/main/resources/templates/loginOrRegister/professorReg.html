@@ -48,14 +48,9 @@
 </header>
 <body>
 <!--农民的进一步注册界面-->
-<form  id="farmerProfile" method="post" style="display: block" th:action="@{/registerCrops}" >
+<form  id="farmerProfile" method="post" enctype="multipart/form-data" style="display: block" th:action="@{/registerSpecialist}" >
     <!--农民身份证信息-->
-    <div class="input-group mb-3"  style="width: 60%;margin-left: 15%">
-        <div class="input-group-prepend">
-            <span class="input-group-text">身份证</span>
-        </div>
-        <input type="text" placeholder="您的身份证号" name="user_card" aria-label="IDcard"  class="form-control">
-    </div>
+
     <!--农民的具体地址-->
     <label for="farmer-address" style="margin-left: 15%;">填写您的地址</label>
     <div class="input-group mb-3" id="farmer-address" style="width: 60%;margin-left: 15%">
@@ -78,20 +73,47 @@
         <div class="input-group mb-3"  style="width: 60%;margin-left: 15%">
             <div class="input-group-prepend">
                 <span class="input-group-text">您擅长的领域</span>
-                <select aria-label="country" name="crop_name1" class="btn btn-outline-secondary crops" type="button">Button</select>
+                <select aria-label="country" name="domain" class="btn btn-outline-secondary" type="button">
+                    <option value="水稻">水稻</option>
+                    <option value="枸杞">枸杞</option>
+                    <option value="土豆">土豆</option>
+                    <option value="玉米">玉米</option>
+                    <option value="小麦">小麦</option>
+                    <option value="向日葵">向日葵</option>
+                    <option value="多领域">多领域</option>
+                </select>
             </div>
+        </div>
+    </div>
+    <input style="display: none" name="role" th:value="${role}" value="1"/>
+    <p   style="width: 60%;margin-left: 15%">工作证明/职称证等证明</p>
+    <div class="bd-example"   style="width: 60%;margin-left: 15%">
+        <div class="custom-file">
+            <input type="file" onchange="change()" name="file" class="custom-file-input" id="upload">
+            <label class="custom-file-label" id="upload-label" for="upload">选择文件</label>
         </div>
     </div>
 
     <!--提交和重置按钮-->
     <div style="width: 30%;margin-left: 35%;text-align: center;margin-top:20px;margin-bottom: 20px">
         <div id="crop-sub-button">
-            <button type="submit" class="btn btn-secondary">提交</button>
+            <button type="submit" onclick="alert('感谢注册，现在将返回登陆页面。')" class="btn btn-secondary">提交</button>
             <button class="btn btn-secondary" type="reset" value="Reset" style="margin-left:15%">重置</button>
         </div>
     </div>
 </form>
-
+<script>
+    function change() {
+        const tag = document.getElementById("upload-label");
+        var obj = document.getElementById("upload");
+        const tag1 = document.getElementById("fileName");
+        var len = obj.files.length;
+        for (var i = 0; i < len; i++) {
+            tag.innerHTML=obj.files[i].name;
+            tag1.value = obj.files[i].name;
+        }
+    }
+</script>
 <script type="text/javascript" th:src="@{JS/location.js}"></script>
 <!--bootstrap的js文件-->
 <script src="https://cdn.jsdelivr.net/npm/jquery@3.4.1/dist/jquery.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>

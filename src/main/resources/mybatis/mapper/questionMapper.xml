@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dajun.springbootplatform.repository.questionRepository">
+    <select id="findquestionByPhone" resultType="questions" parameterType="java.lang.String">
+        select * from questions where user_tel = #{userPhone} ORDER BY id DESC
+    </select>
+    <insert id="saveQuestion" parameterType="com.dajun.springbootplatform.entities.connect.questions">
+		insert into questions(question,q_state,user_tel)
+		values(#{question},#{q_state},#{user_tel})
+	</insert>
+    <update id="setState">
+		update questions set q_state=1 where id=#{id}
+	</update>
+    <select id="findPhoneById" resultType="java.lang.String" >
+        select user_tel from questions where id=#{id}
+    </select>
+    <delete id="deleteQuestion">
+		delete from questions where id=#{id}
+	</delete>
+    <select id="getStateNumByPhone" resultType="java.lang.String" >
+        select count(*) from questions where user_tel=#{phone} and q_state='0'
+    </select>
+</mapper>

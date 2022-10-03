@@ -57,7 +57,7 @@
 }
 /*种子信息管理*/
 #seedNavigation{
-    width: 19%;
+    width: 12%;
     margin-left: 5px;
     height: 400px;
     background: lightcyan;
@@ -80,9 +80,9 @@
     background: chocolate;
 }
 .main-container{
-    width: 78%;
+    width: 85%;
     height: 400px;
-    margin-left: 20%;
+    margin-left: 13%;
 }
 .location{
     margin-bottom: 5px;

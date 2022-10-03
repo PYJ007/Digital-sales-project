@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css" integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+    <style>
+        .sign{
+            font-size: 24px;
+            margin-right: 18px;
+            color: #1a437e;
+        }
+        .navbar{
+            margin-top: -20px;
+        }
+    </style>
+</head>
+<body>
+<div class="page-header" style="margin-top: 10px">
+    <div style="margin-left: 120px">
+        <span class="glyphicon glyphicon-globe sign"></span><span class="sign">个人中心</span>
+    </div>
+</div>
+
+<!--顶部导航条-->
+<nav class="navbar " style="background: linear-gradient(90deg,#00d0d4 19%,#00c5c3 58%,#9effa4 100%);">
+    <div class="container-fluid">
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav" style="margin-left: 80px">
+                <li style="margin-right: 60px"><a class="glyphicon glyphicon-user" th:href="@{/personalCenter/connect}" href="#">顾客列表</a></li>
+                <li style="margin-right: 60px"><a class="glyphicon glyphicon-piggy-bank" href="/personalCenter/getCandidate">审核情况</a></li>
+                <li style="margin-right: 60px"><a class="glyphicon glyphicon-piggy-bank" href="#">订单交易</a></li>
+                <li ><a class="glyphicon glyphicon-pencil" href="/personalCenter/addCrop">添加商品</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right" style="margin-right: 80px">
+                <li ><a class="glyphicon glyphicon-globe" href="/personalCenter/index" style="float: left">返回个人主页</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<div style="width: 1050px;margin-left: 110px;margin-bottom: 50px;float: left">
+    <div>
+        <span class="glyphicon glyphicon-refresh sign"></span><span class="sign">审核中</span>
+    </div>
+    <div th:if="${c1s.size()>0}" th:each="seed:${c1s}" >
+        <div style="float: left;width: 1030px;height: 250px;background-color: wheat;border-bottom: rgba(1,1,1,0.2) 1px solid;margin-right: 20px;margin-bottom: 10px">
+            <a href="#" style="display: block;float: left">
+                <img th:src="@{'/img/seed'+${seed.getSeed_id()}+'.jpg'}" style="width: 350px;height: 230px;margin-top: 10px;margin-left: 10px" alt="加载失败">
+<!--                <img th:src="@{'/img/seed4'}" style="width: 400px;height: 300px;margin-top: 10px;margin-left: 10px" alt="加载失败">-->
+            </a>
+            <div style="float: left;height: 250px;margin-top: 10px;margin-left: 10px">
+                <span>类型：</span><sqan th:text="${seed.getSeed_type()}">宁粳43号</sqan>
+                <br><br>
+                <span >名称：</span><sqan th:text="${seed.getSeed_name()}" >宁粳43号</sqan>
+                <br><br>
+                <span >价格：</span><span th:text="${seed.getSeed_price()}" >宁粳43号</span>
+                <br><br>
+                <span >生产时间：</span><span th:text="${seed.getSeed_productiondate()}" >宁粳43号</span>
+                <br><br>
+                <span >简介：</span><span th:text="${seed.getSeed_introduce()}"> 宁粳43号具有抗倒伏，耐旱耐寒，且产量高，味道甜，在市场上具有一定的人气和市场。</span>
+                <br><br>
+                <span >播种方式：</span><span th:text="${seed.getSeed_method()}"> 宁粳43号具有抗倒伏，耐旱耐寒，且产量高，味道甜，在市场上具有一定的人气和市场。</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div style="width: 1050px;margin-left: 110px;float: left">
+    <div >
+        <span class="glyphicon glyphicon-remove sign"></span><span class="sign">审核未通过</span>
+    </div>
+    <div th:if="${c2s.size()>0}" th:each="seed:${c2s}" >
+        <div style="float: left;width: 1030px;height: 250px;background-color: wheat;border-bottom: rgba(1,1,1,0.2) 1px solid;margin-right: 20px;margin-bottom: 10px">
+            <a href="#" style="display: block;float: left">
+                <img th:src="@{'/img/seed'+${seed.getSeed_id()}+'.jpg'}" style="width: 350px;height: 230px;margin-top: 10px;margin-left: 10px" alt="加载失败">
+            </a>
+            <div style="float: left;height: 250px;width: 400px;margin-top: 10px;margin-left: 10px">
+                <span>类型：</span><sqan th:text="${seed.getSeed_type()}">宁粳43号</sqan>
+                <br><br>
+                <span >名称：</span><sqan th:text="${seed.getSeed_name()}" >宁粳43号</sqan>
+                <br><br>
+                <span >价格：</span><span th:text="${seed.getSeed_price()}" >宁粳43号</span>
+                <br><br>
+                <span >生产时间：</span><span th:text="${seed.getSeed_productiondate()}" >宁粳43号</span>
+                <br><br>
+                <span >简介：</span><span th:text="${seed.getSeed_introduce()}"> 宁粳43号具有抗倒伏，耐旱耐寒，且产量高，味道甜，在市场上具有一定的人气和市场。</span>
+                <br><br>
+                <span >播种方式：</span><span th:text="${seed.getSeed_method()}"> 宁粳43号具有抗倒伏，耐旱耐寒，且产量高，味道甜，在市场上具有一定的人气和市场。</span>
+            </div>
+            <div style="float: left;height: 250px;width: 200px;margin-top: 10px;margin-left: 10px">
+                原因：<span th:text="${seed.getReason()}"></span>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>

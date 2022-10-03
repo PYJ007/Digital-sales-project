@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dajun.springbootplatform.repository.buyerschatRepository">
+    <select id="findQuistionByPhone" resultType="buyersChat" >
+        SELECT * FROM buyerschat WHERE s_phone=#{sellerPhone} AND b_phone=#{buyerPhone} ORDER BY id DESC
+    </select>
+
+    <select id="findMassageStateByPhone" resultType="int" >
+        SELECT COUNT(*) FROM buyerschat WHERE s_phone=#{sellerPhone} AND b_phone=#{buyerPhone} AND state=0;
+    </select>
+    <select id="findSellerPhoneByByuerPhone" resultType="String" >
+        SELECT s_phone FROM buyers_seller WHERE b_phone=#{buyerPhone} LIMIT 1
+    </select>
+    <select id="existSellerAndByuer" resultType="int" >
+        SELECT COUNT(*) FROM buyers_seller WHERE b_phone=#{buyerPhone} AND s_phone=#{sellerPhone}
+    </select>
+    <insert id="establishSellerAndByuer">
+        INSERT INTO buyers_seller VALUE(#{buyerPhone},#{sellerPhone})
+    </insert>
+    <insert id="saveAnswer">
+        INSERT	INTO buyerschat(b_chat,b_phone,s_phone,state) VALUE(#{answer},#{buyerPhone},#{sellerPhone},#{state})
+    </insert>
+</mapper>

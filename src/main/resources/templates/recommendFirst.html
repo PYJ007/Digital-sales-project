@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 <html lang="en"  xmlns:th="http://www.thymeleaf.org">
+<link rel="shortcut icon" type="image/x-icon" href="img/ari-logo.png"/>
+
 <head>
     <meta charset="UTF-8">
     <title>推荐作物选择</title>
@@ -49,52 +51,60 @@
 <!--左侧选择栏-->
     <div style="width: 45%;float: left">
         <div class="list-group" style="margin-left: 2%;margin-right: 10px">
-            <a href="#" onclick="shows(0)" class="list-group-item list-group-item-action crop-type active">水稻类</a>
-            <a href="#" onclick="shows(1)" class="list-group-item list-group-item-action crop-type">玉米类</a>
-            <a href="#" onclick="shows(2)" class="list-group-item list-group-item-action crop-type">枸杞类</a>
-            <a href="#" onclick="shows(3)" class="list-group-item list-group-item-action crop-type">蔬菜类</a>
-<!--            <a href="#" onclick="shows(4)" class="list-group-item list-group-item-action crop-type">大米类</a>-->
-<!--            <a href="#" onclick="shows(5)" class="list-group-item list-group-item-action crop-type">。。类</a>-->
-        </div>
+            <a class="list-group-item list-group-item-action crop-type active" onclick="showSelect('gq',this)" th:if="${wolfBerry!=null&&!wolfBerry.isEmpty()}">枸杞</a>
+            <a class="list-group-item list-group-item-action crop-type " onclick="showSelect('sd',this)" th:if="${paddyRice!=null&&!paddyRice.isEmpty()}">水稻</a>
+            <a class="list-group-item list-group-item-action crop-type " onclick="showSelect('pt',this)" th:if="${purple!=null&&!purple.isEmpty()}">葡萄</a>
+            <a class="list-group-item list-group-item-action crop-type " onclick="showSelect('ym',this)" th:if="${corn!=null&&!corn.isEmpty()}">玉米</a>
+            <a class="list-group-item list-group-item-action crop-type " onclick="showSelect('dd',this)" th:if="${soybean!=null&&!soybean.isEmpty()}">大豆</a>
+            <a class="list-group-item list-group-item-action crop-type " onclick="showSelect('mls',this)" th:if="${potato!=null&&!potato.isEmpty()}">马铃薯</a>
+            <a class="list-group-item list-group-item-action crop-type " onclick="showSelect('xrk',this)" th:if="${sunflower!=null&&!sunflower.isEmpty()}">向日葵</a>
+            <a class="list-group-item list-group-item-action crop-type " onclick="showSelect('xm',this)" th:if="${wheat!=null&&!wheat.isEmpty()}">小麦</a>
+       </div>
     </div>
 <!--右侧选择栏-->
     <div style="width: 45%;float: right;margin-right: 9%">
-<!--        水稻类-->
-        <div class="list-group crop-list" style="margin-left: 2%;margin-right: 10px;display: block">
-            <a href="#" onclick="submitCrop(this)" class="list-group-item list-group-item-action active">富源四号</a>
-            <a href="#" onclick="submitCrop(this)" class="list-group-item list-group-item-action">宁粳43号</a>
-            <a href="#" onclick="submitCrop(this)" class="list-group-item list-group-item-action">富源四号</a>
-            <a href="#" onclick="submitCrop(this)" class="list-group-item list-group-item-action">富源四号</a>
-            <a href="#" onclick="submitCrop(this)" class="list-group-item list-group-item-action">富源四号</a>
-            <a href="#" onclick="submitCrop(this)" class="list-group-item list-group-item-action">富源四号</a>
+        <!--这下面都是名称-->
+        <!--枸杞-->
+        <div class="list-group crop-list" style="margin-left: 2%;margin-right: 10px;display: block" id="gq">
+            <a th:href="@{/specialistSeedName(cropsName=${cropsName})}"  class="list-group-item list-group-item-action"  th:if="${wolfBerry!=null}"
+                     th:each="cropsName:${wolfBerry}" th:value="${cropsName}" th:text="${cropsName}">宁夏枸杞</a>
         </div>
-<!--        玉米类-->
-        <div class="list-group crop-list" style="margin-left: 2%;margin-right: 10px;display: none">
-            <a href="#" class="list-group-item list-group-item-action active">保玉1号</a>
-            <a href="#" class="list-group-item list-group-item-action">宁粳43号</a>
-            <a href="#" class="list-group-item list-group-item-action">富源四号</a>
-            <a href="#" class="list-group-item list-group-item-action">富源四号</a>
-            <a href="#" class="list-group-item list-group-item-action">富源四号</a>
-            <a href="#" class="list-group-item list-group-item-action">富源四号</a>
+        <!--葡萄-->
+        <div class="list-group crop-list" style="margin-left: 2%;margin-right: 10px;display: none" id="pt">
+            <a th:href="@{/specialistSeedName(cropsName=${cropsName})}"  class="list-group-item list-group-item-action"  th:if="${purple!=null}"
+                     th:each="cropsName:${purple}" th:value="${cropsName}" th:text="${cropsName}">宁夏枸杞</a>
         </div>
-<!--        枸杞类-->
-        <div class="list-group crop-list" style="margin-left: 2%;margin-right: 10px;display: none">
-            <a href="#" class="list-group-item list-group-item-action active">富源四号</a>
-            <a href="#" class="list-group-item list-group-item-action">宁粳43号</a>
-            <a href="#" class="list-group-item list-group-item-action">富源四号</a>
-            <a href="#" class="list-group-item list-group-item-action">富源四号</a>
-            <a href="#" class="list-group-item list-group-item-action">富源四号</a>
-            <a href="#" class="list-group-item list-group-item-action">富源四号</a>
+        <!--向日-->
+        <div class="list-group crop-list" style="margin-left: 2%;margin-right: 10px;display: none" id="xrk">
+            <a th:href="@{/specialistSeedName(cropsName=${cropsName})}"  class="list-group-item list-group-item-action"  th:if="${sunflower!=null}" th:each="cropsName:${sunflower}"
+                     th:value="${cropsName}" th:text="${cropsName}">宁夏枸杞</a>
         </div>
-<!--        蔬菜类-->
-        <div class="list-group crop-list" style="margin-left: 2%;margin-right: 10px;display: none">
-            <a href="#" class="list-group-item list-group-item-action active">富源四号</a>
-            <a href="#" class="list-group-item list-group-item-action">宁粳43号</a>
-            <a href="#" class="list-group-item list-group-item-action">富源四号</a>
-            <a href="#" class="list-group-item list-group-item-action">富源四号</a>
-            <a href="#" class="list-group-item list-group-item-action">富源四号</a>
-            <a href="#" class="list-group-item list-group-item-action">富源四号</a>
+        <!--水稻-->
+        <div class="list-group crop-list" style="margin-left: 2%;margin-right: 10px;display: none" id="sd">
+            <a th:href="@{/specialistSeedName(cropsName=${cropsName})}"  class="list-group-item list-group-item-action" th:if="${paddyRice!=null}"
+                    th:each="cropsName:${paddyRice}" th:value="${cropsName}" th:text="${cropsName}">宁夏枸杞</a>
         </div>
+        <!--玉米-->
+        <div class="list-group crop-list" style="margin-left: 2%;margin-right: 10px;display: none" id="ym">
+            <a th:href="@{/specialistSeedName(cropsName=${cropsName})}"  class="list-group-item list-group-item-action"  th:if="${corn!=null}"
+                     th:each="cropsName:${corn}" th:value="${cropsName}" th:text="${cropsName}">宁夏枸杞</a>
+        </div>
+        <!--小麦-->
+        <div class="list-group crop-list" style="margin-left: 2%;margin-right: 10px;display: none" id="xm">
+            <a th:href="@{/specialistSeedName(cropsName=${cropsName})}"  class="list-group-item list-group-item-action"  th:if="${wheat!=null}"
+                     th:each="cropsName:${wheat}" th:value="${cropsName}" th:text="${cropsName}">宁夏枸杞</a>
+        </div>
+        <!--大豆-->
+        <div class="list-group crop-list" style="margin-left: 2%;margin-right: 10px;display: none" id="dd">
+            <a th:href="@{/specialistSeedName(cropsName=${cropsName})}"  class="list-group-item list-group-item-action"  th:if="${soybean!=null}"
+                     th:each="cropsName:${soybean}" th:value="${cropsName}" th:text="${cropsName}">宁夏枸杞</a>
+        </div>
+        <!--马铃-->
+        <div class="list-group crop-list" style="margin-left: 2%;margin-right: 10px;display: none" id="mls">
+            <a th:href="@{/specialistSeedName(cropsName=${cropsName})}"  class="list-group-item list-group-item-action" th:if="${potato!=null}"
+                    th:each="cropsName:${potato}" th:value="${cropsName}" th:text="${cropsName}">宁夏枸杞</a>
+        </div>
+
     </div>
 <!--提交信息的表单，不显示，使用JS自动提交-->
 <form id="hidden-form" action="/specialistFirst" method="get" style="display: none">
@@ -110,16 +120,28 @@
 </footer>
 
 <script>
-    function shows(num) {
+    function showSelect(name,object) {//object是类别的标签
+        //选择具体作物名称的tag
         const tags1 = document.getElementsByClassName("crop-list");
+        //选择类别的tag
         const tags2 = document.getElementsByClassName("crop-type");
+        //具体要打开的类别名称
+        const detailTag = document.getElementById(name);
+        //去除所有类别的活动属性
         for (let i=0; i<tags2.length; i++){
             tags2[i].classList.remove("active");
+        }
+        //所有名称都不展示
+        for (let i=0; i<tags1.length; i++){
             tags1[i].style.display = "none";
         }
-        tags1[num].style.display = "block";
-        tags2[num].classList.add("active");
+        detailTag.style.display = "block";
+        object.classList.add("active");
+
+        //所有作物名称的选择框，置为不展示和移除name属性
     }
+
+
     function submitCrop(object){
         const crop = object.innerText;
         const form = document.getElementById("hidden-form");

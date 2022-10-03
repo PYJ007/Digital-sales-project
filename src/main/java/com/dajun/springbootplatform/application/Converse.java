@@ -1,14 +1,22 @@
 package com.dajun.springbootplatform.application;
 
+import com.dajun.springbootplatform.repository.seedRepository;
+import com.dajun.springbootplatform.repository.specialistRepository;
+
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 public class Converse {
 
-    private static List<String> sowMethod = Arrays.asList("插秧","保墒旱直播","播后上水","催芽撒播");
-    private static List<String> Operations = Arrays.asList("施水操作","施肥操作","施药操作","其他操作");
+    @Resource
+    private seedRepository seedRepository;
 
+    @Resource
+    private specialistRepository specialistRepository;
+
+        //这个城市肯定是不会变的(至少很长时间都不会变)
     public String cityConverse(int x,int y){
         List<String> provList = Arrays.asList("银川市","石嘴山市","吴忠市","固原市","中卫市");
 
@@ -28,39 +36,35 @@ public class Converse {
         return provList.get(x) + " " + cityList.get(x).get(y) ;
     };
 
-    public String cropNameConverse(int x){ //这个返回的是作物类型
-        List<String> cropList = Arrays.asList("玉米","水稻","枸杞");
-
-        return cropList.get(x);
-    };
-
-    public String cropTypeConverse(int x,int y){  //这个返回的是具体的作物名称
-        List<String> corn = Arrays.asList("保玉1号","苏玉31","中糯1号");
-        List<String> rice = Arrays.asList("旱优73","宁粳4号","宁粳1号");
-        List<String> gou_qi = Arrays.asList("中华枸杞","北方枸杞","宁夏枸杞");
-
-        List<List<String>> crops = new ArrayList<>();
-        crops.add(corn);
-        crops.add(rice);
-        crops.add(gou_qi);
-        return crops.get(x).get(y);
-    };
+    //作物一定会变的，想办法从数据库读出来，不要在这里写死
 
     //返回种植操作类型名称
     public String sowMethodConverse(int x){
-        return sowMethod.get(x);
+        return staticVariety.sowMethod.get(x);
     }
 
     //根据种植操作名称返回操作数
     public int sowMethodReverse(String sow){
-        for(int i=0;i<sowMethod.size();i++){
-            if (sow.equals(sowMethod.get(i))) return i;
+        for(int i=0;i<staticVariety.sowMethod.size();i++){
+            if (sow.equals(staticVariety.sowMethod.get(i))) return i;
         }
         return 0;
     }
 
     //根据数字返回具体操作名称，施肥，施水什么的
     public String operationConverse(int x){
-        return Operations.get(x-1);
+        return staticVariety.Operations.get(x-1);
     }
+
+    //根据种子ID返回种子名称
+    public String findSeedName(int id){
+        return seedRepository.findSeedNameById(id);
+    }
+
+    //根据专家ID获取专家名称
+    //这个不知道为什么，一直空指针异常。
+    public String findSpecialistName(int id){
+        return specialistRepository.findNameById(id);
+    }
+
 }

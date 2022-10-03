@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dajun.springbootplatform.repository.policyRepository">
+    <select id="selectAllPolicy" resultType="policy">
+        select * from policy;
+    </select>
+    <delete id="deletePolicyById" parameterType="int">
+        delete from policy where policy_id=#{id}
+    </delete>
+    <select id="selectThreePolicy" resultType="policyAndLink">
+        select a.*,link from policy a,policylink b where a.policy_id=b.policy_id and b.pass=1 limit 3;
+    </select>
+    <select id="findPolicyById" resultType="policy" parameterType="int">
+        select * from policy where policy_id = #{policy_id};
+    </select>
+</mapper>
+

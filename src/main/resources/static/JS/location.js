@@ -57,19 +57,19 @@ let cropsSelects = document.getElementsByClassName('crops');
 let breedsSelects  = document.getElementsByClassName('breeds');
 
 //作物信息添加
-for(let i=0;i<cropsSelects.length;i++) {
-    cropList.forEach(function(val, index){
-        cropsSelects[i].add(new Option(val, index));
-
-    });
-    cropsSelects[i].onchange = function () {
-        let index = this.value;
-        breedsSelects[i].length = 0;
-        breedList[index].forEach(function (val, index) {
-            breedsSelects[i].add(new Option(val, index));
-        })
-    };
-}
+// for(let i=0;i<cropsSelects.length;i++) {
+//     cropList.forEach(function(val, index){
+//         cropsSelects[i].add(new Option(val, index));
+//
+//     });
+//     cropsSelects[i].onchange = function () {
+//         let index = this.value;
+//         breedsSelects[i].length = 0;
+//         breedList[index].forEach(function (val, index) {
+//             breedsSelects[i].add(new Option(val, index));
+//         })
+//     };
+// }
 
 
 for(let i=0;i<citySelects.length;i++) {
