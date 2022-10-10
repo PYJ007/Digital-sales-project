@@ -51,14 +51,14 @@
         select * from recommendpesticide where recommend_id=#{id}
     </select>
     <select id="findRecommendByCropsAndTime" resultType="recommend" parameterType="String">
-        select * from recommend where
+        select * from recommendjude where
 --             curdate()>recommend_time and recommend_endtime>curdate() and
              seed_id in(select seed_id from seed where seed_name in
-             (select user_cropsname from field where user_tel = #{user_tel}))
+             (select user_cropsname from field where user_tel = #{user_tel} and field_id = #{fieldId}))
         order by recommend_time desc;
     </select>
-    <select id="recommendReadOrNot" parameterType="recommendIdAndTel" resultType="Integer">
-        select 1 from recommendread where recommend_id=#{recommend_id} and user_tel=#{user_tel} limit 1;
+    <select id="recommendReadOrNot" resultType="Integer">
+        SELECT 1 FROM importantrecord WHERE recommend_id = #{recommendId} AND group_id = #{groupId} limit 1
     </select>
     <insert id="insertRecommendRead" parameterType="recommendIdAndTel">
         insert into recommendread(recommend_id, user_tel) values (#{recommend_id},#{user_tel})

@@ -114,4 +114,5 @@ public interface seedRepository {
     List<candidateSeed> getCandidateByManufacture(String userName);
 
     List<candidateSeed> getRejectCandidateByManufacture(String userName);
+    String findTypeBySeedName(String seedName);
 }

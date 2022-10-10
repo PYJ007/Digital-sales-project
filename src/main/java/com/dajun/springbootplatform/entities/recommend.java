@@ -1,5 +1,6 @@
 package com.dajun.springbootplatform.entities;
 import lombok.Data;
+import java.util.Date;
 
 @Data
 public class recommend {
@@ -25,4 +26,6 @@ public class recommend {
     private String stage;
 //    播种方式
     private int sowmethod;
+//    用户执行该推荐的时间
+    private Date excute_time;
 }

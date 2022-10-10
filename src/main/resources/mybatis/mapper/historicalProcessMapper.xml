@@ -2,13 +2,26 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.dajun.springbootplatform.repository.adminRecommendMapper">
-    <select id="selectAdminByName" resultType="admin" parameterType="String">
-        select * from admin where admin_name=#{admin_name}
+<mapper namespace="com.dajun.springbootplatform.repository.historicalProcessRepository">
+    <select id="findRecommendsByGroupId" resultType="recommend" parameterType="string">
+        SELECT recommendjude.* FROM
+        (SELECT * FROM importantrecord WHERE group_id=#{groupId}) a
+        LEFT JOIN recommendjude
+        ON recommendjude.`recommend_id`=a.`recommend_id`
+        ORDER BY `finish_time`
     </select>
-    <select id="selectRecommendBySeedSpecialistAndSowMethod" resultType="recommend">
-        select * from recommendjude where specialist_id=#{specialist_id} and seed_id=#{seed_id}
-        and sowmethod=#{sowMethod}
+    <select id="findSeedIdByGroupId" resultType="int">
+        SELECT seed_id FROM importantrecord WHERE group_id = #{groupId} LIMIT 1
+    </select>
+    <select id="findExcuteTime" resultType="date">
+        SELECT finish_time FROM importantrecord WHERE recommend_id = #{recommendId} AND group_id = #{groupId} limit 1
+    </select>
+    <select id="findHistoryOrnot" resultType="string">
+        select 1 from importantrecord where group_id=#{groupId} limit 1
     </select>
 </mapper>
+
+<!--SELECT * FROM recommendjude WHERE recommend_id-->
+<!-- IN (SELECT recommend_id FROM importantrecord WHERE group_id=#{groupId})-->
+<!--ORDER BY recommend_time DESC-->
 

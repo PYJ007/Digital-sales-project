@@ -26,7 +26,7 @@ public class testController {
 
     @RequestMapping("/test")
     String test1(){
-        List<recommend> recommendList = recommendRepository.findRecommendByCropsAndTime("13259680250");
+        List<recommend> recommendList = recommendRepository.findRecommendByCropsAndTime("17863203236","1");
         for(recommend recommend:recommendList){
             System.out.println(recommend.getSpecialist_id());
             System.out.println(new Converse().findSpecialistName(recommend.getSpecialist_id()));

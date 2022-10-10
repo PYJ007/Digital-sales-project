@@ -9,6 +9,9 @@
     <select id="findByAccount" resultType="Specialist" parameterType="java.lang.String">
         select * from specialist where specialist_phone = #{phone}
     </select>
+    <select id="findById" resultType="Specialist" parameterType="int">
+        select * from specialist where specialist_id = #{id}
+    </select>
     <select id="findIdByPhone" resultType="int" parameterType="java.lang.String">
         select specialist_id from specialist where specialist_phone=#{phone}
     </select>

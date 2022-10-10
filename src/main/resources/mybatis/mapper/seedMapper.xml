@@ -166,4 +166,8 @@
     <update id="saveCandidateFileById">
         update candidateseed set certificate=#{file} where seed_id=#{seed_id}
     </update>
+
+    <select id="findTypeBySeedName" resultType="string">
+        SELECT seed_type FROM seed WHERE seed_name=#{seedName}
+    </select>
 </mapper>

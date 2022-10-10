@@ -1,10 +1,239 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <title>Bootstrap 实例</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/css/bootstrap.min.css">
+
+    <link rel="stylesheet" type="text/css" href="CSS/my-css.css">
+    <script type="text/javascript" src="JS/my-js.js"></script>
+
+    <script src="https://cdn.staticfile.org/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/popper.js/1.15.0/umd/popper.min.js"></script>
+    <script src="https://cdn.staticfile.org/twitter-bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <style>
+        body{
+            position: relative;
+        }
+    </style>
 </head>
-<body>
-$END$
+<body data-spy="scroll" data-target=".navbar" data-offset="50">
+
+<div id="top-logo">
+    <div class="logo">
+        <img src="img/ari-logo.png" alt="加载失败">
+        <b>农业一体化智能平台</b>
+    </div>
+    <div class="nav_span">
+        <ul id="nav-list">
+            <li th:style="${session.userName==null}?'display:block;':'display:none;'" class="nav first">请&nbsp;<a href="/login" style="color: chocolate">登陆</a>&nbsp;或&nbsp;<a href="/register" style="color: chocolate">注册</a></li>
+            <li th:style="${session.userName==null}?'display:none;':'display:block;'" class="nav first" ><span>欢迎您&nbsp;</span><span style="color: chocolate" th:text="${session.userName}"></span></li>
+            <li th:style="${session.userName==null}?'display:none;':'display:block;'" class="nav" ><a href="/logout" style="color: #005cbf">注销</a></li>
+            <li class="nav"><a href="/collect">收藏</a></li>
+            <li class="nav"><a href="#">消息&nbsp;</a><span th:if="${not #strings.isEmpty(session.userMsg)}" th:text="${session.userMsg}" class="badge badge-info"></span></li>
+            <li class="nav end"><a href="#">反馈</a></li>
+        </ul>
+    </div>
+</div>
+<!--bootstrap引用导航栏-->
+<nav class="navbar navbar-expand-lg navbar-light bg-light" style="background: linear-gradient(90deg,#00d0d4 19%,#00c5c3 58%,#9effa4 100%);" id="top2-logo">
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto" style="margin: 0">
+            <li class="nav-item">
+                <a class="nav-link"  href="/">主页</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/collect">个人中心</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/myField">
+                    我的田
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/reco">
+                    专家推荐
+                </a>
+            </li>
+            <li class="nav-item">
+                <a target="_blank" class="nav-link" href="http://127.0.0.1:1026/test">
+                    智能推荐
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/firstIntoHistory">
+                    历史记录
+                </a>
+            </li>
+        </ul>
+        <form class="form-inline my-2 my-lg-0" style="margin: 0">
+            <input class="form-control mr-sm-2" type="search" placeholder="搜索" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0"  type="submit">
+                <svg class="bi bi-search" width="1em" height="1em" viewBox="0 0 16 16" fill="currentColor" xmlns="http://www.w3.org/2000/svg" style="vertical-align:revert">
+                    <path fill-rule="evenodd" d="M10.442 10.442a1 1 0 0 1 1.415 0l3.85 3.85a1 1 0 0 1-1.414 1.415l-3.85-3.85a1 1 0 0 1 0-1.415z" clip-rule="evenodd"/>
+                    <path fill-rule="evenodd" d="M6.5 12a5.5 5.5 0 1 0 0-11 5.5 5.5 0 0 0 0 11zM13 6.5a6.5 6.5 0 1 1-13 0 6.5 6.5 0 0 1 13 0z" clip-rule="evenodd"/>
+                </svg></button>
+        </form>
+    </div>
+</nav>
+
+<div style="width: 250px;float: left;margin-left: 120px;margin-right: -20px">
+    <div th:each="field:${fields}" style="margin-top: 20px">
+        <div style="margin-bottom: 10px">
+            <h3><span  class="badge badge-success" th:text="'农田'+${field.getField_id()}+'号'"></span></h3>
+        </div>
+        <div th:each="i:${#numbers.sequence(1,field.getUse_time())}" style="margin-bottom: 10px">
+            <a th:href="'/history?fieldId='+${field.getField_id()}+'&time='+${i}">
+                <button type="button" class="btn btn-outline-success" th:text="'第'+${i}+'次历史'"></button>
+            </a>
+        </div>
+    </div>
+</div>
+
+<div style="width: 1030px;float: left;margin-left: -30px" th:if="${seed}">
+    <nav class="navbar navbar-expand-sm bg-white fixed-top" style="color:orange;width: 1030px;position: sticky">
+        <ul class="navbar-nav">
+            <li class="nav-item">
+                <a style="color: orange" class="nav-link" href="#section1">种子信息</a>
+            </li>
+            <li class="nav-item">
+                <a style="color: orange" class="nav-link" href="#section2">认证信息</a>
+            </li>
+            <li class="nav-item" th:each="recommend:${recommends}">
+                 <a style="color: orange" class="nav-link" th:href="'#section'+${recommend.getRecommend_id()+'3'}" href="#section10" th:text="${recommend.getRecommend_id()}+'号推荐'"></a>
+            </li>
+        </ul>
+    </nav>
+
+    <div id="section1" class="container-fluid" style="padding-top:20px;padding-bottom:20px">
+        <div style="width: 1030px;height: 220px;margin-right: 20px;margin-bottom: 10px">
+            <a href="#" style="display: block;float: left">
+                <img th:src="@{'/img/seed'+${seed.getSeed_id()}+'.jpg'}" style="width: 300px;height: 200px;margin-top: 10px;margin-left: 10px" alt="加载失败">
+            </a>
+            <div style="float: left;width: 600px;height: 300px;margin-top: 10px;margin-left: 10px">
+                <div >
+                    <div style="float: left;width: 70px">名称：</div><div th:text="${seed.getSeed_name()}" style="height: 30px;float: left;width: 530px">宁粳43号</div>
+                </div>
+                <div >
+                    <div style="float: left;width: 70px">类型：</div><div th:text="${seed.getSeed_type()}" style="height: 30px;float: left;width: 530px">宁粳43号</div>
+                </div>
+                <div style="float: left;width: 70px">简介：</div><div th:text="${seed.getSeed_name()}+'种子于'+${#dates.format(seed.getSeed_productiondate(),'yyyy年MM月dd日')}+'由'+${seed.getSeed_manufacturer()}+'上架到平台'" style="float: left;width: 530px;height: 30px"></div>
+                <div >
+                </div>
+                <div style="float: left;width: 70px">电话：</div><div th:text="${seed.getSeed_phone()}" style="height: 30px;float: left;width: 530px"></div>
+            </div>
+        </div>
+    </div>
+    <div id="section2" class="container-fluid" style="padding-bottom:20px">
+        <div style="height: 220px;margin-right: 25px;margin-bottom: 30px;">
+            <a href="#" style="display: block;float: left">
+                <img th:src="@{'/img/证书'+${seed.getSeed_id()}+'.jpg'}" style="height: 250px;width: 200px;margin-top: -40px;margin-left: 5px" alt="加载失败">
+            </a>
+            <div style="float: left;width: 650px;height: 250px;margin-top: -40px;margin-left: 10px">
+                <div >
+                    <div style="float: left;width: 70px">简介：</div><div th:text="${seed.getSeed_name()}+'种子由'+${specialist.getSpecialist_name()}+'专家鉴定后,最终通过平台审核'" style="float: left;width: 530px;height: 30px"></div>
+                </div>
+                <div>
+                    <div style="float: left;width: 80px">专家简介：</div><div th:text="${specialist.getSpecialist_instructions()}" style="float: left;width: 530px;height: 30px"></div>
+                </div>
+                <div>
+                    <div style="float: left;width: 80px">专家电话：</div><div th:text="${specialist.getSpecialist_phone()}" style="float: left;width: 530px;height: 30px"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div th:each="recommend:${recommends}">
+        <div th:id="'section'+${recommend.getRecommend_id()}+'3'" class="container-fluid" style="padding-top:20px;padding-bottom:20px;margin-left: -72px">
+    <!--        <div class="media position-relative"  th:if="${recommend.getRecommend_type()==2}"-->
+    <!--             style="float: left; margin-top: 18px;border-bottom: rgba(1,1,1,0.2) 1px solid;width: 84%;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.19)">-->
+    <!--            <a href="#">-->
+    <!--                <img th:src="@{img/fertilize.jpg}" class="mr-3" width="100px" height="100px" alt="加载失败">-->
+    <!--            </a>-->
+    <!--            <div class="media-body">-->
+    <!--                <div class="d-flex w-100 justify-content-between">-->
+    <!--                    <h5 class="mb-1"><span style="color: chocolate" th:text="${recommend.getStage()}">三叶期</span>&nbsp;&nbsp;<span style="color: royalblue">施肥操作</span></h5>-->
+    <!--                    <small th:if="${recommend.getRecommend_readed()==0}" style="margin-right: 6px;color: red;font: 800 14px Arial, sans-serif">未完成</small>-->
+    <!--                    <small th:if="${recommend.getRecommend_readed()==1}" style="margin-right: 6px;color: green;font: 800 14px Arial, sans-serif">已完成</small>-->
+    <!--                </div>-->
+    <!--                <p style="font: 400 16px Arial, sans-serif;margin-top: 10px"><span style="color: chocolate" th:text="${specialist.getSpecialist_name()}">大俊</span>-->
+    <!--                    专家提醒您：您的<span th:text="${seed.getSeed_name()}" style="color: chocolate">富源四号</span>需要施肥了</p>-->
+    <!--                <p style="font: 400 16px Arial, sans-serif">需要及时施肥，包括-->
+    <!--                    &lt;!&ndash;K的用量&ndash;&gt;-->
+    <!--                    <span th:if="${findRecommend.findElementsById(recommend.getRecommend_id()).getK_volume()!=0}">钾：-->
+    <!--                                            <span style="color: chocolate" th:text="${findRecommend.findElementsById(recommend.getRecommend_id()).getK_volume()*acres}">20</span>-->
+    <!--                                            KG,-->
+    <!--                                        </span>-->
+    <!--                    &lt;!&ndash;N的用量&ndash;&gt;-->
+    <!--                    <span th:if="${findRecommend.findElementsById(recommend.getRecommend_id()).getN_volume()!=0}">氮：-->
+    <!--                                            <span style="color: chocolate" th:text="${findRecommend.findElementsById(recommend.getRecommend_id()).getN_volume()*acres}">20</span>-->
+    <!--                                            KG,-->
+    <!--                                        </span>-->
+    <!--                    &lt;!&ndash;P的用量&ndash;&gt;-->
+    <!--                    <span th:if="${findRecommend.findElementsById(recommend.getRecommend_id()).getP_volume()!=0}">磷：-->
+    <!--                                            <span style="color: chocolate" th:text="${findRecommend.findElementsById(recommend.getRecommend_id()).getP_volume()*acres}">20</span>-->
+    <!--                                            KG-->
+    <!--                                        </span>-->
+    <!--                </p>-->
+    <!--                <p style="font: 400 16px Arial, sans-serif">具体操作：<span style="color: darkgreen" th:text="${recommend.getDetail()}">巴阿巴阿巴阿巴阿巴</span></p>-->
+    <!--                <p style="font: 400 16px Arial, sans-serif">推荐使用：<span style="color: darkgreen" th:text="${recommend.getNotice()}" >巴阿巴阿巴阿巴阿巴</span></p>-->
+    <!--                <div style="float: right;margin-bottom: 5px;margin-right: 6px" th:if="${recommend.getRecommend_readed()==0}">-->
+    <!--                    &lt;!&ndash;                                        <button th:id="${recommend.getRecommend_id()}" class="btn btn-success btn-sm" onclick="haveRead(this)">标记完成</button>&ndash;&gt;-->
+    <!--                    <button th:onclick="'javascript:makeSign('+${recommend.getRecommend_id()}+');'" class="btn btn-success btn-sm" >标记完成</button>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+            <!--施水-->
+            <div class="media position-relative" th:if="${recommend.getRecommend_type()==1}" style="margin-top: 18px;border-bottom: rgba(1,1,1,0.2) 1px solid;width: 84%;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.19)">
+                <a href="#">
+                    <img th:src="@{img/water.jpg}" class="mr-3" width="100px" height="100px" alt="加载失败">
+                </a>
+                <div class="media-body">
+                    <p style="font: 400 16px Arial, sans-serif"><span style="color: darkgreen" th:text="'你于'+${#dates.format(recommend.getExcute_time(),'yyyy年MM月dd日')}+'对'+${seed.getSeed_name()}+'作物完成了浇水操作'"></span>
+                    <h5 class="mb-1"><span style="color: chocolate" th:text="${recommend.getStage()}">三叶期</span>&nbsp;&nbsp;<span style="color: royalblue">施水操作</span></h5>
+                    <p style="font: 400 16px Arial, sans-serif;margin-top: 10px"><span style="color: chocolate"  th:text="${specialist.getSpecialist_name()}">大俊</span>专家提醒您：您的<span th:text="${seed.getSeed_name()}" style="color: chocolate">富源四号</span>需要浇水了</p>
+                    <p style="font: 400 16px Arial, sans-serif">具体操作：<span style="color: darkgreen" th:text="${recommend.getDetail()}">巴阿巴阿巴阿巴阿巴</span></p>
+                    <p style="font: 400 16px Arial, sans-serif">注意事项：<span style="color: darkgreen" th:text="${recommend.getNotice()}">阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴</span>
+                    </p>
+                </div>
+            </div>
+            <!--施药-->
+    <!--        <div class="media position-relative" th:if="${recommend.getRecommend_type()==3}"-->
+    <!--             style="float: left; margin-top: 18px;border-bottom: rgba(1,1,1,0.2) 1px solid;width: 84%;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.19)">-->
+    <!--            <a href="#">-->
+    <!--                <img th:src="@{img/spraymed.jpg}" class="mr-3" width="100px" height="100px" alt="加载失败">-->
+    <!--            </a>-->
+    <!--            <div class="media-body">-->
+    <!--                <div class="d-flex w-100 justify-content-between">-->
+    <!--                    <h5 class="mb-1"><span style="color: chocolate" th:text="${recommend.getStage()}">三叶期</span>&nbsp;&nbsp;<span style="color: royalblue">施药操作</span></h5>-->
+    <!--                    <small th:if="${recommend.getRecommend_readed()==0}" style="margin-right: 6px;color: red;font: 800 14px Arial, sans-serif">未完成</small>-->
+    <!--                    <small th:if="${recommend.getRecommend_readed()==1}" style="margin-right: 6px;color: green;font: 800 14px Arial, sans-serif">已完成</small>-->
+    <!--                </div>-->
+    <!--                <p style="margin-top: 10px;font: 400 16px Arial, sans-serif"><span style="color: chocolate"  th:text="${specialistRepository.findNameById(recommend.getSpecialist_id())}">大俊</span>专家提醒您：需要预防-->
+    <!--                    <span style="color: chocolate" th:text="${findRecommend.findPesticide(recommend.getRecommend_id()).getName()}">稻光病</span>，选取含有-->
+    <!--                    <span style="color: chocolate" th:text="${findRecommend.findPesticide(recommend.getRecommend_id()).getIngredient()}">红霉素</span>的农药</p>-->
+    <!--                <p style="font: 400 16px Arial, sans-serif">具体操作：<span style="color: darkgreen" th:text="${recommend.getDetail()}">阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴</span></p>-->
+    <!--                <div style="float: right;margin-bottom: 5px;margin-right: 6px" th:if="${recommend.getRecommend_readed()==0}">-->
+    <!--                    &lt;!&ndash;                                        <button th:id="${recommend.getRecommend_id()}" class="btn btn-success btn-sm" onclick="haveRead(this)">标记完成</button>&ndash;&gt;-->
+    <!--                    <button th:onclick="'javascript:makeSign('+${recommend.getRecommend_id()}+');'" class="btn btn-success btn-sm" >标记完成</button>-->
+    <!--                </div>-->
+    <!--            </div>-->
+    <!--        </div>-->
+            <!--其他操作-->
+            <div class="media position-relative" th:if="${recommend.getRecommend_type()==4}" style="margin-top: 18px;border-bottom: rgba(1,1,1,0.2) 1px solid;width: 84%;box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.19)">
+                <a href="#">
+                    <img th:src="@{img/water.jpg}" class="mr-3" width="100px" height="100px" alt="加载失败">
+                </a>
+                <div class="media-body">
+                    <div class="d-flex w-100 justify-content-between">
+                        <h5 class="mb-1"><span style="color: chocolate" th:text="${recommend.getStage()}">三叶期</span>&nbsp;&nbsp;<span style="color: royalblue">其他操作</span></h5>
+                    </div>
+                    <p style="font: 400 16px Arial, sans-serif;margin-top: 10px"><span style="color: chocolate"  th:text="${specialist.getSpecialist_name()}">大俊</span>专家提醒您：您的<span th:text="${seed.getSeed_name()}" style="color: chocolate">富源四号</span>需要注意如下内容：</p>
+                    <p style="font: 400 16px Arial, sans-serif" th:text="${recommend.getDetail()}">巴阿巴阿巴阿巴阿巴</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

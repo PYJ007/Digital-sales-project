@@ -12,6 +12,14 @@
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
     <link href="asserts/css/dashboard.css" rel="stylesheet">
+    <style>
+        #question{
+            display:none;
+        }
+        .display{
+            display: block;
+        }
+    </style>
 </head>
 <body>
 
@@ -54,7 +62,17 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/reco">
+                    专家推荐
+                </a>
+            </li>
+            <li class="nav-item">
+                <a target="_blank" class="nav-link" href="http://127.0.0.1:1026/index">
                     智能推荐
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="/firstIntoHistory">
+                    历史记录
                 </a>
             </li>
         </ul>
@@ -88,13 +106,24 @@
                         </a>
                     </li>
                     <!--田间管理-->
-                    <li class="nav-item  active">
-                        <a class="nav-link active" id="manger"  href="#">
-                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="feather" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
-                                <path fill-rule="evenodd" d="M15.817.613A.5.5 0 0 1 16 1v13a.5.5 0 0 1-.402.49l-5 1a.502.502 0 0 1-.196 0L5.5 14.51l-4.902.98A.5.5 0 0 1 0 15V2a.5.5 0 0 1 .402-.49l5-1a.5.5 0 0 1 .196 0l4.902.98 4.902-.98a.5.5 0 0 1 .415.103zM10 2.41l-4-.8v11.98l4 .8V2.41zm1 11.98l4-.8V1.61l-4 .8v11.98zm-6-.8V1.61l-4 .8v11.98l4-.8z"/>
-                            </svg>
+<!--                    <li class="nav-item  active">-->
+<!--                        <a class="nav-link active" id="manger"  href="#">-->
+<!--                            <svg width="1em" height="1em" viewBox="0 0 16 16" class="feather" fill="currentColor" xmlns="http://www.w3.org/2000/svg">-->
+<!--                                <path fill-rule="evenodd" d="M15.817.613A.5.5 0 0 1 16 1v13a.5.5 0 0 1-.402.49l-5 1a.502.502 0 0 1-.196 0L5.5 14.51l-4.902.98A.5.5 0 0 1 0 15V2a.5.5 0 0 1 .402-.49l5-1a.5.5 0 0 1 .196 0l4.902.98 4.902-.98a.5.5 0 0 1 .415.103zM10 2.41l-4-.8v11.98l4 .8V2.41zm1 11.98l4-.8V1.61l-4 .8v11.98zm-6-.8V1.61l-4 .8v11.98l4-.8z"/>-->
+<!--                            </svg>-->
+<!--                            田间管理-->
+<!--                        </a>-->
+<!--                    </li>-->
+                    <li class="nav-item">
+                        <a class="nav-link" data-toggle="collapse" href="#collapseMarket" role="button" aria-expanded="false" aria-controls="collapseMarket">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-shopping-cart"><circle cx="9" cy="21" r="1"></circle><circle cx="20" cy="21" r="1"></circle><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"></path></svg>
                             田间管理
                         </a>
+                        <div th:if="${fieldList}">
+                            <div class="collapse" id="collapseMarket" th:each="field:${fieldList}">
+                                <a class="dropdown-item" th:href="@{/myFieldReco(fieldId=${field.getField_id()})}" th:text="农田+${field.getField_id()}+号">1号田</a>
+                            </div>
+                        </div>
                     </li>
                     <!--投产估算-->
                     <li class="nav-item">
@@ -154,7 +183,7 @@
                                 <div class="media-body">
                                     <div class="d-flex w-100 justify-content-between">
                                         <h5 class="mb-1"><span style="color: chocolate" th:text="${recommend.getStage()}">三叶期</span>&nbsp;&nbsp;<span style="color: royalblue">施肥操作</span></h5>
-                                        <small th:if="${recommend.getRecommend_readed()==0}" style="margin-right: 6px;color: red;font: 800 14px Arial, sans-serif">未完成</small>
+<!--                                        <small th:if="${recommend.getRecommend_readed()==0}" style="margin-right: 6px;color: red;font: 800 14px Arial, sans-serif">未完成</small>-->
                                         <small th:if="${recommend.getRecommend_readed()==1}" style="margin-right: 6px;color: green;font: 800 14px Arial, sans-serif">已完成</small>
                                     </div>
                                     <p style="font: 400 16px Arial, sans-serif;margin-top: 10px"><span style="color: chocolate" th:text="${specialistRepository.findNameById(recommend.getSpecialist_id())}">大俊</span>
@@ -179,7 +208,8 @@
                                     <p style="font: 400 16px Arial, sans-serif">具体操作：<span style="color: darkgreen" th:text="${recommend.getDetail()}">巴阿巴阿巴阿巴阿巴</span></p>
                                     <p style="font: 400 16px Arial, sans-serif">推荐使用：<span style="color: darkgreen" th:text="${recommend.getNotice()}" >巴阿巴阿巴阿巴阿巴</span></p>
                                     <div style="float: right;margin-bottom: 5px;margin-right: 6px" th:if="${recommend.getRecommend_readed()==0}">
-                                        <button th:id="${recommend.getRecommend_id()}" class="btn btn-success btn-sm" onclick="haveRead(this)">标记完成</button>
+<!--                                        <button th:id="${recommend.getRecommend_id()}" class="btn btn-success btn-sm" onclick="haveRead(this)">标记完成</button>-->
+                                        <button th:onclick="'javascript:makeSign('+${recommend.getRecommend_id()}+');'" class="btn btn-success btn-sm" >标记完成</button>
                                     </div>
                                 </div>
                             </div>
@@ -200,7 +230,8 @@
                                     <p style="font: 400 16px Arial, sans-serif">注意事项：<span style="color: darkgreen" th:text="${recommend.getNotice()}">阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴</span>
                                     </p>
                                     <div style="float: right;margin-bottom: 5px;margin-right: 6px" th:if="${recommend.getRecommend_readed()==0}">
-                                        <button th:id="${recommend.getRecommend_id()}" class="btn btn-success btn-sm" onclick="haveRead(this)">标记完成</button>
+<!--                                        <button th:id="${recommend.getRecommend_id()}" class="btn btn-success btn-sm" onclick="haveRead(this)">标记完成</button>-->
+                                        <button th:onclick="'javascript:makeSign(\''+${recommend.getRecommend_id()}+'\',\''+${recommend.getSeed_id()}+'\');'" class="btn btn-success btn-sm" >标记完成</button>
                                     </div>
                                 </div>
                             </div>
@@ -221,7 +252,8 @@
                                         <span style="color: chocolate" th:text="${findRecommend.findPesticide(recommend.getRecommend_id()).getIngredient()}">红霉素</span>的农药</p>
                                     <p style="font: 400 16px Arial, sans-serif">具体操作：<span style="color: darkgreen" th:text="${recommend.getDetail()}">阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴阿巴</span></p>
                                     <div style="float: right;margin-bottom: 5px;margin-right: 6px" th:if="${recommend.getRecommend_readed()==0}">
-                                        <button th:id="${recommend.getRecommend_id()}" class="btn btn-success btn-sm" onclick="haveRead(this)">标记完成</button>
+<!--                                        <button th:id="${recommend.getRecommend_id()}" class="btn btn-success btn-sm" onclick="haveRead(this)">标记完成</button>-->
+                                        <button th:onclick="'javascript:makeSign('+${recommend.getRecommend_id()}+');'" class="btn btn-success btn-sm" >标记完成</button>
                                     </div>
                                 </div>
                             </div>
@@ -240,12 +272,14 @@
                                     <p style="font: 400 16px Arial, sans-serif;margin-top: 10px"><span style="color: chocolate"  th:text="${specialistRepository.findNameById(recommend.getSpecialist_id())}">大俊</span>专家提醒您：您的<span th:text="${seedRepository.findSeedNameById(recommend.getSeed_id())}" style="color: chocolate">富源四号</span>需要注意如下内容：</p>
                                     <p style="font: 400 16px Arial, sans-serif" th:text="${recommend.getDetail()}">巴阿巴阿巴阿巴阿巴</p>
                                     <div style="float: right;margin-bottom: 5px;margin-right: 6px" th:if="${recommend.getRecommend_readed()==0}">
-                                        <button th:id="${recommend.getRecommend_id()}" class="btn btn-success btn-sm" onclick="haveRead(this)">标记完成</button>
+<!--                                        <button th:id="${recommend.getRecommend_id()}" class="btn btn-success btn-sm" onclick="haveRead(this)">标记完成</button>-->
+                                        <button th:onclick="'javascript:makeSign('+${recommend.getRecommend_id()}+${recommend.getSeed_id()}+');'" class="btn btn-success btn-sm" >标记完成</button>
                                     </div>
                                 </div>
                             </div>
                     </div>
 
+                    <input type="hidden" th:value="${fieldId}" name="fieldId" id="fieldId">
 
                         <p th:if="${recommendList==null||recommendList.size()<1}" style="font: 700 20px Arial;color: chocolate;text-align: center;width: 50%">
                             您目前没有提醒喔
@@ -264,6 +298,7 @@
 </form>
 
 </body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <!--添加日期的js-->
 <script>
     window.onload = function() {
@@ -276,12 +311,32 @@
     }
 </script>
 <!--跟新已读-->
-<script>
-    function haveRead(object) {
-        const tagForm = document.getElementById("deleteForm");
-        const tagInput = document.getElementById("recommendInput");
-        tagInput.setAttribute("value",object.getAttribute("id"));
-        tagForm.submit();
+<script type="text/javascript">
+    // function haveRead(object) {
+    //     const tagForm = document.getElementById("deleteForm");
+    //     const tagInput = document.getElementById("recommendInput");
+    //     tagInput.setAttribute("value",object.getAttribute("id"));
+    //     tagForm.submit();
+    // }
+    function makeSign(recommendId,seedId){
+        var fieldId = document.getElementById("fieldId").value;
+        var recommendId = recommendId;
+        var seedId = seedId;
+        $.ajax({
+            url: "/addImportentRecord",
+            data: {"recommendId":recommendId,"fieldId":fieldId,"seedId":seedId},
+            type: "POST",
+            dataType: "text",
+            success: function(data){
+                if(data==0)
+                    alert("标记成功");
+                if(data==1)
+                    alert("已标记过")
+            },
+            error: function (){
+                alert("标记失败");
+            },
+        });
     }
 </script>
 </html>

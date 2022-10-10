@@ -18,4 +18,16 @@
     <select id="selectFieldAcresByTelAndName" parameterType="phoneAndCropsName" resultType="int">
         select sum(user_cropsacres) from field where user_tel=#{user_tel} and user_cropsname=#{user_cropsname}
     </select>
+    <select id="findMyField" parameterType="phoneAndCropsName" resultType="field">
+        SELECT * FROM FIELD WHERE user_tel= #{phone}
+    </select>
+    <insert id="addImportentRecord">
+        insert into importantrecord(recommend_id,field_id,group_id,seed_id,finish_time) VALUES (#{recommendId},#{fieldId},#{groupId},#{seedId},#{date})
+    </insert>
+    <select id="findFieldTime" resultType="int">
+        select use_time from field where field_id=#{fieldId}
+    </select>
+    <update id="updateFieldCrop">
+        update field set user_cropsname=#{seedName},user_cropstype=#{seedType},use_time=use_time+1 where field_id=#{fieldId}
+    </update>
 </mapper>

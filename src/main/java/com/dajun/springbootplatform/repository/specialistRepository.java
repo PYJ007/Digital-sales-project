@@ -10,6 +10,7 @@ public interface specialistRepository {
     String findName(String phone);
     //通过手机号查询专家
     Specialist findByAccount(String phone);
+    Specialist findById(int id);
     //通过手机号查询ID
     int findIdByPhone(String phone);
     //通过ID查询名称

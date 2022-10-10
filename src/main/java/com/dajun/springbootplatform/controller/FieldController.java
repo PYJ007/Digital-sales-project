@@ -3,22 +3,22 @@ package com.dajun.springbootplatform.controller;
 
 import com.dajun.springbootplatform.application.computeFieldRec;
 import com.dajun.springbootplatform.application.findRecommend;
-import com.dajun.springbootplatform.entities.Fertilizer;
-import com.dajun.springbootplatform.entities.User;
-import com.dajun.springbootplatform.entities.field;
+import com.dajun.springbootplatform.entities.*;
 import com.dajun.springbootplatform.entities.other.phoneAndCropsName;
 import com.dajun.springbootplatform.entities.other.recommendIdAndTel;
-import com.dajun.springbootplatform.entities.recommend;
 import com.dajun.springbootplatform.repository.*;
 import com.dajun.springbootplatform.service.FertilizerServiceImpl;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
@@ -53,20 +53,28 @@ public class FieldController {
     //进入我的田的农时推荐，所有种植方式都会被展示出来
     @GetMapping("/myFieldReco")
     public String chooseMethod(Model model,
-                               HttpSession session){
+                               HttpSession session, HttpServletRequest request, @RequestParam("fieldId") String fieldId){
+        model.addAttribute("fieldId",fieldId);
         String phone = session.getAttribute("userPhone").toString();
         //获取用户的总亩数
         Double acres = userRepository.findByAccount(phone).getUser_fieldacres();
         //农时推荐的信息
-        List<recommend> recommendList = recommendRepository.findRecommendByCropsAndTime(phone);
+        List<recommend> recommendList = recommendRepository.findRecommendByCropsAndTime(phone,fieldId);
         //user对象和化肥对象，为了转化出推荐
         User user= userRepository.findByAccount(phone);
+        if (user.getUser_fieldadress()!=null&&user.getUser_fieldacres()!=0) {
+            //遍历获取用户的田间信息
+            List<field> fields = fieldRepository.findMyField(phone);
+            model.addAttribute("fieldList",fields);
+        }
         List<Fertilizer> fertilizers = fertilizerService.selectfertilizerList();
         computeFieldRec computeFieldRec = new computeFieldRec();
+        int useTime = fieldRepository.findFieldTime(Integer.valueOf(fieldId));
+        String groupId = fieldId+"-"+String.valueOf(useTime);
         for (recommend recommend : recommendList) {
 
-            if (recommendRepository.recommendReadOrNot(
-                    new recommendIdAndTel(phone, recommend.getRecommend_id()))!=null) recommend.setRecommend_readed(1);//判断有没有，有就是已经读啦
+            if (recommendRepository.recommendReadOrNot(recommend.getRecommend_id(),groupId)!=null)
+                recommend.setRecommend_readed(1);//判断有没有，有就是已经读啦
 
             //我吐了，为了那个化肥推荐，只能利用上化肥表中的notice字段了
             if (recommend.getRecommend_type()==2){//如果是化肥
@@ -108,11 +116,13 @@ public class FieldController {
         //只有当用户的总亩数而且田间的信息不为空的时候
         if (user.getUser_fieldadress()!=null&&user.getUser_fieldacres()!=0) {
             //遍历获取用户的田间信息
-            List<field> fields = fieldRepository.findFieldByTel(phone);
-            model.addAttribute(fields);
+            List<field> fields = fieldRepository.findMyField(phone);
+            model.addAttribute("fieldList",fields);
         }
         //numbers为1代表没有完善信息
         else session.setAttribute("numbers",1);
+        List<Seed> seeds = seedRepository.findAllSeed();
+        model.addAttribute("seeds",seeds);
        //为添加作物信息提供接口
         //枸杞
         model.addAttribute("wolfBerry",seedRepository.findDetailNameByTypeName("枸杞"));
@@ -149,6 +159,15 @@ public class FieldController {
         fieldRepository.updateAcres(user);
         //删除对应的田的信息
         fieldRepository.deleteFieldByTelAndName(phoneAndCropsName);
+        return "redirect:/myField";
+    }
+
+    @PostMapping("/updateField")
+    public String updateField(HttpServletRequest request){
+        String seedName = request.getParameter("seedName");
+        String seedType = seedRepository.findTypeBySeedName(seedName);
+        int fieldId = Integer.valueOf(request.getParameter("fieldId"));
+        fieldRepository.updateFieldCrop(seedName,seedType,fieldId);
         return "redirect:/myField";
     }
 }

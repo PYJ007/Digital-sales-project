@@ -41,11 +41,11 @@ public interface recommendRepository {
     //通过用户作物id、播种方式（见实体类）  SQL语句中和时间比较筛选信息,按时间降序
     //播种方式不筛选了，我去掉了，但是实体类保留了，只是SQL语句中删除了
     //我想起来用户可能不止一种作物，所以通过单一的作物ID是不行的，所以用多表查询
-    List<recommend> findRecommendByCropsAndTime(String user_tel);
+    List<recommend> findRecommendByCropsAndTime(@Param("user_tel") String user_tel,@Param("fieldId") String fieldId);
     //因为我们的推荐表那个标志是否已读一旦被操作了，就会导致其他人都看不到
     //所以额外加一个表，用来标志用户是否已读，只记录读，不记录没有读；当然推荐表中所有是否已读都要是否( 0 )
     //需要给出用户手机号  和  推荐ID，读取的是是否读了(布尔值，只要存在里面就说明读了->但是好像有点问题喔，返回的不是布尔值)
-    Integer recommendReadOrNot(recommendIdAndTel recommendIdAndTel);
+    Integer recommendReadOrNot(@Param("recommendId") Integer recommendId,@Param("groupId") String groupId);
     //更新用户是否已读
     void insertRecommendRead(recommendIdAndTel recommendIdAndTel);
     //插入一个政策
@@ -61,4 +61,5 @@ public interface recommendRepository {
 
     @Update("update policy set policy_id=#{newId} where policy_id=#{id}")
     void updatePolicyId(@Param("newId") String newId,@Param("id") int id);
+
 }
